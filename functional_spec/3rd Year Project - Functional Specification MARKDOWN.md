@@ -3,22 +3,15 @@
 ##### Page Content Page Number
 
 ##### 1. Introduction
-
-##### 1.1 Overview 1
-
-##### 1.2 Business View 2
-
-##### 1.3 Glossary of Terms 3
+##### 	1.1 Overview 1
+##### 	1.2 Business View 2
+##### 	1.3 Glossary of Terms 3
 
 ##### 2. General Description
-
-##### 2.1 Product / System Functions 4
-
-##### 2.2 User Characteristics and Objectives 6
-
-##### 2.3 Operational Scenarios 7
-
-##### 2.4 Constraints 8
+##### 	2.1 Product / System Functions 4
+##### 	2.2 User Characteristics and Objectives 6
+##### 	2.3 Operational Scenarios 7
+##### 	2.4 Constraints 8
 
 ##### 3. Functional Requirements
 
