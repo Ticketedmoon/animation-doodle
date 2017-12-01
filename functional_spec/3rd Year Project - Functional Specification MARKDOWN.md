@@ -1,11 +1,11 @@
 # Table of Contents
 
-##### Page Content Page Number
+##### Page Content
 
 ##### 1. Introduction
-	##### 1.1 Overview 1
-	##### 1.2 Business View 2
-	##### 1.3 Glossary of Terms 3
+	- **1.1 Overview**
+	- **1.2 Business View**
+	- **1.3 Glossary of Terms**
 
 ##### 2. General Description
 ##### 	2.1 Product / System Functions 4
@@ -59,8 +59,8 @@
 
 ##### 6.2 Critical tasks schedule 20
 
-7. Appendices
-7.1 Appendix – Resources 21
+##### 7. Appendices
+	**7.1 Appendix – Resources 21**
 
 
 # 1 Introduction
