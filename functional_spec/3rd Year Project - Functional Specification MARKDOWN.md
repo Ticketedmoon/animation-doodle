@@ -3,9 +3,9 @@
 ##### Page Content Page Number
 
 ##### 1. Introduction
-##### 	- 1.1 Overview 1
-##### 	- 1.2 Business View 2
-##### 	- 1.3 Glossary of Terms 3
+	##### 1.1 Overview 1
+	##### 1.2 Business View 2
+	##### 1.3 Glossary of Terms 3
 
 ##### 2. General Description
 ##### 	2.1 Product / System Functions 4
