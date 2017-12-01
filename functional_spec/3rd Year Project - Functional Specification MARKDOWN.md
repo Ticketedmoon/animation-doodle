@@ -624,6 +624,8 @@ This feature is not critical to the overall system. It simply makes it a little 
 
 #### 4.1 Basic System Architecture Diagram
 
+![](images/basic.png)
+
 ##### Android Application Layer:
 
 Fig 4.1 above shows the architecture of the project and how all the functionality works
@@ -632,6 +634,8 @@ front-end of the project. The user will interact with our GUI interface setup us
 studio & make GET requests to our Database.
 
 #### 4.2 Database Interaction Diagram
+
+![](images/databse.png)
 
 Users that want to upload their drawn animations to our MySQL Database or view other
 user’s animations through our ‘Uploaded Animations’ tab will require access to our Database
@@ -649,6 +653,8 @@ application on IOS or any other system, we wouldn’t have to change the databas
 ##### and querying techniques because of its interoperability.
 
 #### 4.3 Database Design Diagram
+
+![](images/design.png)
 
 Database design is an essential element of our project. We want to design our database so
 to store animations (Converted to video files) that can be retrieved when needed. When
@@ -668,6 +674,8 @@ should be easy to implement in relational database as such.
 # 5 High-Level Design
 
 #### 5.1 High-Level Design Diagram
+
+![](images/highLevelDesign.png)
 
 ##### Fig 5.
 
