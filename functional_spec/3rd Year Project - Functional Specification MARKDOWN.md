@@ -8,56 +8,37 @@
 - 1.3 Glossary of Terms  
 
 ##### 2. General Description
-##### 	2.1 Product / System Functions 
-##### 	2.2 User Characteristics and Objectives 
-##### 	2.3 Operational Scenarios 
-##### 	2.4 Constraints 
+- 2.1 Product / System Functions 
+- 2.2 User Characteristics and Objectives 
+- 2.3 Operational Scenarios 
+- 2.4 Constraints 
 
 ##### 3. Functional Requirements
-
-##### 3.1 Start Drawing 
-
-##### 3.2 Sign up 
-
-##### 3.3 Create Profile 
-
-##### 3.4 Sign in 
-
-##### 3.5 Draw with Blockly 
-
-##### 3.6 Add drawing to animation 
-
-##### 3.7 Play animation 
-
-##### 3.8 Upload animations to database 
-
-##### 3.9 Rate animations 
-
-##### 3.10 Edit Profile 
-
-##### 3.11 Download animations to phone 
-
-##### 3.12 Search animation database 
+- 3.1 Start Drawing 
+- 3.2 Sign up 
+- 3.3 Create Profile 
+- 3.4 Sign in 
+- 3.5 Draw with Blockly 
+- 3.6 Add drawing to animation 
+- 3.7 Play animation 
+- 3.8 Upload animations to database 
+- 3.9 Rate animations 
+- 3.10 Edit Profile 
+- 3.11 Download animations to phone 
+- 3.12 Search animation database 
 
 ##### 4. System Architecture
-
-##### 4.1 System Architecture Diagram 
-
-##### 4.2 Database Interaction Diagram 
-
-##### 4.3 Database Design Diagram 
+- 4.1 System Architecture Diagram 
+- 4.2 Database Interaction Diagram 
+- 4.3 Database Design Diagram 
 
 ##### 5. High-Level Design Diagrams
-
-##### 5.1 High-Level Design Diagram 
-
-##### 5.2 High-Level Design Description 
+- 5.1 High-Level Design Diagram 
+- 5.2 High-Level Design Description 
 
 ##### 6. Preliminary Schedule
-
-##### 6.1 Gantt Chart 
-
-##### 6.2 Critical tasks schedule 
+- 6.1 Gantt Chart 
+- 6.2 Critical tasks schedule 
 
 ##### 7. Appendices
 - 7.1 Appendix – Resources 21
