@@ -2,72 +2,65 @@
 
 ##### Page Content
 
-<<<<<<< HEAD
 ##### 1. Introduction  
 - 1.1 Overview  
 - 1.2 Business View  
 - 1.3 Glossary of Terms  
-=======
-##### 1. Introduction
-	- **1.1 Overview**
-	- **1.2 Business View**
-	- **1.3 Glossary of Terms**
->>>>>>> c9cada841995067998dd336f64c33c03ba18f6af
 
 ##### 2. General Description
-##### 	2.1 Product / System Functions 4
-##### 	2.2 User Characteristics and Objectives 6
-##### 	2.3 Operational Scenarios 7
-##### 	2.4 Constraints 8
+##### 	2.1 Product / System Functions 
+##### 	2.2 User Characteristics and Objectives 
+##### 	2.3 Operational Scenarios 
+##### 	2.4 Constraints 
 
 ##### 3. Functional Requirements
 
-##### 3.1 Start Drawing 9
+##### 3.1 Start Drawing 
 
-##### 3.2 Sign up 9
+##### 3.2 Sign up 
 
-##### 3.3 Create Profile 10
+##### 3.3 Create Profile 
 
-##### 3.4 Sign in 10
+##### 3.4 Sign in 
 
-##### 3.5 Draw with Blockly 11
+##### 3.5 Draw with Blockly 
 
-##### 3.6 Add drawing to animation 11
+##### 3.6 Add drawing to animation 
 
-##### 3.7 Play animation 12
+##### 3.7 Play animation 
 
-##### 3.8 Upload animations to database 12
+##### 3.8 Upload animations to database 
 
-##### 3.9 Rate animations 13
+##### 3.9 Rate animations 
 
-##### 3.10 Edit Profile 13
+##### 3.10 Edit Profile 
 
-##### 3.11 Download animations to phone 14
+##### 3.11 Download animations to phone 
 
-##### 3.12 Search animation database 14
+##### 3.12 Search animation database 
 
 ##### 4. System Architecture
 
-##### 4.1 System Architecture Diagram 15
+##### 4.1 System Architecture Diagram 
 
-##### 4.2 Database Interaction Diagram 15
+##### 4.2 Database Interaction Diagram 
 
-##### 4.3 Database Design Diagram 16
+##### 4.3 Database Design Diagram 
 
 ##### 5. High-Level Design Diagrams
 
-##### 5.1 High-Level Design Diagram 17
+##### 5.1 High-Level Design Diagram 
 
-##### 5.2 High-Level Design Description 18
+##### 5.2 High-Level Design Description 
 
 ##### 6. Preliminary Schedule
 
-##### 6.1 Gantt Chart 20
+##### 6.1 Gantt Chart 
 
-##### 6.2 Critical tasks schedule 20
+##### 6.2 Critical tasks schedule 
 
 ##### 7. Appendices
-	**7.1 Appendix – Resources 21**
+- 7.1 Appendix – Resources 21
 
 
 # 1 Introduction
