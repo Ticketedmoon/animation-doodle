@@ -571,7 +571,6 @@ This is simply an added feature to satisfy a user's optional needs. It is not cr
 
 ##### system.
 
-
 #### Technical Issues:
 
 ##### We will use a PHP script to carry out this requirement.
@@ -829,39 +828,24 @@ Section Appendices
 
 7.1 Appendix 1 – Resources
 
-o https://developers.google.com/blockly/
-```
-```
-o https://developer.android.com/training/animation/index.html
-```
-```
-o https://en.wikipedia.org/wiki/Onion_skinning
-```
-```
-o http://www.php.net
-```
-```
-o http://www.w3cschools.com
-```
-```
-o http://www.devshed.com
-```
-```
-o http://www.sqlcourse.com
-```
-```
-o http://www.mysql.com
-```
-```
-o https://developer.android.com/studio/index.html
-```
-```
-o https://www.androidauthority.com/android-studio-tutorial-beginners-637572/
-```
-```
-o http://www.computing.dcu.ie/~cdaly/
-```
-```
-o https://gitlab.computing.dcu.ie
-```
-```
+###### • https://developers.google.com/blockly/  
+
+###### • https://developer.android.com/training/animation/index.html  
+
+###### • https://en.wikipedia.org/wiki/Onion_skinning  
+
+###### • http://www.php.net  
+
+###### • http://www.w3cschools.com  
+
+###### • http://www.devshed.com  
+
+###### • http://www.sqlcourse.com  
+
+###### • http://www.mysql.com  
+
+###### • https://developer.android.com/studio/index.html  
+
+###### • http://www.computing.dcu.ie/~cdaly/  
+
+###### • https://gitlab.computing.dcu.ie  
