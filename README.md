@@ -31,6 +31,9 @@ particular folder (screen) in android studio.
 	- Git merge <branchName> will merge your current branch with the  
 	  branch you pass, I.E. git merge shanes_branch.  
 	  Given that I am on master, master will merge with shanes_branch.  
+	- When you are checking out to master to merge your branch,  
+	  **Remember to git pull** before you merge.  
+	  Git will probably issue a warning before anyway.  
 4. Git Status:
 	- Git status will tell you which files have / have not been added or commited.  
 
