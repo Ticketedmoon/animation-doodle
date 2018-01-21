@@ -13,8 +13,10 @@ to unite both drawing and artistic design with animation inside a mobile applica
 
 > To work on / open individual parts of the project and push them back using version control (Git)  
 > simply clone / pull the project (git clone <Project_URL> / git pull origin master.  
+  
 > Then navigate to the code section where you will find a list of directory's representing each of  
 > the possible activities / screens that are present in the App.  
+  
 > Simply choose whichever screen you would like to work on and open that particular folder (screen) in android studio.  
 
 ---
