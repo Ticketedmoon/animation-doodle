@@ -1,41 +1,38 @@
 #### CA326 3rd Year Project
 ---
 
-###### What is Animation Doodle?
-Animation Doodle is a project being developed by James Collins &  
-Shane Creedon in an effort to unite both drawing and artistic design with  
-animation inside a mobile application.
+##### What is Animation Doodle?
+Animation Doodle is a project being developed by James Collins & Shane Creedon in an effort  
+to unite both drawing and artistic design with animation inside a mobile application.  
 
 ---
-###### How to open individual project sections (E.G.):
+##### How to open individual project sections (E.G.):
 - Sign-In Screen
 - Profile Screen
 - Start Drawing Screen
 
-To work on / open individual parts of the project and push them back  
-using version control (Git) simply clone / pull the directory.  
-Then navigate to the code section where you will find a list of directory's  
-representing each of the possible activities / screens that are present  
-in the App.  
-Simply choose whichever screen you would like to work on and open that  
-particular folder (screen) in android studio.  
+To work on / open individual parts of the project and push them back using version control (Git)  
+simply clone / pull the project (git clone <Project_URL> / git pull origin master.  
+Then navigate to the code section where you will find a list of directory's representing each of  
+the possible activities / screens that are present in the App.  
+Simply choose whichever screen you would like to work on and open that particular folder (screen) in android studio.  
 
 ---
 1. Branching:
 	-  Be sure to branch so we don't overwrite each others work.  
-	-  'Git checkout <branchName>' will swap branches.  
-	-  'Git Branch' will show you all working branches.  
+	-  **git checkout <branchName>** will swap branches.  
+	-  **git Branch** will show you all working branches.  
 2. Add / Commit / Push:
-	- Commit & Push changes to your branch.
+	- **git Commit & Push** changes to your branch.
 3. Merging:
-	- Git merge <branchName> will merge your current branch with the  
+	- **git merge <branchName>** will merge your current branch with the  
 	  branch you pass, I.E. git merge shanes_branch.  
 	  Given that I am on master, master will merge with shanes_branch.  
 	- When you are checking out to master to merge your branch,  
 	  **Remember to git pull** before you merge.  
 	  Git will probably issue a warning before anyway.  
 4. Git Status:
-	- Git status will tell you which files have / have not been added or commited.  
+	- **git status** will tell you which files have / have not been added or commited.  
 
 ---
 
