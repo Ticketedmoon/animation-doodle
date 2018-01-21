@@ -42,6 +42,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 // Author: Shane Creedon (Shane.Creedon3@mail.dcu.ie)
 // Author: James Collins
+// (Currently ON:) Shane's Branch
 
 public class sign_in extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
