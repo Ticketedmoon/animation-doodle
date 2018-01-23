@@ -11,24 +11,21 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Animation Doodle"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".Main_Home_Screen"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
             android:windowSoftInputMode="adjustPan">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,6 +34,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".Start_Drawing_Screen"></activity>
     </application>
 
 </manifest>

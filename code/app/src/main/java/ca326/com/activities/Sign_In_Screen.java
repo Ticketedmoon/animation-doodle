@@ -50,20 +50,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     * <ImageView
-             android:id="@+id/imageView"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_alignParentLeft="true"
-             android:layout_alignParentStart="true"
-             android:layout_alignParentTop="true"
-             android:adjustViewBounds="false"
-             android:cropToPadding="false"
-             android:scaleType="centerCrop"
-             android:src="@drawable/sign_up_cartoon" />
-     */
+
     private UserLoginTask mAuthTask = null;
 
     // UI references.
