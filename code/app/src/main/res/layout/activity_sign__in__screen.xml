@@ -20,7 +20,7 @@
         android:visibility="gone" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
@@ -127,7 +127,7 @@
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="56dp"
             android:background="@drawable/button_border"
             android:fontFamily="sans-serif-smallcaps"
             android:onClick="goToHomeScreen"
