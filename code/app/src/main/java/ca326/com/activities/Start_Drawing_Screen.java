@@ -10,4 +10,5 @@ public class Start_Drawing_Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start__drawing__screen);
     }
+    
 }
