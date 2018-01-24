@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 public class Start_Drawing_Screen extends AppCompatActivity{
 
@@ -30,21 +31,23 @@ public class Start_Drawing_Screen extends AppCompatActivity{
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(12);
+        mPaint.setStrokeWidth(5);
 
         // Clear Drawing Functionality
-        // Button clear = (Button) findViewById(R.id.button);
-        //clear.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_start__drawing__screen);
+        Button clear = (Button) findViewById(R.id.button);
+        // clear.setOnClickListener(new View.OnClickListener() {
 
-        //public void onClick(View v) {
-        //        dv.clearDrawing();
-        //}
+            //public void onClick(View v) {
+                //dv.clearDrawing();
+            //}
         //});
     }
+
     public class DrawingView extends View {
 
         public int width;
