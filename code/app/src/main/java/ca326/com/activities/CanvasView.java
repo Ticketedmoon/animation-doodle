@@ -6,43 +6,30 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by Shane on 24/01/2018.
- */
-
 public class CanvasView extends View {
 
-    CanvasView dv ;
     public Paint mPaint;
-
     public int width;
     public  int height;
+
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private Path mPath;
-    private Paint mBitmapPaint;
     Context context;
-    private Paint circlePaint;
-    private Path circlePath;
 
-    public CanvasView(Context c) {
-        super(c);
+    private float mX, mY;
+    private static final float TOUCH_TOLERANCE = 4;
+
+    public CanvasView(Context c, AttributeSet attrbs) {
+        super(c, attrbs);
 
         // Other Stuff
-        context=c;
-        mPath = new Path();
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-
-        circlePaint = new Paint();
-        circlePath = new Path();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.BLUE);
-        circlePaint.setStyle(Paint.Style.STROKE);
-        circlePaint.setStrokeJoin(Paint.Join.MITER);
-        circlePaint.setStrokeWidth(4f);
+        this.context=c;
+        this.mPath = new Path();
 
         // Set up Paint object
         mPaint = new Paint();
@@ -58,17 +45,10 @@ public class CanvasView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        canvas.drawBitmap( mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath( mPath,  mPaint);
-        canvas.drawPath( circlePath,  circlePaint);
+        canvas.drawPath(mPath,  mPaint);
     }
 
-    private float mX, mY;
-    private static final float TOUCH_TOLERANCE = 4;
-
     private void touch_start(float x, float y) {
-        mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
@@ -81,19 +61,11 @@ public class CanvasView extends View {
             mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
             mX = x;
             mY = y;
-
-            circlePath.reset();
-            circlePath.addCircle(mX, mY, 30, Path.Direction.CW);
         }
     }
 
     private void touch_up() {
         mPath.lineTo(mX, mY);
-        circlePath.reset();
-        // commit the path to our offscreen
-        mCanvas.drawPath(mPath,  mPaint);
-        // kill this so we don't double draw
-        mPath.reset();
     }
 
     @Override
@@ -114,7 +86,6 @@ public class CanvasView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 // No longer pressing here
-                System.out.println("No longer pressing");
                 touch_up();
                 invalidate();
                 break;
@@ -122,16 +93,10 @@ public class CanvasView extends View {
         return true;
     }
 
-    public void clearDrawing()
-    {
-        setDrawingCacheEnabled(false);
-        // don't forget that one and the match below,
-        // or you just keep getting a duplicate when you save.
-
-        onSizeChanged(width, height, width, height);
+    public void clearCanvas() {
+        System.out.println("Canvas Cleared!");
+        this.mPath.reset();
         invalidate();
-
-        setDrawingCacheEnabled(true);
     }
 
     @Override
@@ -139,8 +104,8 @@ public class CanvasView extends View {
     {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        width = w;      // don't forget these
-        height = h;
+        this.width = w;      // don't forget these
+        this.height = h;
 
         mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);

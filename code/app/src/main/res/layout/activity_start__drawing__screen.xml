@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/FrameLayout"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="ca326.com.activities.Start_Drawing_Screen">
 
-    <View
-        android:id="@+id/Canvas"
+    <ca326.com.activities.CanvasView
+        android:id="@+id/canvas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </View>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clear"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="9dp"/>
 
     <Button
         android:id="@+id/clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="190dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginStart="9dp"
-        android:text="@string/clear"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="259dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:onClick="clearCanvas"
+        android:text="@string/clear" />
 
-</FrameLayout>
+</RelativeLayout>
