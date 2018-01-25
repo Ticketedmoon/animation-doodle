@@ -13,9 +13,9 @@ import android.view.View;
  * Created by Shane on 24/01/2018.
  */
 
-public class DrawingView extends View {
+public class CanvasView extends View {
 
-    DrawingView dv ;
+    CanvasView dv ;
     public Paint mPaint;
 
     public int width;
@@ -28,7 +28,7 @@ public class DrawingView extends View {
     private Paint circlePaint;
     private Path circlePath;
 
-    public DrawingView(Context c) {
+    public CanvasView(Context c) {
         super(c);
 
         // Other Stuff

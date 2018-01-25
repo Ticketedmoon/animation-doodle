@@ -15,7 +15,7 @@ public class Start_Drawing_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_start__drawing__screen);
 
         // Drawing Functinality
-        DrawingView dv = new DrawingView(this);
+        CanvasView dv = new CanvasView(this);
         Button clear = (Button) findViewById(R.id.clear);
         setContentView(dv);
         // Clear Drawing Functionality
