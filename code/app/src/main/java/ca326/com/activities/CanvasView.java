@@ -7,8 +7,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CanvasView extends View {
 
@@ -23,6 +27,7 @@ public class CanvasView extends View {
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
+    public List<Pair <Path, Paint>> newPaths = new ArrayList<Pair<Path, Paint>>();
 
     public CanvasView(Context c, AttributeSet attrbs) {
         super(c, attrbs);
@@ -32,27 +37,37 @@ public class CanvasView extends View {
 
         // Set up Paint object
         mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(5);
+        setUpPaint(Color.BLACK, mPaint);
 
         // Path
         this.mPath = new Path();
-
+        this.newPaths.add(new Pair(mPath, mPaint));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawPath(mPath,  mPaint);
+        for(int i = 0; i < newPaths.size(); i++) {
+            canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
+        }
     }
 
-    public Path getPath() {
-        return this.mPath;
+    public void setUpPaint(int color, Paint mPaint) {
+        // Set up the paint object with a different selected colour.
+        // Have to redo all the set-up steps.
+        this.mPaint = mPaint;
+        this.mPaint.setAntiAlias(true);
+        this.mPaint.setDither(true);
+        this.mPaint.setColor(color);
+        this.mPaint.setStyle(Paint.Style.STROKE);
+        this.mPaint.setStrokeJoin(Paint.Join.ROUND);
+        this.mPaint.setStrokeCap(Paint.Cap.ROUND);
+        this.mPaint.setStrokeWidth(10);
+    }
+
+    public Path get_new_Path() {
+        this.mPath = new Path();
+        return mPath;
     }
 
     private void touch_start(float x, float y) {
@@ -102,7 +117,29 @@ public class CanvasView extends View {
 
     public void clearCanvas() {
         System.out.println("Canvas Cleared!");
-        this.mPath.reset();
+        this.newPaths.clear();
+        invalidate();
+
+        // Restart with the same colour
+        this.mPath = new Path();
+        this.newPaths.add(new Pair(mPath, mPaint));
+    }
+
+    public void undoAction() {
+        System.out.println("Action Undid");
+        this.newPaths.remove(this.newPaths.size()-1);
+
+        // Assign paint object to previous paint obj
+        // First check if there does exist a path previously with an IF statement,
+        if (this.newPaths.size() != 0) {
+            this.mPath = this.newPaths.get(this.newPaths.size()-1).first;
+        }
+        else {
+            this.mPath = new Path();
+            this.newPaths.add(new Pair(mPath, mPaint));
+        }
+
+        // Restart with the same colour
         invalidate();
     }
 

@@ -1,7 +1,9 @@
 package ca326.com.activities;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,7 +13,7 @@ public class Start_Drawing_Screen extends AppCompatActivity {
 
     // Class Fields
     private CanvasView canvasView;
-    private int mDefaultColour;
+    private Paint mDefaultPaint;
     private Button colour_picker;
 
     @Override
@@ -25,7 +27,7 @@ public class Start_Drawing_Screen extends AppCompatActivity {
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
 
         // Colour Picker Stuff
-        this.mDefaultColour = canvasView.mPaint.getColor();
+        this.mDefaultPaint = canvasView.mPaint;
         this.colour_picker = (Button) findViewById(R.id.change_colour);
         this.colour_picker.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -39,13 +41,19 @@ public class Start_Drawing_Screen extends AppCompatActivity {
         this.canvasView.clearCanvas();
     }
 
+    public void undo(View v) {
+        this.canvasView.undoAction();
+    }
+
     public void openColourPick() {
-        AmbilWarnaDialog colour_picker = new AmbilWarnaDialog(this, this.mDefaultColour, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog colour_picker = new AmbilWarnaDialog(this, this.mDefaultPaint.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
             public void onCancel(AmbilWarnaDialog dialog) {}
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                mDefaultColour = color;
-                canvasView.mPaint.setColor(mDefaultColour);
+                mDefaultPaint = new Paint();
+                canvasView.setUpPaint(color, mDefaultPaint);
+                canvasView.newPaths.add(new Pair(canvasView.get_new_Path(), mDefaultPaint));
+
             }
         });
         colour_picker.show();

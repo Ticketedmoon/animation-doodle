@@ -19,4 +19,5 @@
     <!-- Strings related to 'Start Drawing Screen' -->
     <string name="clear">Clear Canvas</string>
     <string name="change_colour">Swap Colour</string>
+    <string name="undo"> Undo </string>
 </resources>
