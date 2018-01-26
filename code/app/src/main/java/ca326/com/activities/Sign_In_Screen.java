@@ -60,6 +60,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_sign__in__screen);
 
         //Variables
@@ -99,6 +100,16 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         }
 
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    // Disable back button on this screen
+    public void onBackPressed() {
+        System.out.println("Back Button Pushed <Returning to Homescreen>");
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+
     }
 
     private boolean mayRequestContacts() {

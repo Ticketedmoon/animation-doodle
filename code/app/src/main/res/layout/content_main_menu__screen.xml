@@ -7,7 +7,7 @@
     android:background="@color/colorBlack"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ca326.com.activities.Main_Home_Screen"
-    tools:showIn="@layout/activity_signup__screen">
+    tools:showIn="@layout/activity_main_menu__screen">
 
     <TextView
         android:id="@+id/textView"

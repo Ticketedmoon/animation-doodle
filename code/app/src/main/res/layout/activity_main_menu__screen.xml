@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     tools:context="ca326.com.activities.Main_Home_Screen">
 
-    <include layout="@layout/content_signup__screen" />
+    <include layout="@layout/content_main_menu__screen" />
 
 </android.support.design.widget.CoordinatorLayout>

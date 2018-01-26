@@ -16,7 +16,7 @@ public class Main_Home_Screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_signup__screen);
+        setContentView(R.layout.activity_main_menu__screen);
     }
 
     @Override

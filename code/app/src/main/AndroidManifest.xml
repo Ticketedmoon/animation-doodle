@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ca326.com.activities">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -7,37 +8,48 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <application
+    <application xmlns:tools="http://schemas.android.com/tools"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Animation Doodle"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
 
         <activity
             android:name=".Main_Home_Screen"
-            android:screenOrientation="portrait"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Start_Drawing_Screen"></activity>
+        <activity
+            android:name=".Start_Drawing_Screen"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".Intro_Animation_Transition_Screen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
