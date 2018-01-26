@@ -18,7 +18,7 @@ public class CanvasView extends View {
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private Path mPath;
+    public Path mPath;
     Context context;
 
     private float mX, mY;
@@ -29,7 +29,6 @@ public class CanvasView extends View {
 
         // Other Stuff
         this.context=c;
-        this.mPath = new Path();
 
         // Set up Paint object
         mPaint = new Paint();
@@ -40,12 +39,20 @@ public class CanvasView extends View {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(5);
+
+        // Path
+        this.mPath = new Path();
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPath(mPath,  mPaint);
+    }
+
+    public Path getPath() {
+        return this.mPath;
     }
 
     private void touch_start(float x, float y) {
