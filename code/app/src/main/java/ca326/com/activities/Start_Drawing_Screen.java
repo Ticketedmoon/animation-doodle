@@ -3,7 +3,6 @@ package ca326.com.activities;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 
@@ -52,8 +51,6 @@ public class Start_Drawing_Screen extends AppCompatActivity {
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 mDefaultPaint = new Paint();
                 canvasView.setUpPaint(color, mDefaultPaint);
-                canvasView.newPaths.add(new Pair(canvasView.get_new_Path(), mDefaultPaint));
-
             }
         });
         colour_picker.show();

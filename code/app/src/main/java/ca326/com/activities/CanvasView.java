@@ -31,17 +31,11 @@ public class CanvasView extends View {
 
     public CanvasView(Context c, AttributeSet attrbs) {
         super(c, attrbs);
-
-        // Other Stuff
         this.context=c;
 
         // Set up Paint object
         mPaint = new Paint();
         setUpPaint(Color.BLACK, mPaint);
-
-        // Path
-        this.mPath = new Path();
-        this.newPaths.add(new Pair(mPath, mPaint));
     }
 
     @Override
@@ -71,6 +65,7 @@ public class CanvasView extends View {
     }
 
     private void touch_start(float x, float y) {
+        this.newPaths.add(new Pair(this.get_new_Path(),this.mPaint));
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
