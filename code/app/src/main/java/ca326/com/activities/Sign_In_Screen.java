@@ -211,10 +211,10 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     }
 
     // this regex will check that passwords contain at least one digit
-    // a lower case letter at least once,an upper case letter, a special character
-    // is at least 8 characters long and at least one special character
+    // a lower case letter at least once,an upper case letter, at least one special character
+    // and is at least 5 characters long
     private boolean isPasswordValid(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}";
         return password.matches(pattern);
     }
 
