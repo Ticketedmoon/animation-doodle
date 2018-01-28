@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.app.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -27,6 +28,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.net.URLEncoder;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,8 +204,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask = new UserLoginTask(email, password,this);
+            mAuthTask.execute(email, password);
         }
     }
 
@@ -318,51 +327,71 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<String, Void, String> {
 
+        Activity instance;
         private final String mEmail;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, Activity instance) {
             mEmail = email;
             mPassword = password;
+            this.instance = instance;
+
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
             // TODO: attempt authentication against a network service.
+            String email = params[0];
+            String password = params[0];
+            String link;
+            String data;
+            BufferedReader bufferedReader;
+            String result;
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                data = "&emailaddress=" + URLEncoder.encode(email, "UTF-8");
+                data += "&password=" + URLEncoder.encode(password, "UTF-8");
+                link = "our server link when its set up" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        // TODO: register the new account here.
+
+
+    @Override
+    protected void onPostExecute(String result) {
+        String jsonStr = result;
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                String query_result = jsonObj.getString("query_result");
+                if (query_result.equals("SUCCESS")) {
+                    Toast.makeText(instance, "Data inserted successfully. Signup successful.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Sign_In_Screen.this, Main_Home_Screen.class);
+                    startActivity(intent);
+                } else if (query_result.equals("FAILURE")) {
+                    Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
             }
-
-            // TODO: register the new account here.
-            return true;
+        } else {
+            Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
         }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
+    }
 
         @Override
         protected void onCancelled() {
@@ -370,6 +399,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             showProgress(false);
         }
 
-    }
+
+
 }
 
