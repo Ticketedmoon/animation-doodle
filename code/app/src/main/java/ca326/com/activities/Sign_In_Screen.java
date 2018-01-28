@@ -368,36 +368,37 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         // TODO: register the new account here.
 
 
-    @Override
-    protected void onPostExecute(String result) {
-        String jsonStr = result;
-        if (jsonStr != null) {
-            try {
-                JSONObject jsonObj = new JSONObject(jsonStr);
-                String query_result = jsonObj.getString("query_result");
-                if (query_result.equals("SUCCESS")) {
-                    Toast.makeText(instance, "Data inserted successfully. Signup successful.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Sign_In_Screen.this, Main_Home_Screen.class);
-                    startActivity(intent);
-                } else if (query_result.equals("FAILURE")) {
-                    Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
+        @Override
+        protected void onPostExecute(String result) {
+            String jsonStr = result;
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    String query_result = jsonObj.getString("query_result");
+                    if (query_result.equals("SUCCESS")) {
+                        Toast.makeText(instance, "Data inserted successfully. Signup successful.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Sign_In_Screen.this, Main_Home_Screen.class);
+                        startActivity(intent);
+                    } else if (query_result.equals("FAILURE")) {
+                        Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
         }
-    }
 
         @Override
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
         }
+    }
 
 
 
