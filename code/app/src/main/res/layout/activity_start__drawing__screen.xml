@@ -7,45 +7,99 @@
     android:layout_height="match_parent"
     tools:context="ca326.com.activities.Start_Drawing_Screen">
 
-    <ca326.com.activities.CanvasView
-        android:id="@+id/canvas"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/sketch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/timeline"
+        android:layout_toEndOf="@+id/tool_bar"
+        android:layout_toRightOf="@+id/tool_bar"
+        android:background="@android:drawable/alert_light_frame">
+
+        <ca326.com.activities.CanvasView
+            android:id="@+id/canvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:drawable/divider_horizontal_bright">
+
+        <Button
+            android:id="@+id/clear"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="36dp"
+            android:background="@android:color/holo_red_light"
+            android:onClick="clearCanvas"
+            android:text="@string/clear"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/change_colour"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/undo_button"
+            android:layout_marginTop="33dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/change_colour"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/undo_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/clear"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/holo_green_dark"
+            android:onClick="undo"
+            android:text="@string/undo"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_marginBottom="15dp"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:cropToPadding="false"
+            android:src="@drawable/gear" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timeline"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/clear" />
-
-    <Button
-        android:id="@+id/clear"
-        style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="clearCanvas"
-        android:text="@string/clear" />
-
-    <Button
-        android:id="@+id/change_colour"
-        style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/change_colour" />
-
-    <Button
-        android:id="@+id/undo_button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:onClick="undo"
-        android:text="@string/undo"
-        android:textColor="@android:color/white" />
+        android:layout_toEndOf="@+id/tool_bar"
+        android:layout_toRightOf="@+id/tool_bar"
+        android:background="@android:drawable/divider_horizontal_bright"></RelativeLayout>
 
 </RelativeLayout>
