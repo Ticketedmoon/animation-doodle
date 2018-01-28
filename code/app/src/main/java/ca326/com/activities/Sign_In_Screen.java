@@ -170,8 +170,12 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if (!isPasswordValid(password)){
+            mPasswordView.setError(getString(R.string.invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
