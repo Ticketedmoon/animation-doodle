@@ -201,13 +201,21 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        boolean filter = true;
+        String filterString = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+        String laxString = ".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+        String regexEmail = filter ? filterString : laxString;
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(regexEmail);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 
+    // this regex will check that passwords contain at least one digit
+    // a lower case letter at least once,an upper case letter, a special character
+    // is at least 8 characters long and at least one special character
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        return password.matches(pattern);
     }
 
     /**
