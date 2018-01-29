@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -14,6 +15,11 @@ public class Start_Drawing_Screen extends AppCompatActivity {
     private CanvasView canvasView;
     private Paint mDefaultPaint;
     private Button colour_picker;
+    private ImageView timeline;
+    private int[] LEAVES = {
+            R.drawable.ambilwarna_arrow_down,
+            R.drawable.ambilwarna_arrow_right
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class Start_Drawing_Screen extends AppCompatActivity {
                 openColourPick();
             }
         });
+
     }
 
     public void clearCanvas(View v) {

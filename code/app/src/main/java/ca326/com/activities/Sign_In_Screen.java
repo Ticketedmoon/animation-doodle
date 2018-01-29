@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import android.widget.Toast;
+import android.text.method.PasswordTransformationMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        // convert passord to asterix
+        mPasswordView.setTransformationMethod(new changePasswordToAsterix());
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -89,6 +92,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                 return false;
             }
         });
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setTextColor(getApplication().getResources().getColor(R.color.colorWhite));
@@ -404,8 +408,28 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         }
     }
 
+    public class changePasswordToAsterix extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return new GetCharSequence(source);
+        }
 
-
+        private class GetCharSequence implements CharSequence {
+            private CharSequence mText;
+            public GetCharSequence(CharSequence text) {
+                mText = text;
+            }
+            public char charAt(int index) {
+                return '*'; //Replace with an asterix here
+            }
+            public int length() {
+                return mText.length();
+            }
+            public CharSequence subSequence(int start, int end) {
+                return mText.subSequence(start, end);
+            }
+        }
+    };
 }
 
 
