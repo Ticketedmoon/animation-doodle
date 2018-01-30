@@ -1,5 +1,4 @@
 package ca326.com.activities;
-
 import android.app.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -36,6 +35,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import android.widget.Toast;
+import android.content.Context;
 import android.text.method.PasswordTransformationMethod;
 
 import java.util.ArrayList;
@@ -66,6 +66,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         mProgressView = findViewById(R.id.login_progress);
     }
 
+
+
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -124,6 +128,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         startActivity(startMain);
 
     }
+
 
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -212,8 +217,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password,this);
-            mAuthTask.execute(email, password);
+            Toast.makeText(this, "Signing up...", Toast.LENGTH_SHORT).show();
+            new UserLoginTask(this).execute(email,password);
         }
     }
 
@@ -338,53 +343,48 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     public class UserLoginTask extends AsyncTask<String, Void, String> {
 
         Activity instance;
-        private final String mEmail;
-        private final String mPassword;
 
-        UserLoginTask(String email, String password, Activity instance) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(Activity instance) {
             this.instance = instance;
 
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... arg0) {
             // TODO: attempt authentication against a network service.
-            String email = params[0];
-            String password = params[0];
+            String email = arg0[0];
+            String password = arg0[0];
             String link;
             String data;
             BufferedReader bufferedReader;
             String result;
 
             try {
-                data = "&emailaddress=" + URLEncoder.encode(email, "UTF-8");
+                data = "?emailaddress=" + URLEncoder.encode(email, "UTF-8");
                 data += "&password=" + URLEncoder.encode(password, "UTF-8");
-                link = "our server link when its set up" + data;
+                link = "http://animationdoodleserver.000webhostapp.com/signup.php" + data;
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
                 bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 result = bufferedReader.readLine();
                 return result;
+
             } catch (Exception e) {
                 return new String("Exception: " + e.getMessage());
             }
         }
 
-        // TODO: register the new account here.
-
-
         @Override
         protected void onPostExecute(String result) {
-            String jsonStr = result;
+            StringBuilder sb = new StringBuilder();
+            sb.append(result + "\n");
+            String jsonStr = sb.toString();
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
-                        Toast.makeText(instance, "Data inserted successfully. Signup successful.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Sign_In_Screen.this, Main_Home_Screen.class);
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
@@ -407,6 +407,11 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             showProgress(false);
         }
     }
+
+
+    // TODO: register the new account here.
+
+
 
     public class changePasswordToAsterix extends PasswordTransformationMethod {
         @Override
