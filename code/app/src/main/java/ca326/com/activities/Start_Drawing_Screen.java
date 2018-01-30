@@ -1,27 +1,33 @@
 package ca326.com.activities;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-public class Start_Drawing_Screen extends AppCompatActivity {
+public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
     // Class Fields
     private CanvasView canvasView;
     private Paint mDefaultPaint;
     private Button colour_picker;
     private ImageView timeline;
-    private int[] LEAVES = {
-            R.drawable.ambilwarna_arrow_down,
-            R.drawable.ambilwarna_arrow_right
-    };
 
-    @Override
+    private MyRecyclerViewAdapter adapter;
+    private List viewColours = new ArrayList();
+    private List animalNames = new ArrayList();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This function below creates the nice fade in / out transition between activities.
@@ -41,6 +47,21 @@ public class Start_Drawing_Screen extends AppCompatActivity {
             }
         });
 
+
+        // set up the RecyclerView
+        this.setUpTimeline();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        adapter = new MyRecyclerViewAdapter(this, viewColours, animalNames);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
     }
 
     public void clearCanvas(View v) {
@@ -61,5 +82,32 @@ public class Start_Drawing_Screen extends AppCompatActivity {
             }
         });
         colour_picker.show();
+    }
+
+    private void setUpTimeline() {
+        // data to populate the RecyclerView with
+        viewColours.add(Color.BLUE);
+        viewColours.add(Color.YELLOW);
+        viewColours.add(Color.MAGENTA);
+        viewColours.add(Color.RED);
+        viewColours.add(Color.BLACK);
+
+        viewColours.add(Color.BLUE);
+        viewColours.add(Color.YELLOW);
+        viewColours.add(Color.MAGENTA);
+        viewColours.add(Color.RED);
+        viewColours.add(Color.BLACK);
+
+        animalNames.add("Horse");
+        animalNames.add("Cow");
+        animalNames.add("Camel");
+        animalNames.add("Sheep");
+        animalNames.add("Goat");
+
+        animalNames.add("Horse");
+        animalNames.add("Cow");
+        animalNames.add("Camel");
+        animalNames.add("Sheep");
+        animalNames.add("Goat");
     }
 }
