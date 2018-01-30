@@ -94,12 +94,27 @@
     </RelativeLayout>
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/timeline"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/tool_bar"
         android:layout_toRightOf="@+id/tool_bar"
-        android:background="@android:drawable/divider_horizontal_bright"></RelativeLayout>
+        android:background="@android:drawable/divider_horizontal_bright">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frames"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 
 </RelativeLayout>
