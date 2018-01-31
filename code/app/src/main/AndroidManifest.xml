@@ -21,7 +21,7 @@
         tools:replace="android:label">
 
         <activity
-            android:name=".Main_Home_Screen"
+            android:name=".Top_Rated_Screen"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -38,8 +38,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Start_Drawing_Screen"
-            android:screenOrientation="landscape"/>
+            android:name=".Start_Drawing_Screen" />
 
         <activity
             android:name=".Intro_Animation_Transition_Screen"

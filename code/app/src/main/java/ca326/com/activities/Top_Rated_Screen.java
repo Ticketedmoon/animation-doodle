@@ -1,22 +1,20 @@
 package ca326.com.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 // __Author__ = Shane Creedon (Shane.creedon3@mail.dcu.ie)
 // __Author__ = James Collins
 
-public class Main_Home_Screen extends AppCompatActivity {
+public class Top_Rated_Screen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_main_menu__screen);
+        setContentView(R.layout.activity_top_rated__screen);
     }
 
     @Override
@@ -41,9 +39,5 @@ public class Main_Home_Screen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Sync both activities
-    public void goToStartDrawingScreen(View view){
-        Intent intent = new Intent (Main_Home_Screen.this, Start_Drawing_Screen.class);
-        startActivity(intent);
-    }
+
 }

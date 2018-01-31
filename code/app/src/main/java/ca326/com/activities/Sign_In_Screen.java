@@ -1,8 +1,8 @@
 package ca326.com.activities;
-import android.app.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,17 +28,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
-import java.net.URLEncoder;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import android.widget.Toast;
-import android.content.Context;
-import android.text.method.PasswordTransformationMethod;
-
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -331,8 +331,8 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     }
 
     // Sync both activities
-    public void goToHomeScreen(View view){
-        Intent intent = new Intent (Sign_In_Screen.this, Main_Home_Screen.class);
+    public void goToDrawingScreen(View view){
+        Intent intent = new Intent (Sign_In_Screen.this, Start_Drawing_Screen.class);
         startActivity(intent);
     }
 
@@ -385,7 +385,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
-                        Intent intent = new Intent(Sign_In_Screen.this, Main_Home_Screen.class);
+                        Intent intent = new Intent(Sign_In_Screen.this, Top_Rated_Screen.class);
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();

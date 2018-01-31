@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -25,8 +26,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageView timeline;
 
     private MyRecyclerViewAdapter adapter;
-    private List viewColours = new ArrayList();
-    private List animalNames = new ArrayList();
+    private List<Integer> viewColours = new ArrayList();
+    private List<String> animalNames = new ArrayList();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,5 +110,22 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         animalNames.add("Camel");
         animalNames.add("Sheep");
         animalNames.add("Goat");
+    }
+
+    // Left Arrow & Right Arrow pushed
+    // goLeft brings the user to the sign-in / profile screen for viewing
+    // If already signed in, bring to profile... (We can make an IF statement check later to see if they are signed in)
+    // Sync both activities
+    public void goLeft(View view){
+        Intent intent = new Intent (Start_Drawing_Screen.this, Sign_In_Screen.class);
+        startActivity(intent);
+    }
+
+    // Sync both activities
+    // goRight brings the user to the top-rated animations page
+    // Only signed in users can upload, rate etc...
+    public void goRight(View view){
+        Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
+        startActivity(intent);
     }
 }

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlack"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ca326.com.activities.Main_Home_Screen"
-    tools:showIn="@layout/activity_main_menu__screen">
+    tools:context="ca326.com.activities.Top_Rated_Screen"
+    tools:showIn="@layout/activity_top_rated__screen">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="357dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -33,26 +33,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047" />
 
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="187dp"
-        android:layout_height="72dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+    <TextView
+        android:id="@+id/under_construction"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/login_form"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/holo_orange_dark"
-        android:elevation="0dp"
-        android:fontFamily="@font/metamorphous"
-        android:onClick="goToStartDrawingScreen"
-        android:text="Start Drawing"
-        android:textSize="16sp"
+        android:text="Under Construction\nCome Back Later x"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>
