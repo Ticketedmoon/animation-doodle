@@ -12,16 +12,16 @@ import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private List<Integer> mViewColors = Collections.emptyList();
-    private List<String> mAnimals = Collections.emptyList();
+    private List<Integer> mFrames = Collections.emptyList();
+    private List<String> mFrameNum = Collections.emptyList();
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapter(Context context, List<Integer> colors, List<String> animals) {
+    public MyRecyclerViewAdapter(Context context, List<Integer> frames, List<String> frameNo) {
         this.mInflater = LayoutInflater.from(context);
-        this.mViewColors = colors;
-        this.mAnimals = animals;
+        this.mFrames = frames;
+        this.mFrameNum= frameNo;
     }
 
     // inflates the row layout from xml when needed
@@ -35,16 +35,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the view and textview in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int color = mViewColors.get(position);
-        String animal = mAnimals.get(position);
-        holder.myView.setBackgroundColor(color);
+        Integer res = mFrames.get(position);
+        String animal = mFrameNum.get(position);
+        holder.myView.setBackgroundResource(res);
         holder.myTextView.setText(animal);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mAnimals.size();
+        return mFrameNum.size();
     }
 
     // stores and recycles views as they are scrolled off screen
@@ -54,8 +54,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            myView = itemView.findViewById(R.id.colorView);
-            myTextView = itemView.findViewById(R.id.tvAnimalName);
+            myView = itemView.findViewById(R.id.frameView);
+            myTextView = itemView.findViewById(R.id.frameNum);
             itemView.setOnClickListener(this);
         }
 
@@ -67,7 +67,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // convenience method for getting data at click position
     public String getItem(int id) {
-        return mAnimals.get(id);
+        return mFrameNum.get(id);
     }
 
     // allows clicks events to be caught

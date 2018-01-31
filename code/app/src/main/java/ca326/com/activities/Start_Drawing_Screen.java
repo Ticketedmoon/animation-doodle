@@ -1,7 +1,6 @@
 package ca326.com.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +25,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageView timeline;
 
     private MyRecyclerViewAdapter adapter;
-    private List<Integer> viewColours = new ArrayList();
-    private List<String> animalNames = new ArrayList();
+    private List<Integer> frames = new ArrayList();
+    private List<String> frameNums = new ArrayList();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManagaer);
-        adapter = new MyRecyclerViewAdapter(this, viewColours, animalNames);
+        adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
@@ -63,6 +62,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    // Disable back button on this screen
+    public void onBackPressed() {
+        System.out.println("Back Button Pushed <Returning to Homescreen>");
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+
     }
 
     public void clearCanvas(View v) {
@@ -87,29 +96,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private void setUpTimeline() {
         // data to populate the RecyclerView with
-        viewColours.add(Color.BLUE);
-        viewColours.add(Color.YELLOW);
-        viewColours.add(Color.MAGENTA);
-        viewColours.add(Color.RED);
-        viewColours.add(Color.BLACK);
+        Integer arrow = R.drawable.button_border;
+        frames.add(arrow);
+        frames.add(arrow);
+        frames.add(arrow);
+        frames.add(arrow);
+        frames.add(arrow);
+        frames.add(arrow);
 
-        viewColours.add(Color.BLUE);
-        viewColours.add(Color.YELLOW);
-        viewColours.add(Color.MAGENTA);
-        viewColours.add(Color.RED);
-        viewColours.add(Color.BLACK);
+        frameNums.add("Frame 1");
+        frameNums.add("Frame 2");
+        frameNums.add("Frame 1");
+        frameNums.add("Frame 2");
+        frameNums.add("Frame 1");
+        frameNums.add("Frame 2");
 
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
     }
 
     // Left Arrow & Right Arrow pushed

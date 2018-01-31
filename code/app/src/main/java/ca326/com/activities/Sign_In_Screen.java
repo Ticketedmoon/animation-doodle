@@ -119,17 +119,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         getLoaderManager().initLoader(0, null, this);
     }
 
-    // Disable back button on this screen
-    public void onBackPressed() {
-        System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(startMain);
-
-    }
-
-
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;

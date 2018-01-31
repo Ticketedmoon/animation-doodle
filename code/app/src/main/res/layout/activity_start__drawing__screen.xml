@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/timeline"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="50dp"
         android:background="@android:drawable/alert_light_frame">
 
         <ca326.com.activities.CanvasView
@@ -32,7 +32,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@android:drawable/divider_horizontal_bright">
+        android:background="@android:drawable/divider_horizontal_bright"
+        android:padding="0dp">
 
         <Button
             android:id="@+id/clear"
@@ -98,11 +99,15 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/rightArrow"
             android:layout_toRightOf="@+id/leftArrow"
+            android:adjustViewBounds="true"
+            android:maxWidth="42dp"
+            android:maxHeight="42dp"
+            android:scaleType="fitCenter"
             android:divider="@null"
             android:orientation="horizontal"
             android:visibility="visible"

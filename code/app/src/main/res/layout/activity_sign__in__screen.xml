@@ -129,7 +129,7 @@
             android:layout_marginBottom="56dp"
             android:background="@drawable/button_border"
             android:fontFamily="sans-serif-smallcaps"
-            android:onClick="goToHomeScreen"
+            android:onClick="goToDrawingScreen"
             android:text="Transition"
             android:textSize="14sp" />
 
@@ -142,7 +142,7 @@
             android:layout_marginTop="16dp"
             android:elevation="0dp"
             android:fontFamily="sans-serif"
-            android:onClick="goToHomeScreen"
+            android:onClick="goToDrawingScreen"
             android:text="@string/action_sign_in" />
 
     </RelativeLayout>
