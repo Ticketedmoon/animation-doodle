@@ -96,20 +96,26 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private void setUpTimeline() {
         // data to populate the RecyclerView with
-        Integer arrow = R.drawable.button_border;
-        frames.add(arrow);
-        frames.add(arrow);
-        frames.add(arrow);
-        frames.add(arrow);
-        frames.add(arrow);
-        frames.add(arrow);
+        // Bitmap bitmap = Bitmap.createBitmap(this.canvasView.getDrawingCache());
+
+        Integer tmp = R.drawable.frame;
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
 
         frameNums.add("Frame 1");
         frameNums.add("Frame 2");
-        frameNums.add("Frame 1");
-        frameNums.add("Frame 2");
-        frameNums.add("Frame 1");
-        frameNums.add("Frame 2");
+        frameNums.add("Frame 3");
+        frameNums.add("Frame 4");
+        frameNums.add("Frame 5");
+        frameNums.add("Frame 6");
+        frameNums.add("Frame 7");
+        frameNums.add("Frame 8");
 
     }
 

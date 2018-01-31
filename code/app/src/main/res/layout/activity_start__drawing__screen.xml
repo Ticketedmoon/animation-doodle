@@ -104,6 +104,8 @@
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/rightArrow"
             android:layout_toRightOf="@+id/leftArrow"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:adjustViewBounds="true"
             android:maxWidth="42dp"
             android:maxHeight="42dp"

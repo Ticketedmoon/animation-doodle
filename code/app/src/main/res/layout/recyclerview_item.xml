@@ -9,7 +9,7 @@
 
     <View
         android:id="@+id/frameView"
-        android:layout_width="100dp"
+        android:layout_width="75dp"
         android:layout_height="match_parent"/>
 
     <TextView
