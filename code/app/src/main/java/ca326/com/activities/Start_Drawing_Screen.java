@@ -47,7 +47,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
         });
 
-
         // set up the RecyclerView
         this.setUpTimeline();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
@@ -96,26 +95,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private void setUpTimeline() {
         // data to populate the RecyclerView with
-        // Bitmap bitmap = Bitmap.createBitmap(this.canvasView.getDrawingCache());
-
         Integer tmp = R.drawable.frame;
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
+
         frames.add(tmp);
         frames.add(tmp);
 
         frameNums.add("Frame 1");
         frameNums.add("Frame 2");
-        frameNums.add("Frame 3");
-        frameNums.add("Frame 4");
-        frameNums.add("Frame 5");
-        frameNums.add("Frame 6");
-        frameNums.add("Frame 7");
-        frameNums.add("Frame 8");
 
     }
 
@@ -123,6 +109,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // goLeft brings the user to the sign-in / profile screen for viewing
     // If already signed in, bring to profile... (We can make an IF statement check later to see if they are signed in)
     // Sync both activities
+    // Animations
+
     public void goLeft(View view){
         Intent intent = new Intent (Start_Drawing_Screen.this, Sign_In_Screen.class);
         startActivity(intent);

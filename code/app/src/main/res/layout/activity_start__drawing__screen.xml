@@ -76,25 +76,27 @@
 
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/timeline"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        tools:context=".MainActivity"
         android:background="@android:drawable/divider_horizontal_bright">
 
         <ImageButton
-            android:id="@+id/leftArrow"
-            android:layout_width="40dp"
+            android:id="@+id/profile"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:background="@android:drawable/divider_horizontal_dark"
             android:onClick="goLeft"
             android:rotationX="20"
-            android:tint="@android:color/holo_blue_light"
-            app:srcCompat="@drawable/ambilwarna_arrow_right" />
+            android:src="@drawable/profile" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"
@@ -103,15 +105,15 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/rightArrow"
-            android:layout_toRightOf="@+id/leftArrow"
+            android:layout_toRightOf="@+id/profile"
+            android:adjustViewBounds="true"
+            android:divider="@null"
+            android:maxHeight="42dp"
+            android:maxWidth="42dp"
+            android:orientation="horizontal"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="42dp"
-            android:maxHeight="42dp"
             android:scaleType="fitCenter"
-            android:divider="@null"
-            android:orientation="horizontal"
             android:visibility="visible"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:reverseLayout="true">
@@ -120,7 +122,7 @@
 
         <ImageButton
             android:id="@+id/rightArrow"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -128,8 +130,7 @@
             android:background="@android:drawable/divider_horizontal_dark"
             android:onClick="goRight"
             android:rotationX="20"
-            android:tint="@android:color/holo_blue_light"
-            app:srcCompat="@drawable/ambilwarna_arrow_right" />
+            android:src="@drawable/arrow_right" />
 
     </RelativeLayout>
 

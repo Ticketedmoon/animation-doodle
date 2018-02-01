@@ -14,6 +14,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private List<Integer> mFrames = Collections.emptyList();
     private List<String> mFrameNum = Collections.emptyList();
+
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
