@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/timeline"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="50dp"
         android:background="@android:drawable/alert_light_frame">
 
@@ -90,9 +92,9 @@
             android:id="@+id/profile"
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:background="@android:drawable/divider_horizontal_dark"
             android:onClick="goLeft"
             android:rotationX="20"
@@ -104,7 +106,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/rightArrow"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/top_rated"
             android:layout_toRightOf="@+id/profile"
             android:adjustViewBounds="true"
             android:divider="@null"
@@ -121,7 +125,7 @@
         </android.support.v7.widget.RecyclerView>
 
         <ImageButton
-            android:id="@+id/rightArrow"
+            android:id="@+id/top_rated"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -130,8 +134,7 @@
             android:background="@android:drawable/divider_horizontal_dark"
             android:onClick="goRight"
             android:rotationX="20"
-            android:src="@drawable/arrow_right" />
-
+            android:src="@drawable/star" />
     </RelativeLayout>
 
 </RelativeLayout>
