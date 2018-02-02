@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Gravity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -205,8 +206,10 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            Toast.makeText(this, "Signing up...", Toast.LENGTH_SHORT).show();
+            //showProgress(true);
+            Toast toast = Toast.makeText(this, "Signing up...", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0, 0);
+            toast.show();
             new UserLoginTask(this).execute(email,password);
         }
     }
@@ -254,7 +257,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(View.VISIBLE);
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
         } else {
