@@ -254,7 +254,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    mProgressView.setVisibility(View.VISIBLE);
                 }
             });
         } else {
@@ -338,11 +338,13 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
         }
 
+
+
         @Override
         protected String doInBackground(String... arg0) {
-            // TODO: attempt authentication against a network service.
+
             String email = arg0[0];
-            String password = arg0[0];
+            String password = arg0[1];
             String link;
             String data;
             BufferedReader bufferedReader;
@@ -388,6 +390,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             } else {
                 Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
             }
+            mProgressView.setVisibility(View.GONE);
         }
 
         @Override
