@@ -1,16 +1,27 @@
 package ca326.com.activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +38,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private MyRecyclerViewAdapter adapter;
     private List<Integer> frames = new ArrayList();
     private List<String> frameNums = new ArrayList();
+    private static final String TAG = "MainActivity";
+    private static String m_Text;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +86,31 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    public void save_external(View v) {
+        System.out.println("Pushed Save Button");
+        save("tmp");
+    }
+
+    private void save(String store_name) {
+
+        verifyStoragePermissions(this);
+        Bitmap bitmap = Bitmap.createBitmap( this.canvasView.getWidth(), this.canvasView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.WHITE);
+        this.canvasView.draw(canvas);
+
+        try {
+            String filename = store_name + ".jpg";
+            File imageDirectory = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodleImages");
+            imageDirectory.mkdirs();
+            File outputFile = new File(imageDirectory, filename);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(outputFile));
+
+        } catch (Exception e) {
+            Log.e("Error--------->", e.toString());
+        }
+    }
+
     public void clearCanvas(View v) {
         this.canvasView.clearCanvas();
     }
@@ -99,7 +137,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         frames.add(tmp);
         frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
+        frames.add(tmp);
 
+
+        frameNums.add("Frame 1");
+        frameNums.add("Frame 2");
+        frameNums.add("Frame 1");
+        frameNums.add("Frame 2");
         frameNums.add("Frame 1");
         frameNums.add("Frame 2");
 
@@ -122,5 +169,33 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void goRight(View view){
         Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
         startActivity(intent);
+    }
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    /**
+     * Checks if the app has permission to write to device storage
+     *
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }

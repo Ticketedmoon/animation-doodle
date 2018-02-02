@@ -38,6 +38,19 @@
         android:padding="0dp">
 
         <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/holo_orange_dark"
+            android:onClick="save_external"
+            android:text="SAVE"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <Button
             android:id="@+id/clear"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
@@ -55,9 +68,9 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/save"
+            android:layout_toRightOf="@+id/save"
             android:background="@android:color/holo_blue_light"
             android:text="@string/change_colour"
             android:textSize="12sp" />
@@ -68,7 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/clear"
+            android:layout_toStartOf="@+id/clear"
             android:background="@android:color/holo_green_dark"
             android:onClick="undo"
             android:text="@string/undo"
@@ -78,26 +92,25 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/timeline"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        tools:context=".MainActivity"
-        android:background="@android:drawable/divider_horizontal_bright">
+        android:background="@android:drawable/divider_horizontal_bright"
+        tools:context=".MainActivity">
 
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@android:drawable/divider_horizontal_dark"
+            android:background="@android:drawable/btn_default_small"
+            android:cropToPadding="true"
             android:onClick="goLeft"
-            android:rotationX="20"
             android:src="@drawable/profile" />
 
         <android.support.v7.widget.RecyclerView
@@ -106,8 +119,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/top_rated"
             android:layout_toRightOf="@+id/profile"
             android:adjustViewBounds="true"
@@ -127,13 +138,12 @@
         <ImageButton
             android:id="@+id/top_rated"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@android:drawable/divider_horizontal_dark"
+            android:background="@android:drawable/btn_default_small"
             android:onClick="goRight"
-            android:rotationX="20"
             android:src="@drawable/star" />
     </RelativeLayout>
 

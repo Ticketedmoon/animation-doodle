@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ca326.com.activities">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -12,7 +15,7 @@
     <application xmlns:tools="http://schemas.android.com/tools"
         android:hardwareAccelerated="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/anim_dood_logo"
         android:label="Animation Doodle"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
