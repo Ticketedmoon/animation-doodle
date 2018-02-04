@@ -2,6 +2,8 @@ package ca326.com.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,9 +16,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -39,7 +41,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private List<Integer> frames = new ArrayList();
     private List<String> frameNums = new ArrayList();
     private static final String TAG = "MainActivity";
-    private static String m_Text;
+    private static String value;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,27 +90,63 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
-        save("tmp");
+        this.get_file_input(this.canvasView);
     }
 
     private void save(String store_name) {
 
         verifyStoragePermissions(this);
-        Bitmap bitmap = Bitmap.createBitmap( this.canvasView.getWidth(), this.canvasView.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.WHITE);
-        this.canvasView.draw(canvas);
+
+        //Bitmap bitmap = Bitmap.createBitmap(this.canvasView.width, this.canvasView.height, Bitmap.Config.ARGB_8888);
 
         try {
-            String filename = store_name + ".jpg";
-            File imageDirectory = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodleImages");
-            imageDirectory.mkdirs();
-            File outputFile = new File(imageDirectory, filename);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(outputFile));
+            this.canvasView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = this.canvasView.getDrawingCache();
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawColor(Color.WHITE);
+            this.canvasView.draw(canvas);
 
-        } catch (Exception e) {
-            Log.e("Error--------->", e.toString());
+            File f = null;
+            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+                f = new File(file.getAbsolutePath()+file.separator + store_name +".png");
+            }
+            FileOutputStream ostream = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
+            ostream.close();
+        } catch(Exception e){
+            e.printStackTrace();
         }
+    }
+
+    public void get_file_input(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Enter a filename");
+        alert.setMessage("Background Title: ");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                value = input.getText().toString();
+                // Do something with value!
+                save(value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.create().show();
     }
 
     public void clearCanvas(View v) {
