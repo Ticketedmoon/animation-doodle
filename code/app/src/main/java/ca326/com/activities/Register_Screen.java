@@ -36,11 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -354,34 +350,19 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
             String email = arg0[0];
             String password = arg0[1];
             String link;
+            String data;
+            BufferedReader bufferedReader;
+            String result;
 
             try {
-                link = "http://animationdoodleserver.000webhostapp.com/signin.php";
+                data = "?emailaddress=" + URLEncoder.encode(email, "UTF-8");
+                data += "&password=" + URLEncoder.encode(password, "UTF-8");
+                link = "http://animationdoodle2017.com/register.php" + data;
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("POST");
-                con.setDoInput(true);
-                con.setDoOutput(true);
-                OutputStream out=con.getOutputStream();
 
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-                String post_data=URLEncoder.encode("emailaddress","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+
-                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
-                writer.write(post_data);
-                Log.i("response",post_data);
-                writer.flush();
-                writer.close();
-                out.close();
-                InputStream in=con.getInputStream();
-                BufferedReader br=new BufferedReader(new InputStreamReader(in,"iso-8859-1"));
-                String result="";
-                String line="";
-                while((line=br.readLine())!=null)
-                {
-                    Log.i("response",line);
-                    result+=line;
-                }
-                Log.i("response",result);
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
                 return result;
 
             } catch (Exception e) {
@@ -391,7 +372,9 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
 
         @Override
         protected void onPostExecute(String result) {
-            String jsonStr = result;
+            StringBuilder sb = new StringBuilder();
+            sb.append(result + "\n");
+            String jsonStr = sb.toString();
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -401,13 +384,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
-                    }
-                      else if (query_result.equals("User signed in")) {
-                        Toast.makeText(instance, "Welcome back!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Register_Screen.this,Start_Drawing_Screen.class);
-                        startActivity(intent);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -419,7 +396,6 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
             }
             mProgressView.setVisibility(View.GONE);
         }
-
         @Override
         protected void onCancelled() {
             mAuthTask = null;

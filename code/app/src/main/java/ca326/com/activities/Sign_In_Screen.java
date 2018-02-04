@@ -41,6 +41,10 @@ package ca326.com.activities;
         import java.net.URLEncoder;
         import java.util.ArrayList;
         import java.util.List;
+        import java.io.OutputStream;
+        import java.io.OutputStreamWriter;
+        import java.io.BufferedWriter;
+        import java.io.InputStream;
 
         import static android.Manifest.permission.READ_CONTACTS;
 
@@ -355,19 +359,31 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             String email = arg0[0];
             String password = arg0[1];
             String link;
-            String data;
-            BufferedReader bufferedReader;
-            String result;
 
             try {
-                data = "?emailaddress=" + URLEncoder.encode(email, "UTF-8");
-                data += "&password=" + URLEncoder.encode(password, "UTF-8");
-                link = "http://animationdoodleserver.000webhostapp.com/register.php" + data;
+                link = "http://animationdoodle2017.com/signin.php";
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                OutputStream out=con.getOutputStream();
 
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                result = bufferedReader.readLine();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                String post_data=URLEncoder.encode("emailaddress","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
+                writer.write(post_data);
+                writer.flush();
+                writer.close();
+                out.close();
+                InputStream in=con.getInputStream();
+                BufferedReader br=new BufferedReader(new InputStreamReader(in,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line=br.readLine())!=null)
+                {
+                    result+=line;
+                }
                 return result;
 
             } catch (Exception e) {
@@ -377,9 +393,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
         @Override
         protected void onPostExecute(String result) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(result + "\n");
-            String jsonStr = sb.toString();
+            String jsonStr = result;
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -388,8 +402,14 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                         Intent intent = new Intent(Sign_In_Screen.this, Top_Rated_Screen.class);
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
-                        Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
-                    } else {
+                        Toast.makeText(instance, "Login details incorrect.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (query_result.equals("User signed in")) {
+                        Toast.makeText(instance, "Welcome back!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Sign_In_Screen.this,Start_Drawing_Screen.class);
+                        startActivity(intent);
+                    }
+                    else {
                         Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
