@@ -1,53 +1,58 @@
 package ca326.com.activities;
-        import android.animation.Animator;
-        import android.animation.AnimatorListenerAdapter;
-        import android.annotation.TargetApi;
-        import android.app.Activity;
-        import android.app.LoaderManager.LoaderCallbacks;
-        import android.content.CursorLoader;
-        import android.content.Intent;
-        import android.content.Loader;
-        import android.content.pm.PackageManager;
-        import android.database.Cursor;
-        import android.net.Uri;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.provider.ContactsContract;
-        import android.support.annotation.NonNull;
-        import android.support.design.widget.Snackbar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.text.TextUtils;
-        import android.text.method.PasswordTransformationMethod;
-        import android.view.KeyEvent;
-        import android.view.View;
-        import android.view.View.OnClickListener;
-        import android.view.inputmethod.EditorInfo;
-        import android.widget.ArrayAdapter;
-        import android.widget.AutoCompleteTextView;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
-        import android.view.Gravity;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.view.Gravity;
 
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.io.BufferedReader;
-        import java.io.InputStreamReader;
-        import java.net.HttpURLConnection;
-        import java.net.URL;
-        import java.net.URLEncoder;
-        import java.util.ArrayList;
-        import java.util.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
-        import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class Register_Screen extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     // Id to identity READ_CONTACTS permission request.
     private static final int REQUEST_READ_CONTACTS = 0;
@@ -74,7 +79,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_sign__in__screen);
+        setContentView(R.layout.activity_register__screen);
 
         //Variables
 
@@ -97,7 +102,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         });
 
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_register_button);
         mEmailSignInButton.setTextColor(getApplication().getResources().getColor(R.color.colorWhite));
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -305,7 +310,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(Sign_In_Screen.this,
+                new ArrayAdapter<>(Register_Screen.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
@@ -324,15 +329,9 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
     // Sync both activities
     public void goToDrawingScreen(View view){
-        Intent intent = new Intent (Sign_In_Screen.this, Start_Drawing_Screen.class);
+        Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
         startActivity(intent);
     }
-
-    public void goToRegisterScreen(View view){
-        Intent intent = new Intent (Sign_In_Screen.this, Register_Screen.class);
-        startActivity(intent);
-    }
-
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -355,19 +354,34 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             String email = arg0[0];
             String password = arg0[1];
             String link;
-            String data;
-            BufferedReader bufferedReader;
-            String result;
 
             try {
-                data = "?emailaddress=" + URLEncoder.encode(email, "UTF-8");
-                data += "&password=" + URLEncoder.encode(password, "UTF-8");
-                link = "http://animationdoodleserver.000webhostapp.com/register.php" + data;
+                link = "http://animationdoodleserver.000webhostapp.com/signin.php";
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                OutputStream out=con.getOutputStream();
 
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                result = bufferedReader.readLine();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                String post_data=URLEncoder.encode("emailaddress","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
+                writer.write(post_data);
+                Log.i("response",post_data);
+                writer.flush();
+                writer.close();
+                out.close();
+                InputStream in=con.getInputStream();
+                BufferedReader br=new BufferedReader(new InputStreamReader(in,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line=br.readLine())!=null)
+                {
+                    Log.i("response",line);
+                    result+=line;
+                }
+                Log.i("response",result);
                 return result;
 
             } catch (Exception e) {
@@ -377,19 +391,23 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
         @Override
         protected void onPostExecute(String result) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(result + "\n");
-            String jsonStr = sb.toString();
+            String jsonStr = result;
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
-                        Intent intent = new Intent(Sign_In_Screen.this, Top_Rated_Screen.class);
+                        Intent intent = new Intent(Register_Screen.this, Top_Rated_Screen.class);
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                      else if (query_result.equals("User signed in")) {
+                        Toast.makeText(instance, "Welcome back!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Register_Screen.this,Start_Drawing_Screen.class);
+                        startActivity(intent);
+                    }
+                    else {
                         Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -437,8 +455,4 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         }
     };
 }
-
-
-
-
 

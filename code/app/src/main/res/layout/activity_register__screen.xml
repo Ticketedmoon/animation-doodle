@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca326.com.activities.Sign_In_Screen">
+    tools:context="ca326.com.activities.Register_Screen">
 
     <!-- Login progress -->
     <ProgressBar
@@ -27,7 +27,7 @@
         android:background="@color/colorPrimary"
         tools:context=".MainActivity">
 
-	<ScrollView
+        <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -124,7 +124,7 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/email_sign_in_button"
+            android:id="@+id/email_register_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/password"
@@ -133,17 +133,6 @@
             android:elevation="0dp"
             android:fontFamily="sans-serif"
             android:onClick="goToDrawingScreen"
-            android:text="@string/action_sign_in" />
-        <Button
-            android:id="@+id/email_register_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/password"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:elevation="0dp"
-            android:fontFamily="sans-serif"
-            android:onClick="goToRegisterScreen"
             android:text="@string/action_register" />
 
     </RelativeLayout>
