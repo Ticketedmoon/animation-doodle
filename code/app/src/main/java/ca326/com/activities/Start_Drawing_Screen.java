@@ -90,14 +90,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
-        this.get_file_input(this.canvasView);
+        get_file_input(this.canvasView);
+        // Add and delete tmp file
+        save("tmp");
+        File file = new File("/sdcard/Animation_Doodle_Images/tmp.jpg");
+        boolean deleted = file.delete();
+        System.out.println("tmp deleted: " + deleted);
+        // Print out to log
+        System.out.println("File Saved");
     }
 
     private void save(String store_name) {
 
         verifyStoragePermissions(this);
-
-        //Bitmap bitmap = Bitmap.createBitmap(this.canvasView.width, this.canvasView.height, Bitmap.Config.ARGB_8888);
+        // Bitmap bitmap = Bitmap.createBitmap(this.canvasView.width, this.canvasView.height, Bitmap.Config.ARGB_8888);
+        // this.canvasView.getDrawingCache();
 
         try {
             this.canvasView.setDrawingCacheEnabled(true);
@@ -112,10 +119,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 if(!file.exists()){
                     file.mkdirs();
                 }
-                f = new File(file.getAbsolutePath()+file.separator + store_name +".png");
+                f = new File(file.getAbsolutePath()+file.separator + store_name +".jpg");
             }
             FileOutputStream ostream = new FileOutputStream(f);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 15, ostream);
             ostream.close();
         } catch(Exception e){
             e.printStackTrace();
