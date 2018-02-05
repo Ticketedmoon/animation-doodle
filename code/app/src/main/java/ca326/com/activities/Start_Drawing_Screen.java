@@ -3,8 +3,10 @@ package ca326.com.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -43,11 +45,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private static final String TAG = "MainActivity";
     private static String value;
 
+    private SharedPreferences mSharedPreferences;
+    public static final String PREFERENCE= "preference";
+    public static final String PREF_NAME = "name";
+    public static final String PREF_PASSWD = "passwd";
+    public static final String PREF_SKIP_LOGIN = "skip_login";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This function below creates the nice fade in / out transition between activities.
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
+
+
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
@@ -204,8 +214,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Animations
 
     public void goLeft(View view){
-        Intent intent = new Intent (Start_Drawing_Screen.this, Sign_In_Screen.class);
+        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        Intent intent;
+        if(mSharedPreferences.contains(PREF_NAME)&& mSharedPreferences.contains(PREF_PASSWD)) {
+            intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
+        }
+        else{
+            intent = new Intent(Start_Drawing_Screen.this, Register_Screen.class);
+        }
         startActivity(intent);
+        finish();
     }
 
     // Sync both activities
