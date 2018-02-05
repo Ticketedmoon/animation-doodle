@@ -54,4 +54,21 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/email_sign_in_button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="105dp"
+        android:layout_marginTop="105dp"
+        android:elevation="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="logOut"
+        android:text="@string/logout_form"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/under_construction" />
+
 </android.support.constraint.ConstraintLayout>

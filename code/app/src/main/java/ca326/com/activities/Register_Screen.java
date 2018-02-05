@@ -72,6 +72,10 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     private View mProgressView;
     private View mLoginFormView;
 
+    public static final String PREFERENCE= "preference";
+    public static final String PREF_EMAIL = "email";
+    public static final String PREF_PASSWORD = "password";
+
 
 
     @Override
@@ -331,6 +335,10 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
         Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
         startActivity(intent);
     }
+    public void goToSignInScreen(View view){
+        Intent intent = new Intent (Register_Screen.this, Sign_In_Screen.class);
+        startActivity(intent);
+    }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -375,15 +383,23 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
 
         @Override
         protected void onPostExecute(String result) {
+            String email = mEmailView.getText().toString();
+            String password = mPasswordView.getText().toString();
             StringBuilder sb = new StringBuilder();
             sb.append(result + "\n");
             String jsonStr = sb.toString();
+            Log.i("response",jsonStr);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
-                        Intent intent = new Intent(Register_Screen.this, Top_Rated_Screen.class);
+                        SharedPreferences mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor mEditor = mSharedPreference.edit();
+                        mEditor.putString(PREF_EMAIL,email);
+                        mEditor.putString(PREF_PASSWORD,password);
+                        mEditor.apply();
+                        Intent intent = new Intent(Register_Screen.this, Profile_Screen.class);
                         startActivity(intent);
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Data could not be inserted. Signup failed.", Toast.LENGTH_SHORT).show();

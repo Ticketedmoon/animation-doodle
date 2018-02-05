@@ -47,9 +47,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private SharedPreferences mSharedPreferences;
     public static final String PREFERENCE= "preference";
-    public static final String PREF_NAME = "name";
-    public static final String PREF_PASSWD = "passwd";
-    public static final String PREF_SKIP_LOGIN = "skip_login";
+    public static final String PREF_EMAIL = "email";
+    public static final String PREF_PASSWORD = "password";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,7 +215,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void goLeft(View view){
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
-        if(mSharedPreferences.contains(PREF_NAME)&& mSharedPreferences.contains(PREF_PASSWD)) {
+        if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
             intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
         }
         else{

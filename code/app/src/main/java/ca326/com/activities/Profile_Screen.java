@@ -1,6 +1,7 @@
 package ca326.com.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -41,8 +42,11 @@ public class Profile_Screen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goToDrawingScreen(View view) {
-        Intent intent = new Intent(Profile_Screen.this, Start_Drawing_Screen.class);
+    public void logOut(View view) {
+        SharedPreferences.Editor editor = getSharedPreferences("preference",getApplicationContext().MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(Profile_Screen.this, Sign_In_Screen.class);
         startActivity(intent);
     }
 

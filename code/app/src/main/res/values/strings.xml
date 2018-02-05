@@ -19,6 +19,9 @@
         completions."
     </string>
 
+    <!-- Strings related to logout -->
+    <string name="logout_form">Log out</string>
+
     <!-- Strings related to 'Start Drawing Screen' -->
     <string name="clear">Clear</string>
     <string name="change_colour">Colour</string>
