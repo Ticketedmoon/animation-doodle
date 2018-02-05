@@ -24,6 +24,7 @@ public class CanvasView extends View {
     private Canvas mCanvas;
     public Path mPath;
     Context context;
+    AttributeSet attrbs;
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
@@ -32,6 +33,7 @@ public class CanvasView extends View {
     public CanvasView(Context c, AttributeSet attrbs) {
         super(c, attrbs);
         this.context=c;
+        this.attrbs = attrbs;
 
         // Set up Paint object
         mPaint = new Paint();

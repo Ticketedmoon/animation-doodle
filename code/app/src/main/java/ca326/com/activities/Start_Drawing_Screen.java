@@ -38,9 +38,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageView timeline;
 
     private MyRecyclerViewAdapter adapter;
-    private List<Integer> frames = new ArrayList();
-    private List<String> frameNums = new ArrayList();
-    private static final String TAG = "MainActivity";
+    private List<Integer> frames = new ArrayList<Integer>();
+    private List<String> frameNums = new ArrayList<String>();
+    private List<CanvasView> canvasFrames = new ArrayList<CanvasView>();
     private static String value;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+        this.canvasView = this.canvasFrames.get(position);
     }
 
     // Disable back button on this screen
@@ -119,7 +120,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 if(!file.exists()){
                     file.mkdirs();
                 }
-                f = new File(file.getAbsolutePath()+file.separator + store_name +".jpg");
+                f = new File(file.getAbsolutePath()+ file.separator + store_name +".jpg");
             }
             FileOutputStream ostream = new FileOutputStream(f);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 15, ostream);
@@ -179,6 +180,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private void setUpTimeline() {
         // data to populate the RecyclerView with
         Integer tmp = R.drawable.frame;
+        CanvasView tmpCanvas = this.canvasView;
 
         frames.add(tmp);
         frames.add(tmp);
@@ -186,15 +188,20 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         frames.add(tmp);
         frames.add(tmp);
         frames.add(tmp);
-
 
         frameNums.add("Frame 1");
         frameNums.add("Frame 2");
-        frameNums.add("Frame 1");
-        frameNums.add("Frame 2");
-        frameNums.add("Frame 1");
-        frameNums.add("Frame 2");
+        frameNums.add("Frame 3");
+        frameNums.add("Frame 4");
+        frameNums.add("Frame 5");
+        frameNums.add("Frame 6");
 
+        for(Integer frame : this.frames) {
+            canvasFrames.add(tmpCanvas);
+            tmpCanvas = new CanvasView(this.canvasView.getContext(), this.canvasView.attrbs);
+        }
+
+        System.out.println(this.canvasFrames);
     }
 
     // Left Arrow & Right Arrow pushed
