@@ -21,6 +21,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,13 +35,17 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
-    // Class Fields
+    // Views
     private CanvasView canvasView;
+    private RelativeLayout test;
+
+    // Object creations
     private Paint mDefaultPaint;
     private Button colour_picker;
-    public static Integer pos = 0;
-
     private MyRecyclerViewAdapter adapter;
+
+    // Animation & Timeline Logic
+    public static Integer pos = 0;
     private List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
     private List<CanvasView> canvasFrames = new ArrayList<CanvasView>();
@@ -51,11 +56,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // This function below creates the nice fade in / out transition between activities.
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
+        // Set Views here
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
+        this.test = (RelativeLayout) findViewById(R.id.penny);
+        // END
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
@@ -76,10 +85,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        // END
     }
 
     @Override
     public void onItemClick(View view, int position) {
+
+        // Integrate here with canvasView class
+        // Make sure when user swaps the frame in the timeline
+        // it updates to the correct canvas.
+
         if (this.pos != position) {
             Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
             this.pathways.put(this.pos, this.canvasView.newPaths);
@@ -88,10 +103,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.invalidate();
         }
         test();
-
-        // Integrate here with canvasView class
-        // Make sure when user swaps the frame in the timeline
-        // it updates to the correct canvas.
 
     }
 
@@ -268,4 +279,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             );
         }
     }
+
+    // TOOL BAR MODIFICATIONS
+    public void banter(View v) {
+        this.test.setVisibility(View.VISIBLE);
+    }
+
+    //    rl1.setVisibility(View.INVISIBLE);
+    //RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.rl2);
+    //    rl2.setVisibility(View.VISIBLE);
 }

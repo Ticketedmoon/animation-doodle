@@ -90,6 +90,28 @@
             android:textColor="@android:color/white"
             android:textSize="12sp" />
 
+        <Button
+            android:id="@+id/test"
+            android:layout_width="40dp"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_purple"
+            android:onClick="banter"
+            android:text="B" />
+
+        <RelativeLayout
+            android:id="@+id/penny"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/save"
+            android:alpha="0.5"
+            android:background="@android:color/holo_red_light"
+            android:elevation="2dp"
+            android:visibility="invisible">
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
