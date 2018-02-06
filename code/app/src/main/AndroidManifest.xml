@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ca326.com.activities">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -14,8 +14,8 @@
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
-        android:icon="@mipmap/anim_dood_logo"
         android:hardwareAccelerated="true"
+        android:icon="@mipmap/anim_dood_logo"
         android:label="Animation Doodle"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -31,7 +31,7 @@
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -51,11 +51,16 @@
             android:name=".Register_Screen"
             android:label="@string/title_activity_register__screen"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".Profile_Screen"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

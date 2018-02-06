@@ -3,8 +3,10 @@ package ca326.com.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -54,6 +56,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     //IMPORTANT
     public Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
 
+    // Login Credentials
+    private SharedPreferences mSharedPreferences;
+    public static final String PREFERENCE= "preference";
+    public static final String PREF_EMAIL = "email";
+    public static final String PREF_PASSWORD = "password";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -61,7 +69,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
-        // Set Views here
+        // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.test = (RelativeLayout) findViewById(R.id.penny);
         // END
@@ -246,8 +254,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Animations
 
     public void goLeft(View view){
-        Intent intent = new Intent (Start_Drawing_Screen.this, Sign_In_Screen.class);
+        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        Intent intent;
+        if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
+            intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
+        }
+        else{
+            intent = new Intent(Start_Drawing_Screen.this, Register_Screen.class);
+        }
         startActivity(intent);
+        finish();
     }
 
     // Sync both activities
@@ -286,6 +302,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     //    rl1.setVisibility(View.INVISIBLE);
-    //RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.rl2);
+    //	  RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.rl2);
     //    rl2.setVisibility(View.VISIBLE);
 }

@@ -124,6 +124,18 @@
             android:textSize="14sp" />
 
         <Button
+            android:id="@+id/email_sign_in_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:elevation="0dp"
+            android:fontFamily="sans-serif"
+            android:onClick="goToSignInScreen"
+            android:text="@string/action_sign_in" />
+
+        <Button
             android:id="@+id/email_register_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
