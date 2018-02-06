@@ -10,22 +10,25 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -35,7 +38,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private CanvasView canvasView;
     private Paint mDefaultPaint;
     private Button colour_picker;
-    private ImageView timeline;
+    public static Integer pos = 0;
 
     private MyRecyclerViewAdapter adapter;
     private List<Integer> frames = new ArrayList<Integer>();
@@ -43,13 +46,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private List<CanvasView> canvasFrames = new ArrayList<CanvasView>();
     private static String value;
 
+    //IMPORTANT
+    public Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This function below creates the nice fade in / out transition between activities.
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
-        // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
 
         // Colour Picker Stuff
@@ -75,8 +80,26 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
-        this.canvasView = this.canvasFrames.get(position);
+        if (this.pos != position) {
+            Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+            this.pathways.put(this.pos, this.canvasView.newPaths);
+            this.canvasView.newPaths = this.pathways.get(position);
+            this.pos = position;
+            this.canvasView.invalidate();
+        }
+        test();
+
+        // Integrate here with canvasView class
+        // Make sure when user swaps the frame in the timeline
+        // it updates to the correct canvas.
+
+    }
+
+    private void test() {
+        for(int i = 0; i < pathways.size(); i++) {
+            System.out.println("========= DEBUGGING ========\nKey: " + i + "\nValue: " + this.pathways.get(i));
+            System.out.println("========= END DEBUGGING ========");
+        }
     }
 
     // Disable back button on this screen
@@ -180,7 +203,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private void setUpTimeline() {
         // data to populate the RecyclerView with
         Integer tmp = R.drawable.frame;
-        CanvasView tmpCanvas = this.canvasView;
 
         frames.add(tmp);
         frames.add(tmp);
@@ -196,12 +218,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         frameNums.add("Frame 5");
         frameNums.add("Frame 6");
 
-        for(Integer frame : this.frames) {
-            canvasFrames.add(tmpCanvas);
-            tmpCanvas = new CanvasView(this.canvasView.getContext(), this.canvasView.attrbs);
+        for(int i = 0; i < frames.size(); i++) {
+            List <Pair <Path, Paint>> emptyArr =  new ArrayList <Pair <Path, Paint>>();
+            this.pathways.put(i, emptyArr);
         }
 
-        System.out.println(this.canvasFrames);
+        for(CanvasView c : this.canvasFrames) {
+            System.out.println(c);
+        }
     }
 
     // Left Arrow & Right Arrow pushed
@@ -230,13 +254,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    /**
-     * Checks if the app has permission to write to device storage
-     *
-     * If the app does not has permission then the user will be prompted to grant permissions
-     *
-     * @param activity
-     */
+    // Check Storage permissions (Mandatory)
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);

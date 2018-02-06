@@ -40,12 +40,21 @@ public class CanvasView extends View {
         setUpPaint(Color.BLACK, mPaint);
     }
 
-    @Override
+    public CanvasView(Context context) {
+        super(context);
+        this.context = context;
+
+        // Set up Paint object
+        mPaint = new Paint();
+        setUpPaint(Color.BLACK, mPaint);
+    }
+
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for(int i = 0; i < newPaths.size(); i++) {
             canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
         }
+
     }
 
     public void setUpPaint(int color, Paint mPaint) {
@@ -67,7 +76,9 @@ public class CanvasView extends View {
     }
 
     private void touch_start(float x, float y) {
-        this.newPaths.add(new Pair(this.get_new_Path(),this.mPaint));
+        Path ix = this.get_new_Path();
+        this.newPaths.add(new Pair(ix,this.mPaint));
+
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
@@ -85,6 +96,7 @@ public class CanvasView extends View {
 
     private void touch_up() {
         mPath.lineTo(mX, mY);
+        System.out.println(this.newPaths);
     }
 
     @Override
@@ -124,20 +136,21 @@ public class CanvasView extends View {
 
     public void undoAction() {
         System.out.println("Action Undid");
-        this.newPaths.remove(this.newPaths.size()-1);
+        if (this.newPaths.size() > 0) {
+            this.newPaths.remove(this.newPaths.size() - 1);
 
-        // Assign paint object to previous paint obj
-        // First check if there does exist a path previously with an IF statement,
-        if (this.newPaths.size() != 0) {
-            this.mPath = this.newPaths.get(this.newPaths.size()-1).first;
-        }
-        else {
-            this.mPath = new Path();
-            this.newPaths.add(new Pair(mPath, mPaint));
-        }
+            // Assign paint object to previous paint obj
+            // First check if there does exist a path previously with an IF statement,
+            if (this.newPaths.size() != 0) {
+                this.mPath = this.newPaths.get(this.newPaths.size() - 1).first;
+            } else {
+                this.mPath = new Path();
+                this.newPaths.add(new Pair(mPath, mPaint));
+            }
 
-        // Restart with the same colour
-        invalidate();
+            // Restart with the same colour
+            invalidate();
+        }
     }
 
     @Override
