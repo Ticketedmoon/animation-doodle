@@ -21,6 +21,7 @@ package ca326.com.activities;
         import android.support.v7.app.AppCompatActivity;
         import android.text.TextUtils;
         import android.text.method.PasswordTransformationMethod;
+        import android.util.Log;
         import android.view.KeyEvent;
         import android.view.View;
         import android.view.View.OnClickListener;
@@ -395,6 +396,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             String email = mEmailView.getText().toString();
             String password = mPasswordView.getText().toString();
             String jsonStr = result;
+            Log.i("response",result);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);

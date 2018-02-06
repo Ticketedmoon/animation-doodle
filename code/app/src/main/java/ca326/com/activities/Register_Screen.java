@@ -39,7 +39,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -361,19 +365,31 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
             String email = arg0[0];
             String password = arg0[1];
             String link;
-            String data;
-            BufferedReader bufferedReader;
-            String result;
 
             try {
-                data = "?emailaddress=" + URLEncoder.encode(email, "UTF-8");
-                data += "&password=" + URLEncoder.encode(password, "UTF-8");
-                link = "http://animationdoodle2017.com/register.php" + data;
+                link = "http://animationdoodle2017.com/register.php";
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                OutputStream out=con.getOutputStream();
 
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                result = bufferedReader.readLine();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                String post_data=URLEncoder.encode("emailaddress","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
+                writer.write(post_data);
+                writer.flush();
+                writer.close();
+                out.close();
+                InputStream in=con.getInputStream();
+                BufferedReader br=new BufferedReader(new InputStreamReader(in,"iso-8859-1"));
+                String line="";
+                String result="";
+                while((line=br.readLine())!=null)
+                {
+                    result+=line;
+                }
                 return result;
 
             } catch (Exception e) {
