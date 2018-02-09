@@ -141,7 +141,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/top_rated"
+            android:layout_toLeftOf="@+id/playPauseButton"
             android:layout_toRightOf="@+id/profile"
             android:adjustViewBounds="true"
             android:divider="@null"
@@ -157,16 +157,16 @@
 
         </android.support.v7.widget.RecyclerView>
 
+
         <ImageButton
-            android:id="@+id/top_rated"
+            android:id="@+id/playPauseButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@android:drawable/btn_default_small"
-            android:onClick="goRight"
-            android:src="@drawable/star" />
+            android:src="@drawable/play"/>
     </RelativeLayout>
 
 </RelativeLayout>

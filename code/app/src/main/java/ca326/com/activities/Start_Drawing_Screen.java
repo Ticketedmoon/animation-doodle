@@ -23,6 +23,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -62,12 +63,20 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
+    //Play and Pause button
+    public static boolean pause = true;
+    ImageButton playButton;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // This function below creates the nice fade in / out transition between activities.
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
+
+        playButton = (ImageButton)findViewById(R.id.playPauseButton);
+
+
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
@@ -84,6 +93,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
         });
 
+
         // set up the RecyclerView
         this.setUpTimeline();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
@@ -94,6 +104,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         // END
+
+        playButton.setImageResource(R.drawable.play);
+        playButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)
+            {
+                //start animating frames
+                if (!pause) {
+                    playButton.setImageResource(R.drawable.pause);
+                    pause = true;
+                }
+                else{
+                    //if animation() is currently running then stop it and
+                    //replace the pause button with the play button
+                    playButton.setImageResource(R.drawable.play);
+                }
+            }
+        });
     }
 
     @Override
@@ -102,6 +129,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Integrate here with canvasView class
         // Make sure when user swaps the frame in the timeline
         // it updates to the correct canvas.
+
+
 
         if (this.pos != position) {
             Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
@@ -266,13 +295,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         finish();
     }
 
+
     // Sync both activities
     // goRight brings the user to the top-rated animations page
     // Only signed in users can upload, rate etc...
-    public void goRight(View view){
-        Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
-        startActivity(intent);
-    }
+
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
