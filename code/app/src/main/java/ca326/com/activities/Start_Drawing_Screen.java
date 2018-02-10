@@ -39,7 +39,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Views
     private CanvasView canvasView;
-    private RelativeLayout test;
+    private RelativeLayout menu;
 
     // Object creations
     private Paint mDefaultPaint;
@@ -62,6 +62,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
+    // Other Fields
+    private boolean button_colour_swap = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -71,7 +74,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
-        this.test = (RelativeLayout) findViewById(R.id.penny);
+        this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         // END
 
         // Colour Picker Stuff
@@ -297,8 +300,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // TOOL BAR MODIFICATIONS
-    public void banter(View v) {
-        this.test.setVisibility(View.VISIBLE);
+    public void open_menu(View v) {
+        if (!this.button_colour_swap)
+            this.menu.setVisibility(View.VISIBLE);
+        else
+            this.menu.setVisibility(View.INVISIBLE);
+
+        this.button_colour_swap = !(this.button_colour_swap);
     }
 
     //    rl1.setVisibility(View.INVISIBLE);

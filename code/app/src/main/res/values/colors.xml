@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Standard Colour resources -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ffa500</color>
+    <color name="ice_teal">#42c2f4</color>
+    <color name="nice_grey">#c1c1c1</color>
+
+    <!-- Button Colour Transition -->
+    <color name="button_pressed">#F0F0F0</color>
+    <color name="button_focused">#F0F0F0</color>
+    <color name="button_default">#FF0000</color>
+
+    <!-- Transparent Colours -->
+    <color name="grey_trans">#F8F0F0F0</color>
 
 </resources>

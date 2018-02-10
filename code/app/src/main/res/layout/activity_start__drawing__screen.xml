@@ -14,8 +14,7 @@
         android:layout_above="@+id/timeline"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        android:background="@android:drawable/alert_light_frame">
+        android:layout_marginTop="50dp">
 
         <ca326.com.activities.CanvasView
             android:id="@+id/canvas"
@@ -30,49 +29,71 @@
     <RelativeLayout
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@android:drawable/divider_horizontal_bright"
-        android:padding="0dp">
+        android:background="@color/nice_grey">
 
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:onClick="open_menu"
+            app:srcCompat="@drawable/menu" />
+
+        <ImageButton
+            android:id="@+id/top_rated"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:drawable/btn_default_small"
+            android:onClick="goRight"
+            android:src="@drawable/star_w" />
+
+        <ImageButton
+            android:id="@+id/profile"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@android:color/holo_orange_dark"
-            android:onClick="save_external"
-            android:text="SAVE"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:background="@android:drawable/btn_default_small"
+            android:cropToPadding="true"
+            android:onClick="goLeft"
+            android:src="@drawable/profile_w" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_menu"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/tool_bar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_border"
+        android:elevation="2dp"
+        android:visibility="invisible">
 
         <Button
             android:id="@+id/clear"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/change_colour"
+            android:layout_marginLeft="5dp"
             android:background="@android:color/holo_red_light"
             android:onClick="clearCanvas"
             android:text="@string/clear"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/change_colour"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/save"
-            android:layout_toRightOf="@+id/save"
-            android:background="@android:color/holo_blue_light"
-            android:text="@string/change_colour"
             android:textSize="12sp" />
 
         <Button
@@ -80,9 +101,11 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/clear"
-            android:layout_toStartOf="@+id/clear"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="77dp"
             android:background="@android:color/holo_green_dark"
             android:onClick="undo"
             android:text="@string/undo"
@@ -91,49 +114,43 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/test"
-            android:layout_width="40dp"
-            android:layout_height="48dp"
+            android:id="@+id/change_colour"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/holo_purple"
-            android:onClick="banter"
-            android:text="B" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="27dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/change_colour"
+            android:textSize="12sp" />
 
-        <RelativeLayout
-            android:id="@+id/penny"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/save"
-            android:alpha="0.5"
-            android:background="@android:color/holo_red_light"
-            android:elevation="2dp"
-            android:visibility="invisible">
-
-        </RelativeLayout>
-
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/change_colour"
+            android:layout_alignBottom="@+id/change_colour"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/holo_orange_dark"
+            android:onClick="save_external"
+            android:text="SAVE"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/timeline"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@android:drawable/divider_horizontal_bright"
         tools:context=".MainActivity">
-
-        <ImageButton
-            android:id="@+id/profile"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@android:drawable/btn_default_small"
-            android:cropToPadding="true"
-            android:onClick="goLeft"
-            android:src="@drawable/profile" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"
@@ -141,9 +158,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/top_rated"
-            android:layout_toRightOf="@+id/profile"
             android:adjustViewBounds="true"
+            android:background="@color/button_focused"
             android:divider="@null"
             android:maxHeight="42dp"
             android:maxWidth="42dp"
@@ -157,16 +173,6 @@
 
         </android.support.v7.widget.RecyclerView>
 
-        <ImageButton
-            android:id="@+id/top_rated"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@android:drawable/btn_default_small"
-            android:onClick="goRight"
-            android:src="@drawable/star" />
     </RelativeLayout>
 
 </RelativeLayout>
