@@ -15,13 +15,13 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     public void initSplash(ConfigSplash configSplash) {
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.colorOrange); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.ice_teal); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(1500); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
 
         //Customize Logo
-        configSplash.setLogoSplash(R.drawable.ad_gem); //or any other drawable
+        configSplash.setLogoSplash(R.drawable.black_tiger); //or any other drawable
         configSplash.setAnimLogoSplashDuration(750); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.DropOut); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
@@ -36,9 +36,9 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
         //Customize Title
         configSplash.setTitleSplash("Animation Doodle");
         configSplash.setTitleTextColor(R.color.colorBlack);
-        configSplash.setTitleTextSize(60f); //float value
+        configSplash.setTitleTextSize(40f); //float value
         configSplash.setAnimTitleDuration(1500);
-        configSplash.setAnimTitleTechnique(Techniques.FlipInX);
+        configSplash.setAnimTitleTechnique(Techniques.FadeIn);
 
         configSplash.setTitleFont("fonts/intro_transition_font.ttf"); //provide string to your font located in assets/fonts/
     }

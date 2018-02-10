@@ -40,7 +40,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Views
     private CanvasView canvasView;
-    private RelativeLayout test;
+    private RelativeLayout menu;
 
     // Object creations
     private Paint mDefaultPaint;
@@ -66,6 +66,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     //Play and Pause button
     public static boolean pause = true;
     ImageButton playButton;
+    // Other Fields
+    private boolean button_colour_swap = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
-        this.test = (RelativeLayout) findViewById(R.id.penny);
+        this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         // END
 
         // Colour Picker Stuff
@@ -305,6 +307,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         finish();
     }
 
+    public void goRight(View view){
+        Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
+        startActivity(intent);
+    }
+
+
 
     // Sync both activities
     // goRight brings the user to the top-rated animations page
@@ -334,8 +342,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // TOOL BAR MODIFICATIONS
-    public void banter(View v) {
-        this.test.setVisibility(View.VISIBLE);
+    public void open_menu(View v) {
+        if (!this.button_colour_swap)
+            this.menu.setVisibility(View.VISIBLE);
+        else
+            this.menu.setVisibility(View.INVISIBLE);
+
+        this.button_colour_swap = !(this.button_colour_swap);
     }
 
     //    rl1.setVisibility(View.INVISIBLE);
