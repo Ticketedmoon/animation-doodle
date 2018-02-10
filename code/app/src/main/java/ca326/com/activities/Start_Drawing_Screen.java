@@ -107,13 +107,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         playButton.setImageResource(R.drawable.play);
         playButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v)
+            public void onClick(View view)
             {
                 //start animating frames
-                if (!pause) {
-                    playButton.setImageResource(R.drawable.pause);
-                    pause = true;
-                }
+                if (pause) {
+                        for (int i = 0; i < pathways.size(); i++) {
+                            System.out.println(pos);
+                            canvasView.newPaths.addAll(pathways.get(pos-1));
+                            canvasView.invalidate();
+
+                        }
+                        playButton.setImageResource(R.drawable.pause);
+                        pause = true;
+                    }
                 else{
                     //if animation() is currently running then stop it and
                     //replace the pause button with the play button
@@ -131,11 +137,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // it updates to the correct canvas.
 
 
-
+        //canvasView.newPaths.addAll(pathways.get(position));
+        //canvasView.invalidate();
         if (this.pos != position) {
             Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
+
             this.pos = position;
             this.canvasView.invalidate();
         }
@@ -274,7 +282,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         for(CanvasView c : this.canvasFrames) {
             System.out.println(c);
         }
-    }
+
+        }
+
 
     // Left Arrow & Right Arrow pushed
     // goLeft brings the user to the sign-in / profile screen for viewing
