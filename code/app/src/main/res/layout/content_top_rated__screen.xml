@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
+    android:background="@drawable/anime"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ca326.com.activities.Top_Rated_Screen"
     tools:showIn="@layout/activity_top_rated__screen">
@@ -29,14 +28,14 @@
         app:layout_constraintVertical_bias="0.047" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="357dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/timeline"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="27dp"
+        android:layout_marginTop="38dp"
         android:fontFamily="@font/metamorphous"
-        android:text="Recently Uploaded Animations"
+        android:text="Top Rated Animations"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
@@ -44,10 +43,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.275" />
+        app:layout_constraintVertical_bias="0.631" />
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -77,7 +76,8 @@
         android:adjustViewBounds="true"
         android:background="@color/button_focused"
         android:divider="@null"
-        android:maxHeight="42dp"
+        android:layout_weight="1"
+        android:maxHeight="0dp"
         android:maxWidth="42dp"
         android:orientation="horizontal"
         android:paddingBottom="2dp"
@@ -93,16 +93,15 @@
 
     </android.support.v7.widget.RecyclerView>
 
-
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView2"
         android:layout_width="357dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="35dp"
+        android:layout_below="@+id/frames"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
         android:fontFamily="@font/metamorphous"
-        android:text="Top Rated Animations"
+        android:text="Recently Uploaded"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
@@ -115,7 +114,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.631" />
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/frames2"
+        android:layout_width="wrap_content"
+        android:layout_height="102dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frames"
+        android:layout_marginTop="84dp"
+        android:adjustViewBounds="true"
+        android:background="@color/button_focused"
+        android:divider="@null"
+        android:layout_weight="1"
+        android:maxHeight="0dp"
+        android:maxWidth="42dp"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeline"
+        app:layout_constraintVertical_bias="1.0"
+        app:reverseLayout="true" />
 
 
 </RelativeLayout>

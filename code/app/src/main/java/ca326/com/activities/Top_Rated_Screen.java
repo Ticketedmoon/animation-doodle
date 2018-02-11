@@ -29,7 +29,11 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyRecyclerVie
     private List<Integer> images = new ArrayList<Integer>();
     private List<String> videoDescription = new ArrayList<String>();
 
+    private List<Integer> images2 = new ArrayList<Integer>();
+    private List<String> videoDescription2 = new ArrayList<String>();
+
    private MyRecyclerViewAdapter adapter;
+    private MyRecyclerViewAdapter adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,23 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyRecyclerVie
         // set up the RecyclerView
         this.setUpTimeline();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
-        LinearLayoutManager horizontalLayoutManagaer
+        LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(Top_Rated_Screen.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
         adapter = new MyRecyclerViewAdapter(this, images, videoDescription);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+
+        this.setUpTimeline();
+        RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.frames2);
+        LinearLayoutManager horizontalLayoutManager2
+                = new LinearLayoutManager(Top_Rated_Screen.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(horizontalLayoutManager2);
+        adapter2 = new MyRecyclerViewAdapter(this, images, videoDescription);
+        adapter2.setClickListener(this);
+        recyclerView2.setAdapter(adapter2);
+
+
 
     }
 
@@ -94,6 +109,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyRecyclerVie
 
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

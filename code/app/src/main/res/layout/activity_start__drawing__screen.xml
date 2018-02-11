@@ -24,6 +24,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
 
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -127,6 +128,16 @@
             android:text="@string/change_colour"
             android:textSize="12sp" />
 
+        <ImageButton
+            android:id="@+id/onionSkinningButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/btn_default_small"
+            android:cropToPadding="true"
+            android:src="@drawable/onion" />
+
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
@@ -152,14 +163,6 @@
         android:background="@android:drawable/divider_horizontal_bright"
         tools:context=".MainActivity">
 
-        <ImageButton
-            android:id="@+id/playPauseButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="@android:drawable/btn_default_small"
-            android:src="@drawable/play" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"

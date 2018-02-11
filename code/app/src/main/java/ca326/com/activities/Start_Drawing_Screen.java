@@ -63,9 +63,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
-    //Play and Pause button
-    public static boolean pause = true;
-    ImageButton playButton;
+    //Onion skinning button
+    public static boolean onionSkinning = true;
+    ImageButton onionButton;
+
     // Other Fields
     private boolean button_colour_swap = false;
 
@@ -76,7 +77,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
-        playButton = (ImageButton)findViewById(R.id.playPauseButton);
+        onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
 
 
 
@@ -107,26 +108,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         recyclerView.setAdapter(adapter);
         // END
 
-        playButton.setImageResource(R.drawable.play);
-        playButton.setOnClickListener(new View.OnClickListener(){
+        onionButton.setImageResource(R.drawable.onion);
+        onionButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)
             {
-                //start animating frames
-                if (pause) {
+                //add onion layers
+                if (onionSkinning) {
                         for (int i = 0; i < pathways.size(); i++) {
-                            System.out.println(pos);
-                            canvasView.newPaths.addAll(pathways.get(pos-1));
-                            canvasView.invalidate();
-
+                            if (pos!=0) {
+                                canvasView.newPaths.addAll(pathways.get(pos - 1));
+                                canvasView.invalidate();
+                            }
                         }
-                        playButton.setImageResource(R.drawable.pause);
-                        pause = true;
+                        // here we will make the button fade out to indicate onion skinning feature is turned on
+                        onionButton.setImageResource(R.drawable.onion);
                     }
-                else{
-                    //if animation() is currently running then stop it and
-                    //replace the pause button with the play button
-                    playButton.setImageResource(R.drawable.play);
-                }
             }
         });
     }
