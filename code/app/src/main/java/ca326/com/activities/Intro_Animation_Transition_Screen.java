@@ -35,7 +35,7 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
 
         //Customize Title
         configSplash.setTitleSplash("Animation Doodle");
-        configSplash.setTitleTextColor(R.color.colorBlack);
+        configSplash.setTitleTextColor(R.color.colorWhite);
         configSplash.setTitleTextSize(40f); //float value
         configSplash.setAnimTitleDuration(1500);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
