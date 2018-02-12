@@ -57,10 +57,15 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Profile_Screen"
+        <activity
+            android:name=".Profile_Screen"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MyVolleyRequest" />
+        <activity android:name=".Video" />
+        <activity android:name=".MyCardAdapter" />
+        <activity android:name=".Test_Rated_Screen" />
     </application>
 
 </manifest>
