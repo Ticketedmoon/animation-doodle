@@ -74,7 +74,7 @@
     <RelativeLayout
         android:id="@+id/layout_menu"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_alignTop="@+id/tool_bar"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -83,30 +83,49 @@
         android:elevation="2dp"
         android:visibility="invisible">
 
+        <ImageButton
+            android:id="@+id/change_colour"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/onionSkinningButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="25dp"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/btn_default_small"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rainbow_colour_picker" />
+
         <Button
             android:id="@+id/clear"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/change_colour"
-            android:layout_marginLeft="5dp"
+            android:layout_alignStart="@+id/change_colour"
+            android:layout_below="@+id/onionSkinningButton"
             android:background="@android:color/holo_red_light"
             android:onClick="clearCanvas"
             android:text="@string/clear"
             android:textSize="12sp" />
 
+        <ImageButton
+            android:id="@+id/onionSkinningButton"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/btn_default_small"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/onion" />
+
         <Button
             android:id="@+id/undo_button"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="77dp"
+            android:layout_alignStart="@+id/save"
+            android:layout_alignTop="@+id/change_colour"
             android:background="@android:color/holo_green_dark"
             android:onClick="undo"
             android:text="@string/undo"
@@ -115,38 +134,13 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/change_colour"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="27dp"
-            android:background="@android:color/holo_blue_light"
-            android:text="@string/change_colour"
-            android:textSize="12sp" />
-
-        <ImageButton
-            android:id="@+id/onionSkinningButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@android:drawable/btn_default_small"
-            android:cropToPadding="true"
-            android:src="@drawable/onion" />
-
-        <Button
             android:id="@+id/save"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/change_colour"
-            android:layout_alignBottom="@+id/change_colour"
+            android:layout_alignBaseline="@+id/clear"
+            android:layout_alignBottom="@+id/clear"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="19dp"
             android:background="@android:color/holo_orange_dark"
             android:onClick="save_external"
             android:text="SAVE"
@@ -166,10 +160,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_centerInParent="false"
             android:adjustViewBounds="true"
             android:background="@color/button_focused"
             android:divider="@null"
@@ -184,6 +179,17 @@
             app:reverseLayout="true">
 
         </android.support.v7.widget.RecyclerView>
+
+        <ImageButton
+            android:id="@+id/play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:background="@color/nice_grey"
+            android:onClick="play_animation"
+            app:srcCompat="@drawable/play" />
 
     </RelativeLayout>
 

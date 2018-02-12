@@ -21,7 +21,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -44,14 +43,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Object creations
     private Paint mDefaultPaint;
-    private Button colour_picker;
+    private ImageButton colour_picker;
     private MyRecyclerViewAdapter adapter;
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
     private List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
-    private List<CanvasView> canvasFrames = new ArrayList<CanvasView>();
     private static String value;
 
     //IMPORTANT
@@ -77,18 +75,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
-        onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
-
-
-
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
+        onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
         // END
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
-        this.colour_picker = (Button) findViewById(R.id.change_colour);
+        this.colour_picker = (ImageButton) findViewById(R.id.change_colour);
         this.colour_picker.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // If the swap colour button is pressed then:
@@ -114,29 +109,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             {
                 //add onion layers
                 if (onionSkinning) {
-                        for (int i = 0; i < pathways.size(); i++) {
-                            if (pos!=0) {
-                                canvasView.newPaths.addAll(pathways.get(pos - 1));
-                                canvasView.invalidate();
-                            }
+                    for (int i = 0; i < pathways.size(); i++) {
+                        if (pos!=0) {
+                            canvasView.newPaths.addAll(pathways.get(pos - 1));
+                            canvasView.invalidate();
                         }
-                        // here we will make the button fade out to indicate onion skinning feature is turned on
-                        onionButton.setImageResource(R.drawable.onion);
                     }
+                    // here we will make the button fade out to indicate onion skinning feature is turned on
+                    onionButton.setImageResource(R.drawable.onion);
+                }
             }
         });
     }
 
-    @Override
+    // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
-
-        // Integrate here with canvasView class
-        // Make sure when user swaps the frame in the timeline
-        // it updates to the correct canvas.
-
-
-        //canvasView.newPaths.addAll(pathways.get(position));
-        //canvasView.invalidate();
         if (this.pos != position) {
             Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
             this.pathways.put(this.pos, this.canvasView.newPaths);
@@ -145,6 +132,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.pos = position;
             this.canvasView.invalidate();
         }
+
+        // Debugging Function, Useful
         test();
 
     }
@@ -277,11 +266,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.pathways.put(i, emptyArr);
         }
 
-        for(CanvasView c : this.canvasFrames) {
-            System.out.println(c);
-        }
-
-        }
+    }
 
 
     // Left Arrow & Right Arrow pushed
@@ -347,7 +332,33 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.button_colour_swap = !(this.button_colour_swap);
     }
 
-    //    rl1.setVisibility(View.INVISIBLE);
-    //	  RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.rl2);
-    //    rl2.setVisibility(View.VISIBLE);
+    public void play_animation(View v) {
+        System.out.println("Play Button Pushed\nPlaying Animation");
+
+        //code to make text appear...
+        for(int i = 0; i < this.frames.size(); i++){
+            canvasView.postDelayed(new Runnable() {
+                public void run() {
+                    System.out.println("Time: " + Integer.toString(pos));
+                    canvasView.newPaths = pathways.get(pos);
+                    pos++;
+
+                    try {
+                        canvasView.postInvalidate();
+                        Thread.sleep(1000);
+
+                    } catch (Exception e) {
+                        System.out.println("??????????????????");
+                        e.printStackTrace();
+                    }
+                }
+            }, 1000);
+
+            canvasView.invalidate();
+        }
+
+        this.pos = 0;
+        this.canvasView.invalidate();
+
+    }
 }
