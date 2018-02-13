@@ -289,7 +289,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void goRight(View view){
-        Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
+        Intent intent = new Intent (Start_Drawing_Screen.this, Test_Rated_Screen.class);
         startActivity(intent);
     }
 
