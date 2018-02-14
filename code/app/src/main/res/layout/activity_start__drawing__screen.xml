@@ -146,6 +146,19 @@
             android:text="SAVE"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/prev_frame"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:onClick="previous_frame"
+            android:text="Previous"
+            android:textColor="@android:color/white"
+            android:textSize="10dp" />
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

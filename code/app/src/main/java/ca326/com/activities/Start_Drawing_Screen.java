@@ -15,6 +15,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -68,6 +69,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Other Fields
     private boolean button_colour_swap = false;
 
+    // Handlers / Timed events
+    Handler m_handler;
+    Runnable m_handlerTask;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -78,7 +83,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
-        onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
+        this.onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
         // END
 
         // Colour Picker Stuff
@@ -333,32 +338,43 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void play_animation(View v) {
+        // Logcat Information
         System.out.println("Play Button Pushed\nPlaying Animation");
 
-        //code to make text appear...
-        for(int i = 0; i < this.frames.size(); i++){
-            canvasView.postDelayed(new Runnable() {
-                public void run() {
-                    System.out.println("Time: " + Integer.toString(pos));
-                    canvasView.newPaths = pathways.get(pos);
-                    pos++;
+        // Remember Frame user is on & Time
+        List<Pair <Path, Paint>> currentFrame = this.canvasView.newPaths;
 
-                    try {
-                        canvasView.postInvalidate();
-                        Thread.sleep(1000);
+        // Play Animation Begin Logic
+        m_handler = new Handler();
+        m_handlerTask = new Runnable()
+        {
+            public void run() {
+                //Put code here to run after 1 seconds
+                m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
 
-                    } catch (Exception e) {
-                        System.out.println("??????????????????");
-                        e.printStackTrace();
-                    }
-                }
-            }, 1000);
+                canvasView.newPaths = pathways.get(pos);
+                canvasView.invalidate();
+                pos++;
 
-            canvasView.invalidate();
-        }
-
+                if (pos == frames.size())
+                    m_handler.removeCallbacks(m_handlerTask);
+            }
+        };
+        m_handlerTask.run();
         this.pos = 0;
-        this.canvasView.invalidate();
+    }
 
+    public void previous_frame(View v) {
+        Integer currentIndex = this.pos;
+        List<Pair <Path, Paint>> mixed_frame = new ArrayList<>();
+
+        if (currentIndex > 0) {
+            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
+            // Combine Both the previous frame with the current frame
+            mixed_frame.addAll(this.canvasView.newPaths);
+            mixed_frame.addAll(prev_frame);
+        }
+        this.canvasView.newPaths = mixed_frame;
+        canvasView.invalidate();
     }
 }
