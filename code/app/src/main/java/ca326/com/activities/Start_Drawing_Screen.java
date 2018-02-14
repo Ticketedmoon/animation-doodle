@@ -340,6 +340,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Logcat Information
         System.out.println("Play Button Pushed\nPlaying Animation");
         // Swap to play_animation activity. (Play_Animation_Screen)
+        Play_Animation_Screen.pathways = this.pathways;
         Intent intent = new Intent (Start_Drawing_Screen.this, Play_Animation_Screen.class);
         startActivity(intent);
 
