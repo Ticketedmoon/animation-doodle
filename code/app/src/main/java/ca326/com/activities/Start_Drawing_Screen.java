@@ -67,6 +67,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     ImageButton onionButton;
 
     // Other Fields
+    ImageButton play;
+    public static boolean playButton = true;
     private boolean button_colour_swap = false;
 
     // Handlers / Timed events
@@ -84,6 +86,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         this.onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
+        this.play = (ImageButton)findViewById((R.id.play_button));
+
         // END
 
         // Colour Picker Stuff
@@ -339,29 +343,38 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void play_animation(View v) {
         // Logcat Information
-        System.out.println("Play Button Pushed\nPlaying Animation");
+        if (playButton) {
+            playButton = false;
+            play.setImageResource(R.drawable.pause);
+            //System.out.println("Play Button Pushed\nPlaying Animation");
 
-        // Remember Frame user is on & Time
-        List<Pair <Path, Paint>> currentFrame = this.canvasView.newPaths;
+            // Remember Frame user is on & Time
+            List<Pair<Path, Paint>> currentFrame = this.canvasView.newPaths;
 
-        // Play Animation Begin Logic
-        m_handler = new Handler();
-        m_handlerTask = new Runnable()
-        {
-            public void run() {
-                //Put code here to run after 1 seconds
-                m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
+            // Play Animation Begin Logic
+            m_handler = new Handler();
+            m_handlerTask = new Runnable() {
+                public void run() {
+                    //Put code here to run after 1 seconds
+                    m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
 
-                canvasView.newPaths = pathways.get(pos);
-                canvasView.invalidate();
-                pos++;
+                    canvasView.newPaths = pathways.get(pos);
+                    canvasView.invalidate();
+                    pos++;
 
-                if (pos == frames.size())
-                    m_handler.removeCallbacks(m_handlerTask);
-            }
-        };
-        m_handlerTask.run();
-        this.pos = 0;
+                    if (pos == pathways.size()) {
+                        pos = 0;
+                    }
+                }
+            };
+            m_handlerTask.run();
+            this.pos = 0;
+        }
+        else {
+            play.setImageResource(R.drawable.play);
+            m_handler.removeCallbacks(m_handlerTask);
+            playButton = true;
+        }
     }
 
     public void previous_frame(View v) {
