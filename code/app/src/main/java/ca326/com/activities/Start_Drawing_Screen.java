@@ -15,7 +15,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,7 +38,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
     // Views
-    private CanvasView canvasView;
+    private static CanvasView canvasView;
     private RelativeLayout menu;
 
     // Object creations
@@ -49,12 +48,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
-    private List<Integer> frames = new ArrayList<Integer>();
+    public static List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
     private static String value;
 
     //IMPORTANT
-    public Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
+    public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
 
     // Login Credentials
     private SharedPreferences mSharedPreferences;
@@ -68,10 +67,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Other Fields
     private boolean button_colour_swap = false;
-
-    // Handlers / Timed events
-    Handler m_handler;
-    Runnable m_handlerTask;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +143,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             System.out.println("========= DEBUGGING ========\nKey: " + i + "\nValue: " + this.pathways.get(i));
             System.out.println("========= END DEBUGGING ========");
         }
+    }
+
+    public static CanvasView getCView() {
+        return canvasView;
     }
 
     // Disable back button on this screen
@@ -340,28 +339,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void play_animation(View v) {
         // Logcat Information
         System.out.println("Play Button Pushed\nPlaying Animation");
+        // Swap to play_animation activity. (Play_Animation_Screen)
+        Intent intent = new Intent (Start_Drawing_Screen.this, Play_Animation_Screen.class);
+        startActivity(intent);
 
-        // Remember Frame user is on & Time
-        List<Pair <Path, Paint>> currentFrame = this.canvasView.newPaths;
-
-        // Play Animation Begin Logic
-        m_handler = new Handler();
-        m_handlerTask = new Runnable()
-        {
-            public void run() {
-                //Put code here to run after 1 seconds
-                m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
-
-                canvasView.newPaths = pathways.get(pos);
-                canvasView.invalidate();
-                pos++;
-
-                if (pos == frames.size())
-                    m_handler.removeCallbacks(m_handlerTask);
-            }
-        };
-        m_handlerTask.run();
-        this.pos = 0;
     }
 
     public void previous_frame(View v) {

@@ -28,7 +28,7 @@ public class CanvasView extends View {
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
-    public List<Pair <Path, Paint>> newPaths = new ArrayList<Pair<Path, Paint>>();
+    public static List<Pair <Path, Paint>> newPaths = new ArrayList<Pair<Path, Paint>>();
 
     public CanvasView(Context c, AttributeSet attrbs) {
         super(c, attrbs);
