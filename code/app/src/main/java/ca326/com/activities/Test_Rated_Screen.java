@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +57,9 @@ public class Test_Rated_Screen extends AppCompatActivity implements RecyclerView
         //list 2 videos side by side in a grid
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
+
+
+
 
         //Initializing video list
         listVideos = new ArrayList<>();

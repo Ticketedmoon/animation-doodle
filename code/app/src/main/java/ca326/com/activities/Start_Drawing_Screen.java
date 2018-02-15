@@ -361,7 +361,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                     canvasView.newPaths = pathways.get(pos);
                     canvasView.invalidate();
                     pos++;
-
                     if (pos == frames.size()) {
                         pos = 0;
                     }

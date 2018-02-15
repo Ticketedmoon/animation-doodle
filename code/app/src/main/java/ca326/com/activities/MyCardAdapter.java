@@ -13,7 +13,7 @@ import android.widget.VideoView;
 import com.android.volley.toolbox.ImageLoader;
 import java.util.List;
 
-public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
+public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.VideoViewHolder> {
 
     private Context context;
 
@@ -27,15 +27,15 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.video_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        VideoViewHolder viewHolder = new VideoViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final VideoViewHolder holder, int position) {
 
         //get the video for the right position
         Video video =  videos.get(position);
@@ -43,17 +43,11 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
         System.out.println(videoUri);
-        holder.videoView.setVideoURI(videoUri);
+        holder.videoView.setSource(videoUri);
         holder.textViewName.setText(video.getName());
         holder.textViewDescription.setText(video.getDescription());
-        holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                holder.videoView.start();
-            }
+        holder.videoView.setLooping(true);
 
-    });
     }
 
     @Override
@@ -61,18 +55,18 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         return videos.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class VideoViewHolder extends RecyclerView.ViewHolder{
         //Views
 
         //will be changing NetworkImageView to videoView later on
-        public VideoView videoView;
+        public CustomVideoView videoView;
         public TextView textViewName;
         public TextView textViewDescription;
 
         //Initializing Views
-        public ViewHolder(View itemView) {
+        public VideoViewHolder(View itemView) {
             super(itemView);
-            videoView = (VideoView) itemView.findViewById(R.id.videoViews);
+            videoView = (CustomVideoView) itemView.findViewById(R.id.videoViews);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDescription);
         }
