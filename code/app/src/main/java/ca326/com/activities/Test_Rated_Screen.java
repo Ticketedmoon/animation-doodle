@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,8 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 
 import com.android.volley.RequestQueue;
@@ -39,6 +42,7 @@ public class Test_Rated_Screen extends AppCompatActivity implements RecyclerView
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
     private int pageCount = 1;
+    public static int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +67,11 @@ public class Test_Rated_Screen extends AppCompatActivity implements RecyclerView
         //Adding an scroll change listener to recyclerview
         recyclerView.setOnScrollChangeListener(this);
 
-        //initializing our adapter
+        //initializing our adapter with list of videos
         adapter = new MyCardAdapter(listVideos, this);
-
         //Add adapter to recyclerview
         recyclerView.setAdapter(adapter);
+
     }
 
 

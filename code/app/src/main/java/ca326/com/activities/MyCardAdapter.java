@@ -1,21 +1,20 @@
 package ca326.com.activities;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-
 import java.util.List;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
-    //load image for now
-    private ImageLoader loadImage;
     private Context context;
 
     //List for videos
@@ -36,21 +35,25 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         //get the video for the right position
         Video video =  videos.get(position);
 
-        //load image from url which is stored in the database
-        loadImage = MyVolleyRequest.getInstance(context).getImageLoader();
-        //set temporary image i.e R.drawable.play
-        loadImage.get(video.getVideoUrl(), ImageLoader.getImageListener(holder.imageView, R.drawable.play, android.R.drawable.ic_dialog_alert));
-
-        //Showing data on the views
-        holder.imageView.setImageUrl(video.getVideoUrl(), loadImage);
+        String url = video.getVideoUrl();
+        Uri videoUri = Uri.parse(url);
+        System.out.println(videoUri);
+        holder.videoView.setVideoURI(videoUri);
         holder.textViewName.setText(video.getName());
         holder.textViewDescription.setText(video.getDescription());
+        holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+                holder.videoView.start();
+            }
 
+    });
     }
 
     @Override
@@ -62,14 +65,14 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         //Views
 
         //will be changing NetworkImageView to videoView later on
-        public NetworkImageView imageView;
+        public VideoView videoView;
         public TextView textViewName;
         public TextView textViewDescription;
 
         //Initializing Views
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = (NetworkImageView) itemView.findViewById(R.id.imageViewHero);
+            videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDescription);
         }
