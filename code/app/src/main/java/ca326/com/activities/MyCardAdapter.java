@@ -10,15 +10,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.android.volley.toolbox.ImageLoader;
 import java.util.List;
 
-public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.VideoViewHolder> {
+public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
     private Context context;
 
     //List for videos
     List<Video> videos;
+
+    private boolean isLooping = true;
 
     public MyCardAdapter(List<Video> videos, Context context){
         super();
@@ -27,15 +28,15 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.VideoViewH
     }
 
     @Override
-    public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.video_list, parent, false);
-        VideoViewHolder viewHolder = new VideoViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final VideoViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         //get the video for the right position
         Video video =  videos.get(position);
@@ -43,11 +44,15 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.VideoViewH
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
         System.out.println(videoUri);
-        holder.videoView.setSource(videoUri);
+        holder.videoView.setVideoURI(videoUri);
         holder.textViewName.setText(video.getName());
         holder.textViewDescription.setText(video.getDescription());
-        holder.videoView.setLooping(true);
-
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.videoView.start();
+            }
+        });
     }
 
     @Override
@@ -55,18 +60,18 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.VideoViewH
         return videos.size();
     }
 
-    class VideoViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         //Views
 
         //will be changing NetworkImageView to videoView later on
-        public CustomVideoView videoView;
+        public VideoView videoView;
         public TextView textViewName;
         public TextView textViewDescription;
 
         //Initializing Views
-        public VideoViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            videoView = (CustomVideoView) itemView.findViewById(R.id.videoViews);
+            videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDescription);
         }

@@ -15,6 +15,7 @@ public class CustomVideoView extends TextureView implements TextureView.SurfaceT
     private Uri mSource;
     private MediaPlayer.OnCompletionListener mCompletionListener;
     private boolean isLooping = false;
+    private Context context;
 
 
     public CustomVideoView(Context context) {
@@ -60,12 +61,14 @@ public class CustomVideoView extends TextureView implements TextureView.SurfaceT
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
 //            mMediaPlayer.setOnBufferingUpdateListener((MediaPlayer.OnBufferingUpdateListener) this);
 //            mMediaPlayer.setOnErrorListener((MediaPlayer.OnErrorListener) this);
-            mMediaPlayer.setLooping(isLooping);
+            mMediaPlayer.setLooping(false);
             mMediaPlayer.setDataSource(getContext(), mSource);
             mMediaPlayer.setSurface(surface);
             mMediaPlayer.prepare();
 
             mMediaPlayer.start();
+
+            mMediaPlayer.stop();
 
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
