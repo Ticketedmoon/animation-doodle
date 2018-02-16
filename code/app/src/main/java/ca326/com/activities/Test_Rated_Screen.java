@@ -75,6 +75,8 @@ public class Test_Rated_Screen extends AppCompatActivity implements RecyclerView
     }
 
 
+
+
     private JsonArrayRequest getVideoFromDB(int pageCount) {
         //Initializing ProgressBar
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
