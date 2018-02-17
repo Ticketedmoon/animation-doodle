@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,8 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
     //List for videos
     List<Video> videos;
 
+    private Bitmap bitmap;
+
     private boolean isPlaying = true;
 
     public MyCardAdapter(List<Video> videos, Context context){
@@ -37,6 +42,8 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.video_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
+        final ViewHolder holder = new ViewHolder(v);
+
         return viewHolder;
     }
 
@@ -46,20 +53,24 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         //get the video for the right position
         Video video =  videos.get(position);
 
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        //MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         //give YourVideoUrl below
-        retriever.setDataSource(video.getVideoUrl(), new HashMap<String, String>());
+        //retriever.setDataSource(video.getVideoUrl(), new HashMap<String, String>());
 // this gets frame at 2nd second
-        Bitmap image = retriever.getFrameAtTime(2000000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+        //Bitmap image = retriever.getFrameAtTime(2000000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
 //use this bitmap image
+
+
         String url = video.getVideoUrl();
+        //bitmap = retriveVideoFrameFromVideo(url);
+        //BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
+        //Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail( url, MediaStore.Video.Thumbnails.MINI_KIND );
+
         Uri videoUri = Uri.parse(url);
         System.out.println(videoUri);
-
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(image);
-        holder.videoView.setBackground(bitmapDrawable);
-        //holder.image.setImageBitmap(image);
+        //holder.videoView.setBackground(bitmapDrawable);
         holder.videoView.setVideoURI(videoUri);
+        holder.videoView.setMinimumWidth(1000);
         holder.textViewName.setText(video.getName());
         holder.textViewDescription.setText(video.getDescription());
         holder.videoView.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +78,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             public void onClick(View view) {
                 System.out.println("second click");
                 if (isPlaying){
-                    holder.videoView.setBackground(null);
+                    //holder.videoView.setBackground(null);
                     holder.videoView.start();
                     isPlaying = false;
                 }
@@ -101,5 +112,18 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDescription);
         }
+    }
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+             {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+            else
+                mediaMetadataRetriever.setDataSource(videoPath);
+
+            bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
+        return bitmap;
     }
 }

@@ -9,6 +9,14 @@
     tools:context="ca326.com.activities.Profile_Screen"
     tools:showIn="@layout/activity_profile__screen">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="357dp"
@@ -70,5 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/under_construction" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

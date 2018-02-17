@@ -65,7 +65,6 @@
         <activity android:name=".MyVolleyRequest" />
         <activity android:name=".Video" />
         <activity android:name=".MyCardAdapter" />
-        <activity android:name=".Test_Rated_Screen" />
         <activity android:name=".CustomVideoView"></activity>
     </application>
 
