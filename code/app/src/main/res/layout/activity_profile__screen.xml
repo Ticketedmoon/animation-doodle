@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -23,8 +23,10 @@
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
+                android:backgroundTint="@android:color/transparent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:onClick="menu"
                 android:src="@drawable/menu" />
 
             <TextView
@@ -50,6 +52,31 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/menu_layout"
+            android:layout_width="70dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="53dp"
+            android:background="@drawable/button_border"
+            android:elevation="8dp"
+            android:visibility="invisible">
+
+            <Button
+                android:id="@+id/log_out_button"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:elevation="0dp"
+                android:fontFamily="sans-serif"
+                android:onClick="logOut"
+                android:text="@string/logout_form"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
 
 
         <LinearLayout

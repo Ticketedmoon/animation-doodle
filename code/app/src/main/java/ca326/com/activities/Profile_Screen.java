@@ -7,39 +7,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 // __Author__ = Shane Creedon (Shane.creedon3@mail.dcu.ie)
 // __Author__ = James Collins
 
+
 public class Profile_Screen extends AppCompatActivity {
+
+    private RelativeLayout drop_down_option_menu;
+    private Button logout;
+
+    private boolean button_colour_swap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_profile__screen);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_signup__screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        this.drop_down_option_menu = (RelativeLayout) findViewById(R.id.menu_layout);
+        this.logout = (Button) findViewById(R.id.log_out_button);
     }
 
     public void onBackPressed() {
@@ -48,7 +38,21 @@ public class Profile_Screen extends AppCompatActivity {
         startActivity(startMain);
     }
 
+
+    public void menu(View v) {
+        System.out.println("clicked");
+        if (!button_colour_swap){
+            this.drop_down_option_menu.setVisibility(View.VISIBLE);
+            button_colour_swap = true;
+        }
+        else{
+            this.drop_down_option_menu.setVisibility(View.INVISIBLE);
+            button_colour_swap= false;
+        }
+    }
+
     public void logOut(View view) {
+        //this.logout.setVisibility(View.VISIBLE);
         SharedPreferences.Editor editor = getSharedPreferences("preference",getApplicationContext().MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
