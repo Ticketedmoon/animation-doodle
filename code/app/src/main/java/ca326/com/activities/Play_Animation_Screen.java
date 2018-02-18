@@ -37,52 +37,38 @@ public class Play_Animation_Screen extends AppCompatActivity {
         play_animation(cv);
     }
 
+    // THIS FUNCTION IS NOT WORKING CORRECTLY -> REMEMBER TO FIX
     public void play_animation(View v) {
         // Logcat Information
         System.out.println("Transition to Play_Animation Activity\nPlay Button Pushed / paused\nPlaying Animation");
         System.out.println(Start_Drawing_Screen.pathways);
         System.out.println("--------");
         System.out.println(pathways);
+        // END
 
-        if (playButton) {
-            playButton = false;
+        // Play Animation Begin Logic
+        m_handler = new Handler();
+        m_handlerTask = new Runnable() {
+            public void run() {
+                System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
+                cv.newPaths = pathways.get(pos);
+                cv.invalidate();
+                pos++;
 
-            // Play Animation Begin Logic
-            m_handler = new Handler();
-            m_handlerTask = new Runnable() {
-                public void run() {
-                    System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
-                    cv.newPaths = pathways.get(pos);
-                    cv.invalidate();
-                    pos++;
+                // Delay needs to be here for pause / play button reasons
+                // instead of 1000 mention the delay in milliseconds
+                m_handler.postDelayed(m_handlerTask, 500);
 
-                    // Delay needs to be here for pause / play button reasons
-                    // instead of 1000 mention the delay in milliseconds
-                    m_handler.postDelayed(m_handlerTask, 500);
+                // Doesn't require {} body since only 1 line following the IF conditional.
+                if (pos == pathways.size())
+                    pos=0;
 
-                    // Doesn't require {} body since only 1 line following the IF conditional.
-                    if (pos == pathways.size())
-                        pos=0;
-
-                }
-            };
-            m_handlerTask.run();
-        }
-        else {
-            // Fixed bug with this IF statement (Maybe Refactor later)
-            if(pos != 0)
-                pos--;
-            else
-                pos=pathways.size()-1;
-
-            m_handler.removeCallbacks(m_handlerTask);
-            playButton = true;
-
-            System.out.println("pos: " + Integer.toString(pos));
-        }
+            }
+        };
+        m_handlerTask.run();
     }
 
-    @Override
+    // Import method, controls back logic and remembers previously drawn frames.
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // do something

@@ -15,7 +15,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,6 +39,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Views
     private static CanvasView canvasView;
     private RelativeLayout menu;
+    private RecyclerView timeline_frames;
 
     // Object creations
     private Paint mDefaultPaint;
@@ -49,6 +48,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
+    private Integer frame_counter = 1;
     public static List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
     private static String value;
@@ -68,12 +68,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Other Fields
     ImageButton play;
-    public static boolean playButton = true;
-    private boolean button_colour_swap = false;
-
-    // Handlers / Timed events
-    Handler m_handler;
-    Runnable m_handlerTask;
+    private boolean is_menu_open = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +80,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
+        this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
         this.onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
         this.play = (ImageButton)findViewById((R.id.play_button));
 
@@ -102,16 +98,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
 
         // set up the RecyclerView
-        this.setUpTimeline();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
-        LinearLayoutManager horizontalLayoutManagaer
-                = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);
-        adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        // END
+        add_frame(timeline_frames);
 
+        // Onion Button
         onionButton.setImageResource(R.drawable.onion);
         onionButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)
@@ -134,24 +123,22 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
         if (this.pos != position) {
-            Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
 
             this.pos = position;
             this.canvasView.invalidate();
         }
-
-        // Debugging Function, Useful
-        test();
-
     }
 
-    private void test() {
-        for(int i = 0; i < pathways.size(); i++) {
-            System.out.println("========= DEBUGGING ========\nKey: " + i + "\nValue: " + this.pathways.get(i));
-            System.out.println("========= END DEBUGGING ========");
-        }
+    private void adjust_timeline() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
 
     public static CanvasView getCView() {
@@ -256,32 +243,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         colour_picker.show();
     }
 
-    private void setUpTimeline() {
-        // data to populate the RecyclerView with
-        Integer tmp = R.drawable.frame;
-
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-        frames.add(tmp);
-
-        frameNums.add("Frame 1");
-        frameNums.add("Frame 2");
-        frameNums.add("Frame 3");
-        frameNums.add("Frame 4");
-        frameNums.add("Frame 5");
-        frameNums.add("Frame 6");
-
-        for(int i = 0; i < frames.size(); i++) {
-            List <Pair <Path, Paint>> emptyArr =  new ArrayList <Pair <Path, Paint>>();
-            this.pathways.put(i, emptyArr);
-        }
-
-    }
-
-
     // Left Arrow & Right Arrow pushed
     // goLeft brings the user to the sign-in / profile screen for viewing
     // If already signed in, bring to profile... (We can make an IF statement check later to see if they are signed in)
@@ -307,12 +268,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         startActivity(intent);
     }
 
-
-
     // Sync both activities
     // goRight brings the user to the top-rated animations page
     // Only signed in users can upload, rate etc...
-
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -337,64 +295,46 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // TOOL BAR MODIFICATIONS
-    public void open_menu(View v) {
-        if (!this.button_colour_swap)
+    public void shift_menu(View v) {
+        if (!this.is_menu_open)
             this.menu.setVisibility(View.VISIBLE);
         else
             this.menu.setVisibility(View.INVISIBLE);
 
-        this.button_colour_swap = !(this.button_colour_swap);
+        this.is_menu_open = !(this.is_menu_open);
     }
 
     public void play_animation(View v) {
+        // Close Menu if open
+        if (this.is_menu_open)
+            shift_menu(menu);
+
+        // Add to pathways current frame -- onItemClick() will handle the rest
+        this.pathways.put(this.pos, this.canvasView.newPaths);
+
         // Store frame user is on
         pos = this.frames.size()-1;
         Intent playing = new Intent(Start_Drawing_Screen.this, Play_Animation_Screen.class);
         startActivity(playing);
     }
-    /*
-    public void play_animation(View v) {
-        // Logcat Information
-        System.out.println("Play Button Pushed / paused\nPlaying Animation");
 
-        if (playButton) {
-            playButton = false;
-            play.setImageResource(R.drawable.pause);
+    public void add_frame(View v) {
+        // will generate a frame object and frameNo and place it in the timeline.
+        // data to populate the RecyclerView with
+        Integer tmp = R.drawable.frame;
+        frames.add(tmp);
+        frameNums.add("Frame " + frame_counter);
 
-            // Play Animation Begin Logic
-            m_handler = new Handler();
-            m_handlerTask = new Runnable() {
-                public void run() {
-                    canvasView.newPaths = pathways.get(pos);
-                    canvasView.invalidate();
-                    pos++;
+        List <Pair <Path, Paint>> emptyArr =  new ArrayList <Pair <Path, Paint>>();
+        this.pathways.put(frame_counter, emptyArr);
 
-                    if (pos == frames.size())
-                        pos = 0;
+        frame_counter++;
+        adjust_timeline();
 
-                    // Delay needs to be here for pause / play button reasons
-                    m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
-
-                }
-            };
-            m_handlerTask.run();
-        }
-
-        else {
-            // Fixed bug with this IF statement (Maybe Refactor later)
-            if(pos != 0)
-                pos--;
-            else
-                pos=frames.size()-1;
-
-            play.setImageResource(R.drawable.play);
-            m_handler.removeCallbacks(m_handlerTask);
-            playButton = true;
-
-            System.out.println("pos: " + Integer.toString(pos));
-        }
+        // Change view to next frame
+        System.out.println(frames);
+        System.out.println("Pathways:" + pathways);
     }
-    */
 
     public void previous_frame(View v) {
         Integer currentIndex = this.pos;
