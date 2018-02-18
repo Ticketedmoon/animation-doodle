@@ -176,8 +176,6 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
             getData();
         }
     }
-
-
     public void menu(View v) {
         System.out.println("clicked");
         if (!button_colour_swap){

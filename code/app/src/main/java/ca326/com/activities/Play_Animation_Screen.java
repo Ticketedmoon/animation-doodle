@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
+import android.view.KeyEvent;
+import android.view.View;
 
 import java.util.List;
 import java.util.Map;
 
 public class Play_Animation_Screen extends AppCompatActivity {
 
-    // Normal
-    private CanvasView cv;
+    // Normal fields
+    private CanvasViewNonEditable cv;
     private Integer pos;
-    public static Map<Integer, List <Pair<Path, Paint>>> pathways;
+    private boolean playButton = true;
+
+    public static Map<Integer, List <Pair<Path, Paint>>> pathways = Start_Drawing_Screen.pathways;
 
     // Handlers / Timed events
     private Handler m_handler;
@@ -27,37 +31,65 @@ public class Play_Animation_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_play__animation__screen);
 
         // Initialisation
-        this.pos = Start_Drawing_Screen.pos;
+        this.pos = 0;
+        this.cv = (CanvasViewNonEditable) findViewById(R.id.canvas2);
 
-        // Identify views
-        this.cv = (CanvasView) findViewById(R.id.canvas);
-
+        play_animation(cv);
     }
 
-    public void play_animation(final Map<Integer, List<Pair<Path, Paint>>> pathways) {
-        // Remember Frame user is on & Time
-        pos = 0;
+    public void play_animation(View v) {
+        // Logcat Information
+        System.out.println("Transition to Play_Animation Activity\nPlay Button Pushed / paused\nPlaying Animation");
+        System.out.println(Start_Drawing_Screen.pathways);
+        System.out.println("--------");
+        System.out.println(pathways);
 
-        // Play Animation Begin Logic
-        m_handler = new Handler();
-        m_handlerTask = new Runnable()
-        {
-            public void run() {
-                //Put code here to run after 1 seconds
-                m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
-                cv.newPaths = pathways.get(pos);
+        if (playButton) {
+            playButton = false;
 
-                //cv.invalidate();
-                pos++;
+            // Play Animation Begin Logic
+            m_handler = new Handler();
+            m_handlerTask = new Runnable() {
+                public void run() {
+                    System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
+                    cv.newPaths = pathways.get(pos);
+                    cv.invalidate();
+                    pos++;
 
-                if (pos == pathways.size()) {
-                    m_handler.removeCallbacks(m_handlerTask);
-                    System.out.println("-- Animation Play End --");
+                    // Delay needs to be here for pause / play button reasons
+                    // instead of 1000 mention the delay in milliseconds
+                    m_handler.postDelayed(m_handlerTask, 500);
+
+                    // Doesn't require {} body since only 1 line following the IF conditional.
+                    if (pos == pathways.size())
+                        pos=0;
+
                 }
+            };
+            m_handlerTask.run();
+        }
+        else {
+            // Fixed bug with this IF statement (Maybe Refactor later)
+            if(pos != 0)
+                pos--;
+            else
+                pos=pathways.size()-1;
 
-            }
-        };
-        m_handlerTask.run();
-        this.pos = 0;
+            m_handler.removeCallbacks(m_handlerTask);
+            playButton = true;
+
+            System.out.println("pos: " + Integer.toString(pos));
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // do something
+            m_handler.removeCallbacks(m_handlerTask);
+            finish();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

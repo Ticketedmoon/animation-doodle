@@ -1,4 +1,5 @@
 package ca326.com.activities;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -326,11 +327,6 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     }
 
     // Sync both activities
-    public void onBackPressed() {
-        System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Register_Screen.this, Start_Drawing_Screen.class);
-        startActivity(startMain);
-    }
 
     public void goToDrawingScreen(View view){
         Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
