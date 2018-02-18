@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -23,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +33,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.Gravity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -335,6 +334,12 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     }
 
     // Sync both activities
+    public void onBackPressed() {
+        System.out.println("Back Button Pushed <Returning to Homescreen>");
+        Intent startMain = new Intent(Register_Screen.this, Start_Drawing_Screen.class);
+        startActivity(startMain);
+    }
+
     public void goToDrawingScreen(View view){
         Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
         startActivity(intent);
