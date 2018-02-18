@@ -75,19 +75,19 @@
         android:id="@+id/layout_menu"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/tool_bar"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/button_border"
         android:elevation="2dp"
         android:visibility="invisible">
 
         <ImageButton
             android:id="@+id/change_colour"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_above="@+id/onionSkinningButton"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="25dp"
+            android:layout_alignTop="@+id/save"
+            android:layout_marginStart="30dp"
             android:adjustViewBounds="true"
             android:background="@android:drawable/btn_default_small"
             android:scaleType="fitCenter"
@@ -96,10 +96,10 @@
         <Button
             android:id="@+id/clear"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
             android:layout_alignStart="@+id/change_colour"
-            android:layout_below="@+id/onionSkinningButton"
+            android:layout_alignTop="@+id/onionSkinningButton"
             android:background="@android:color/holo_red_light"
             android:onClick="clearCanvas"
             android:text="@string/clear"
@@ -107,10 +107,11 @@
 
         <ImageButton
             android:id="@+id/onionSkinningButton"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/save"
+            android:layout_alignStart="@+id/save"
+            android:layout_marginBottom="14dp"
             android:adjustViewBounds="true"
             android:background="@android:drawable/btn_default_small"
             android:cropToPadding="true"
@@ -120,10 +121,11 @@
         <Button
             android:id="@+id/undo_button"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/save"
-            android:layout_alignTop="@+id/change_colour"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/onionSkinningButton"
+            android:layout_marginEnd="25dp"
             android:background="@android:color/holo_green_dark"
             android:onClick="undo"
             android:text="@string/undo"
@@ -133,12 +135,10 @@
 
         <Button
             android:id="@+id/save"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/clear"
-            android:layout_alignBottom="@+id/clear"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="19dp"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:background="@android:color/holo_orange_dark"
             android:onClick="save_external"
             android:text="SAVE"
@@ -147,16 +147,27 @@
 
         <Button
             android:id="@+id/prev_frame"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_alignStart="@+id/onionSkinningButton"
-            android:layout_below="@+id/onionSkinningButton"
-            android:layout_marginTop="12dp"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/change_colour"
+            android:layout_marginBottom="19dp"
             android:background="@color/colorPrimary"
             android:onClick="previous_frame"
             android:text="Previous"
             android:textColor="@android:color/white"
             android:textSize="10dp" />
+
+        <ImageButton
+            android:id="@+id/play_button"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignStart="@+id/save"
+            android:layout_alignTop="@+id/prev_frame"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/btn_default_small"
+            android:onClick="play_animation"
+            app:srcCompat="@drawable/play" />
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -171,11 +182,12 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frames"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="false"
+            android:layout_marginRight="50dp"
             android:adjustViewBounds="true"
             android:background="@color/button_focused"
             android:divider="@null"
@@ -190,17 +202,6 @@
             app:reverseLayout="true">
 
         </android.support.v7.widget.RecyclerView>
-
-        <ImageButton
-            android:id="@+id/play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:background="@color/nice_grey"
-            android:onClick="play_animation"
-            app:srcCompat="@drawable/play" />
 
     </RelativeLayout>
 
