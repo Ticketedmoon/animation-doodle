@@ -16,7 +16,7 @@
             <VideoView
                 android:id="@+id/videoViews"
                 android:layout_width="wrap_content"
-                android:layout_height="268dp" />
+                android:layout_height="250dp" />
 
             <ImageView
                 android:id="@+id/imageView"
