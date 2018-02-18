@@ -346,10 +346,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         if (playButton) {
             playButton = false;
             play.setImageResource(R.drawable.pause);
-            //System.out.println("Play Button Pushed\nPlaying Animation");
-
-            // Remember Frame user is on & Time
-            List<Pair<Path, Paint>> currentFrame = this.canvasView.newPaths;
+            System.out.println("Play Button Pushed\nPlaying Animation");
 
             // Play Animation Begin Logic
             m_handler = new Handler();
@@ -370,6 +367,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.pos = 0;
         }
         else {
+            // Keep this, needed to make sure first frame isn't removed.
+            this.pos = 0;
+            canvasView.newPaths = pathways.get(pos);
+            canvasView.invalidate();
+            // END
+
             play.setImageResource(R.drawable.play);
             m_handler.removeCallbacks(m_handlerTask);
             playButton = true;
