@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 
 import java.util.List;
@@ -56,10 +57,13 @@ public class Play_Animation_Screen extends AppCompatActivity {
                     pos++;
 
                     // Delay needs to be here for pause / play button reasons
-                    m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
-                    if (pos == pathways.size()) {
-                        m_handler.removeCallbacks(m_handlerTask);
-                    }
+                    // instead of 1000 mention the delay in milliseconds
+                    m_handler.postDelayed(m_handlerTask, 500);
+
+                    // Doesn't require {} body since only 1 line following the IF conditional.
+                    if (pos == pathways.size())
+                        pos=0;
+
                 }
             };
             m_handlerTask.run();
@@ -76,5 +80,16 @@ public class Play_Animation_Screen extends AppCompatActivity {
 
             System.out.println("pos: " + Integer.toString(pos));
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // do something
+            m_handler.removeCallbacks(m_handlerTask);
+            finish();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

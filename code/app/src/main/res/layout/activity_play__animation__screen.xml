@@ -14,7 +14,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:alpha="0.8"
-        android:background="@android:drawable/alert_light_frame">
+        android:background="@drawable/paper"
+        android:rotation="0">
 
         <ca326.com.activities.CanvasViewNonEditable
             android:id="@+id/canvas2"
@@ -22,6 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:alpha="0.75"
+            android:scaleType="fitCenter" />
     </RelativeLayout>
 </RelativeLayout>
