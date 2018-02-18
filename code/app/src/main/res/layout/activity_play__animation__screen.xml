@@ -16,7 +16,7 @@
         android:alpha="0.8"
         android:background="@android:drawable/alert_light_frame">
 
-        <ca326.com.activities.CanvasView
+        <ca326.com.activities.CanvasViewNonEditable
             android:id="@+id/canvas2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

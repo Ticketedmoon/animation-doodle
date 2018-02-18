@@ -62,6 +62,9 @@
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".Play_Animation_Screen"></activity>
+
         <activity android:name=".MyVolleyRequest" />
         <activity android:name=".Video" />
         <activity android:name=".MyCardAdapter" />

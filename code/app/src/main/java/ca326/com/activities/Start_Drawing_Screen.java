@@ -347,6 +347,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void play_animation(View v) {
+        // Store frame user is on
+        pos = this.frames.size()-1;
+        Intent playing = new Intent(Start_Drawing_Screen.this, Play_Animation_Screen.class);
+        startActivity(playing);
+    }
+    /*
+    public void play_animation(View v) {
         // Logcat Information
         System.out.println("Play Button Pushed / paused\nPlaying Animation");
 
@@ -387,6 +394,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             System.out.println("pos: " + Integer.toString(pos));
         }
     }
+    */
 
     public void previous_frame(View v) {
         Integer currentIndex = this.pos;
