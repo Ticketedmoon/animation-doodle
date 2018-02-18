@@ -291,14 +291,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void goLeft(View view){
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
+
         if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
             intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
         }
         else{
             intent = new Intent(Start_Drawing_Screen.this, Register_Screen.class);
         }
+
         startActivity(intent);
-        finish();
     }
 
     public void goRight(View view){
@@ -347,11 +348,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void play_animation(View v) {
         // Logcat Information
-	
+        System.out.println("Play Button Pushed / paused\nPlaying Animation");
+
         if (playButton) {
             playButton = false;
             play.setImageResource(R.drawable.pause);
-            System.out.println("Play Button Pushed\nPlaying Animation");
 
             // Play Animation Begin Logic
             m_handler = new Handler();
@@ -361,20 +362,29 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                     canvasView.invalidate();
                     pos++;
 
+                    if (pos == frames.size())
+                        pos = 0;
+
                     // Delay needs to be here for pause / play button reasons
                     m_handler.postDelayed(m_handlerTask, 500); // instead of 1000 mention the delay in milliseconds
 
-                    if (pos == frames.size()) {
-                        pos = 0;
-                    }
                 }
             };
             m_handlerTask.run();
         }
+
         else {
+            // Fixed bug with this IF statement (Maybe Refactor later)
+            if(pos != 0)
+                pos--;
+            else
+                pos=frames.size()-1;
+
             play.setImageResource(R.drawable.play);
             m_handler.removeCallbacks(m_handlerTask);
             playButton = true;
+
+            System.out.println("pos: " + Integer.toString(pos));
         }
     }
 
@@ -387,8 +397,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
+
+            pathways.put(pos, mixed_frame);
+            this.canvasView.newPaths = mixed_frame;
+            canvasView.invalidate();
         }
-        this.canvasView.newPaths = mixed_frame;
-        canvasView.invalidate();
     }
 }

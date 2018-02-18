@@ -42,12 +42,6 @@ public class Profile_Screen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onBackPressed() {
-        System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Profile_Screen.this, Start_Drawing_Screen.class);
-        startActivity(startMain);
-    }
-
     public void logOut(View view) {
         SharedPreferences.Editor editor = getSharedPreferences("preference",getApplicationContext().MODE_PRIVATE).edit();
         editor.clear();
