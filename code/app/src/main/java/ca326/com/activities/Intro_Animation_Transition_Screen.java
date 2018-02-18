@@ -46,7 +46,8 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     @Override
     public void animationsFinished() {
         //transit to another activity here
-        startActivity(new Intent(Intro_Animation_Transition_Screen.this, Start_Drawing_Screen.class));
+        Intent canvas_memory = new Intent(Intro_Animation_Transition_Screen.this, Start_Drawing_Screen.class);
+        startActivity(canvas_memory);
     }
 
 }

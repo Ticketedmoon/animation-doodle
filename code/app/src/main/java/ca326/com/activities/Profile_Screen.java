@@ -32,12 +32,6 @@ public class Profile_Screen extends AppCompatActivity {
         this.logout = (Button) findViewById(R.id.log_out_button);
     }
 
-    public void onBackPressed() {
-        System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Profile_Screen.this, Start_Drawing_Screen.class);
-        startActivity(startMain);
-    }
-
 
     public void menu(View v) {
         System.out.println("clicked");
