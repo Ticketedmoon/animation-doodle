@@ -8,7 +8,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ffa500</color>
     <color name="ice_teal">#42c2f4</color>
-    <color name="nice_grey">#c1c1c1</color>
+    <color name="nice_grey">#88313131</color>
 
     <!-- Button Colour Transition -->
     <color name="button_pressed">#F0F0F0</color>
@@ -16,6 +16,8 @@
     <color name="button_default">#FF0000</color>
 
     <!-- Transparent Colours -->
-    <color name="grey_trans">#F8F0F0F0</color>
+    <color name="grey_trans">#F8f2f2f2</color>
+    <color name="red_trans">#FFF90000</color>
+    <color name="green_trans">#E0008000</color>
 
 </resources>

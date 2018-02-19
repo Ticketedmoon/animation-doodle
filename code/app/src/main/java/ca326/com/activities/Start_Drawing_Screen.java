@@ -53,7 +53,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private List<String> frameNums = new ArrayList<String>();
     private static String value;
 
-    //IMPORTANT
+    // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
 
     // Login Credentials
@@ -62,12 +62,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
-    //Onion skinning button
-    public static boolean onionSkinning = true;
+    // Image Buttons / Buttons
     ImageButton onionButton;
-
-    // Other Fields
     ImageButton play;
+    ImageButton ham_menu;
+    ImageButton profile;
+    ImageButton top_rated;
+
+    // OTher Fields
+    public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
         this.onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
         this.play = (ImageButton)findViewById((R.id.play_button));
-
         // END
+
+        // Image button / Button onClick Listeners (For Style effects)
+        this.ham_menu = (ImageButton)findViewById(R.id.menu);
+        this.ham_menu.setBackgroundColor(Color.TRANSPARENT);
+
+        this.profile = (ImageButton)findViewById(R.id.profile);
+        this.profile.setBackgroundColor(Color.TRANSPARENT);
+        this.profile.setImageResource(R.drawable.profile_background_colour);
+
+        this.top_rated = (ImageButton)findViewById(R.id.top_rated);
+        this.top_rated.setBackgroundColor(Color.TRANSPARENT);
+        this.top_rated.setImageResource(R.drawable.top_rated_background_colour);
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
@@ -95,7 +109,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 openColourPick();
             }
         });
-
 
         // set up the RecyclerView
         add_frame(timeline_frames);
@@ -244,12 +257,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // Left Arrow & Right Arrow pushed
-    // goLeft brings the user to the sign-in / profile screen for viewing
+    // goToProfile brings the user to the sign-in / profile screen for viewing
     // If already signed in, bring to profile... (We can make an IF statement check later to see if they are signed in)
     // Sync both activities
     // Animations
 
-    public void goLeft(View view){
+    public void goToProfile(View view){
+        // OnTouch change background colour to red
+
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
 
@@ -263,13 +278,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         startActivity(intent);
     }
 
-    public void goRight(View view){
+    public void goToTopRatedAnimations(View view){
         Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
         startActivity(intent);
     }
 
     // Sync both activities
-    // goRight brings the user to the top-rated animations page
+    // goToTopRatedAnimations brings the user to the top-rated animations page
     // Only signed in users can upload, rate etc...
 
     // Storage Permissions
@@ -296,10 +311,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // TOOL BAR MODIFICATIONS
     public void shift_menu(View v) {
-        if (!this.is_menu_open)
+        if (!this.is_menu_open) {
             this.menu.setVisibility(View.VISIBLE);
-        else
+            this.ham_menu.setImageResource(R.drawable.button_background_colour_inverse);
+        }
+        else {
             this.menu.setVisibility(View.INVISIBLE);
+            this.ham_menu.setImageResource(R.drawable.button_background_colour);
+        }
 
         this.is_menu_open = !(this.is_menu_open);
     }

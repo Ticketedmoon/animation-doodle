@@ -30,7 +30,7 @@
     <RelativeLayout
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -38,35 +38,33 @@
 
         <ImageButton
             android:id="@+id/menu"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="@android:color/transparent"
             android:onClick="shift_menu"
-            app:srcCompat="@drawable/menu" />
+            app:srcCompat="@drawable/button_background_colour" />
 
         <ImageButton
             android:id="@+id/top_rated"
-            android:layout_width="50dp"
+            android:layout_width="140dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@android:drawable/btn_default_small"
-            android:onClick="goRight"
-            android:src="@drawable/star_w" />
+            android:adjustViewBounds="true"
+            android:onClick="goToTopRatedAnimations"
+            android:src="@drawable/top_rated_icon_w" />
 
         <ImageButton
             android:id="@+id/profile"
-            android:layout_width="50dp"
+            android:layout_width="140dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@android:drawable/btn_default_small"
-            android:cropToPadding="true"
-            android:onClick="goLeft"
+            android:adjustViewBounds="true"
+            android:onClick="goToProfile"
             android:src="@drawable/profile_w" />
 
     </RelativeLayout>
@@ -77,6 +75,8 @@
         android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tool_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/button_border"
         android:elevation="2dp"
         android:visibility="invisible">
@@ -103,7 +103,7 @@
             android:background="@android:color/holo_red_light"
             android:onClick="clearCanvas"
             android:text="@string/clear"
-            android:textSize="12sp" />
+            android:textSize="8sp" />
 
         <ImageButton
             android:id="@+id/onionSkinningButton"
@@ -125,13 +125,13 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/onionSkinningButton"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="29dp"
             android:background="@android:color/holo_green_dark"
             android:onClick="undo"
             android:text="@string/undo"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="8sp" />
 
         <Button
             android:id="@+id/save"
@@ -143,20 +143,20 @@
             android:onClick="save_external"
             android:text="SAVE"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="8sp" />
 
         <Button
             android:id="@+id/prev_frame"
             android:layout_width="55dp"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/change_colour"
-            android:layout_marginBottom="19dp"
+            android:layout_below="@+id/change_colour"
+            android:layout_marginTop="15dp"
             android:background="@color/colorPrimary"
             android:onClick="previous_frame"
             android:text="Previous"
             android:textColor="@android:color/white"
-            android:textSize="10dp" />
+            android:textSize="8sp" />
 
         <ImageButton
             android:id="@+id/play_button"
