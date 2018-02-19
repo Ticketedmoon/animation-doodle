@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,14 @@ public class Test_VideoPlayer extends AppCompatActivity {
         Uri videoUri = Uri.parse(url);
         videoView.setVideoURI(videoUri);
         videoView.start();
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
     }
 
 }
