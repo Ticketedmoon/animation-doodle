@@ -145,6 +145,11 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         //add to adapter
         adapter.notifyDataSetChanged();
     }
+    public void rateMe(View view){
+
+        Toast.makeText(getApplicationContext(),
+                String.valueOf(MyCardAdapter.ratingBar.getRating()), Toast.LENGTH_LONG).show();
+    }
 
     //check if reached bottom
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
