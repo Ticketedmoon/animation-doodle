@@ -1,27 +1,19 @@
 package ca326.com.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
