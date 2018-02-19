@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 
 import com.android.volley.RequestQueue;
@@ -24,14 +26,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Top_Rated_Screen extends AppCompatActivity implements RecyclerView.OnScrollChangeListener {
+public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     //list of videos
     private List<Video> listVideos;
 
     //Creating Views
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private MyCardAdapter adapter;
 
     //Volley Request Queue
     private RequestQueue requestQueue;
@@ -66,6 +68,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements RecyclerView.
 
         //initializing our adapter with list of videos
         adapter = new MyCardAdapter(listVideos, this);
+
+        adapter.setClickListener(this);
         //Add adapter to recyclerview
         recyclerView.setAdapter(adapter);
 
@@ -123,6 +127,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements RecyclerView.
                 json = array.getJSONObject(i);
 
                 //Adding data to the video object
+                video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
                 video.setName(json.getString("name"));
                 video.setDescription(json.getString("video description"));
@@ -150,6 +155,12 @@ public class Top_Rated_Screen extends AppCompatActivity implements RecyclerView.
         return false;
     }
 
+    public void onItemClick(View view, int position) {
+        System.out.println("its clicked");
+        Intent intent = new Intent (Top_Rated_Screen.this, Start_Drawing_Screen.class);
+        startActivity(intent);
+
+    }
     //detects scrolling
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

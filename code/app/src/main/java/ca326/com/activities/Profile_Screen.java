@@ -33,7 +33,7 @@ import java.util.List;
 // __Author__ = James Collins
 
 
-public class Profile_Screen extends AppCompatActivity implements RecyclerView.OnScrollChangeListener {
+public class Profile_Screen extends AppCompatActivity implements  MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     private RelativeLayout drop_down_option_menu;
     private Button logout;
@@ -42,10 +42,10 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
 
     //Creating Views
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private MyCardAdapter adapter;
 
 
-    private boolean button_colour_swap = false;
+    private boolean menu_button = false;
 
     private RequestQueue requestQueue;
 
@@ -75,9 +75,16 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
         listVideos = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
 
+        //method to retrieve data from database
         getData();
 
+        //Adding an scroll change listener to recyclerview
+        recyclerView.setOnScrollChangeListener(this);
+
+        //initializing our adapter with list of videos
         adapter = new MyCardAdapter(listVideos, this);
+
+        adapter.setClickListener(this);
         //Add adapter to recyclerview
         recyclerView.setAdapter(adapter);
 
@@ -140,6 +147,7 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
                 json = array.getJSONObject(i);
 
                 //Adding data to the video object
+                video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
                 video.setName(json.getString("name"));
                 video.setDescription(json.getString("video description"));
@@ -178,13 +186,13 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
     }
     public void menu(View v) {
         System.out.println("clicked");
-        if (!button_colour_swap){
+        if (!menu_button){
             this.drop_down_option_menu.setVisibility(View.VISIBLE);
-            button_colour_swap = true;
+            menu_button = true;
         }
         else{
             this.drop_down_option_menu.setVisibility(View.INVISIBLE);
-            button_colour_swap= false;
+            menu_button= false;
         }
     }
 
@@ -195,6 +203,13 @@ public class Profile_Screen extends AppCompatActivity implements RecyclerView.On
         editor.apply();
         Intent intent = new Intent(Profile_Screen.this, Sign_In_Screen.class);
         startActivity(intent);
+    }
+
+    public void onItemClick(View view, int position) {
+        System.out.println("its clicked");
+        Intent intent = new Intent (Profile_Screen.this, Start_Drawing_Screen.class);
+        startActivity(intent);
+
     }
 
 
