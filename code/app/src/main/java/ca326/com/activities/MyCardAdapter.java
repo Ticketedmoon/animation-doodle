@@ -126,7 +126,6 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            System.out.println("thisis clicked");
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }

@@ -29,7 +29,7 @@ import java.util.List;
 public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     //list of videos
-    private List<Video> listVideos;
+    public static List<Video> listVideos;
 
     //Creating Views
     private RecyclerView recyclerView;
@@ -156,8 +156,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     }
 
     public void onItemClick(View view, int position) {
-        System.out.println("its clicked");
-        Intent intent = new Intent (Top_Rated_Screen.this, Start_Drawing_Screen.class);
+        Intent intent = new Intent (Top_Rated_Screen.this, Test_VideoPlayer.class);
         startActivity(intent);
 
     }
