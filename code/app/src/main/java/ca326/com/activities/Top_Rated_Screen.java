@@ -30,6 +30,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
     //list of videos
     public static List<Video> listVideos;
+    public static Integer position;
 
     //Creating Views
     private RecyclerView recyclerView;
@@ -156,6 +157,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     }
 
     public void onItemClick(View view, int position) {
+        this.position = position;
         Intent intent = new Intent (Top_Rated_Screen.this, Test_VideoPlayer.class);
         startActivity(intent);
 
