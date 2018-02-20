@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
+    private Integer j=0;
 
 
     private Context context;
@@ -29,11 +31,13 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
     private ItemClickListener mClickListener;
 
+    public static RatingBar ratingBar;
+
+
 
     //List for videos
     List<Video> videos;
 
-    public static RatingBar ratingBar;
 
     public MyCardAdapter(List<Video> videos, Context context){
         super();
@@ -71,6 +75,14 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
 
+        Float rating = video.getRating();
+        //have to replace this with the rating of the video stored in database
+        ratingBar.setRating(rating);
+        System.out.println(ratingBar);
+        System.out.println("this is i : " + j);
+        j++;
+
+
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
         holder.textViewName.setText(video.getName());
@@ -107,7 +119,6 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         public VideoView videoView;
         public NetworkImageView image;
         public TextView textViewName;
-
         //Initializing Views
         public ViewHolder(View itemView) {
             super(itemView);
@@ -117,6 +128,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
             itemView.setOnClickListener(this);
         }
+
 
         @Override
         public void onClick(View view) {

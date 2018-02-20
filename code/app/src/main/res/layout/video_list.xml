@@ -61,7 +61,7 @@
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/ratingBar"
-                        android:onClick="rateMe"
+                        android:onClick="rating"
                         android:src="@drawable/star" />
 
                 </RelativeLayout>

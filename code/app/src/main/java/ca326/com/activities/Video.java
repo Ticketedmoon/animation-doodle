@@ -7,6 +7,7 @@ public class Video {
     private String imageUrl;
     private String name;
     private String description;
+    private Float rating;
 
     //Getters and Setters
     public String getVideoUrl() {
@@ -16,6 +17,15 @@ public class Video {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
 
     public String getImageUrl() {
         return imageUrl;
