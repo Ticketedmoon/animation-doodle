@@ -82,6 +82,18 @@
         android:visibility="invisible">
 
         <ImageButton
+            android:id="@+id/frame_rate_btn"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignStart="@+id/undo_button"
+            android:layout_below="@+id/onionSkinningButton"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/btn_default_small"
+            android:onClick="prompt_frame_rate"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/frame_rate" />
+
+        <ImageButton
             android:id="@+id/change_colour"
             android:layout_width="55dp"
             android:layout_height="40dp"

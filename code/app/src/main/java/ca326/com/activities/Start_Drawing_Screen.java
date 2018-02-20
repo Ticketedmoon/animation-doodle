@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +52,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Integer frame_counter = 1;
     public static List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
+
+    // Input from user stored in these variables
     private static String value;
+    private static Integer frame_rate_value = 500;
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -170,7 +174,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
-        get_file_input(this.canvasView);
+        get_file_input_save(this.canvasView);
         // Add and delete tmp file
         save("tmp");
         File file = new File("/sdcard/Animation_Doodle_Images/tmp.jpg");
@@ -209,7 +213,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public void get_file_input(View v) {
+    public void get_file_input_save(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Enter a filename");
@@ -224,6 +228,42 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 value = input.getText().toString();
                 // Do something with value!
                 save(value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.create().show();
+    }
+
+    // Adapt this function later to handle Integers rather than Strings more efficiently.
+    public void get_file_input_frame_rate(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Frame Rate Manager");
+        alert.setMessage("Enter how many Frames to display per second (FPS): ");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                try {
+                    Integer v = Integer.parseInt(input.getText().toString());
+                    if(v > 0)
+                        frame_rate_value = v;
+                    else
+                        Toast.makeText(getApplication(), "Impossible frame rate entered. Try Again.", Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("Entered a string value rather than an Integer");
+                    Toast.makeText(getApplication(), "Frame rate unchanged (Entered a non-number)", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -324,6 +364,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void play_animation(View v) {
+        // First Assign frame_rate (Default 1.5 frames per second)
+        Play_Animation_Screen.frame_rate = (int) (1000 / (frame_rate_value));
+        System.out.println("Frame rate set at: " + Integer.toString(Play_Animation_Screen.frame_rate));
+
         // Close Menu if open
         if (this.is_menu_open)
             shift_menu(menu);
@@ -335,6 +379,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         pos = this.frames.size()-1;
         Intent playing = new Intent(Start_Drawing_Screen.this, Play_Animation_Screen.class);
         startActivity(playing);
+    }
+
+    public void prompt_frame_rate(View v) {
+        // Integer value stored in class field.
+        get_file_input_frame_rate(canvasView);
     }
 
     public void add_frame(View v) {
