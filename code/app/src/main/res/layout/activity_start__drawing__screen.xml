@@ -47,7 +47,7 @@
 
         <ImageButton
             android:id="@+id/top_rated"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -58,7 +58,7 @@
 
         <ImageButton
             android:id="@+id/profile"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
