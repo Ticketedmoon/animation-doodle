@@ -115,7 +115,6 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            //textViewDescription = (TextView) itemView.findViewById(R.id.textViewDescription);
             itemView.setOnClickListener(this);
         }
 
