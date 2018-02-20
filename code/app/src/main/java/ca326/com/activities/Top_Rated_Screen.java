@@ -42,7 +42,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
     private int pageCount = 1;
-    public static int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +118,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     //used to parse the json data returned by the php script
     private void parseData(JSONArray array) {
         for (int i = 0; i < array.length(); i++) {
-            System.out.println(array.length());
             //Creating the video object
             Video video = new Video();
             JSONObject json = null;
@@ -128,6 +126,9 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                 json = array.getJSONObject(i);
 
                 //Adding data to the video object
+                String rating =(json.getString("rating"));
+                Float number = Float.parseFloat(rating);
+                video.setRating(number);
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
                 video.setName(json.getString("name"));
@@ -137,13 +138,14 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
             }
             //Add to the list
             listVideos.add(video);
-            System.out.println(video.getName());
-            System.out.println(listVideos.size());
-            System.out.println(video.getName());
         }
 
         //add to adapter
         adapter.notifyDataSetChanged();
+    }
+    public void rating(View view){
+        Toast.makeText(getApplicationContext(),
+                String.valueOf(MyCardAdapter.ratingBar.getRating()), Toast.LENGTH_LONG).show();
     }
 
     //check if reached bottom

@@ -15,6 +15,7 @@ public class Test_VideoPlayer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_test__video_player);
 
         videoView = (VideoView) findViewById(R.id.videoViews);
@@ -25,12 +26,16 @@ public class Test_VideoPlayer extends AppCompatActivity {
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
         videoView.setVideoURI(videoUri);
+
+        //changes the screen to white from black as video loads
+        videoView.setZOrderOnTop(true);
         videoView.start();
 
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.start();
+                //continually plays video until back button pressed
                 mp.setLooping(true);
             }
         });
