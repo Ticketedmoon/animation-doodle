@@ -33,7 +33,7 @@ import java.util.List;
 // __Author__ = James Collins
 
 
-public class Profile_Screen extends AppCompatActivity implements  MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
+public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     private RelativeLayout drop_down_option_menu;
     private Button logout;
@@ -42,7 +42,7 @@ public class Profile_Screen extends AppCompatActivity implements  MyCardAdapter.
 
     //Creating Views
     private RecyclerView recyclerView;
-    private MyCardAdapter adapter;
+    private ProfileCardAdapter adapter;
 
 
     private boolean menu_button = false;
@@ -82,7 +82,7 @@ public class Profile_Screen extends AppCompatActivity implements  MyCardAdapter.
         recyclerView.setOnScrollChangeListener(this);
 
         //initializing our adapter with list of videos
-        adapter = new MyCardAdapter(listVideos, this);
+        adapter = new ProfileCardAdapter(listVideos, this);
 
         adapter.setClickListener(this);
         //Add adapter to recyclerview

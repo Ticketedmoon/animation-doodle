@@ -67,7 +67,8 @@
         <activity android:name=".Video" />
         <activity android:name=".MyCardAdapter" />
         <activity android:name=".CustomVideoView" />
-        <activity android:name=".Test_VideoPlayer"></activity>
+        <activity android:name=".Test_VideoPlayer" />
+        <activity android:name=".ProfileCardAdapter"></activity>
     </application>
 
 </manifest>
