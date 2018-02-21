@@ -66,9 +66,9 @@
         <activity android:name=".MyVolleyRequest" />
         <activity android:name=".Video" />
         <activity android:name=".MyCardAdapter" />
-        <activity android:name=".CustomVideoView" />
         <activity android:name=".Test_VideoPlayer" />
-        <activity android:name=".ProfileCardAdapter"></activity>
+        <activity android:name=".ProfileCardAdapter" />
+        <activity android:name=".FileUpload"></activity>
     </application>
 
 </manifest>

@@ -425,6 +425,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
+    public void upload(View view){
+        
+    }
+
     // TOOL BAR MODIFICATIONS
     public void shift_menu(View v) {
         if (!this.is_menu_open) {
@@ -501,6 +505,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             pathways.put(pos, mixed_frame);
             this.canvasView.newPaths = mixed_frame;
+            canvasView.invalidate();
         }
     }
 }
