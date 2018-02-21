@@ -13,6 +13,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -72,6 +74,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // OTher Fields
     public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
+    private Paint mPaint;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -360,14 +363,22 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         List<Pair <Path, Paint>> mixed_frame = new ArrayList<>();
 
         if (currentIndex > 0) {
+
             List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
+
+            //example of transparent paint
+            // #80000000 == 50 % transparent
+            // #33000000 == 20% transparent
+            // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 -- link to colours
+
+            this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
             // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
 
+
             pathways.put(pos, mixed_frame);
             this.canvasView.newPaths = mixed_frame;
-            canvasView.invalidate();
         }
     }
 }
