@@ -20,7 +20,6 @@
             android:id="@+id/canvas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
 
@@ -80,6 +79,18 @@
         android:background="@drawable/button_border"
         android:elevation="2dp"
         android:visibility="invisible">
+
+        <ImageButton
+            android:id="@+id/save_animation"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignStart="@+id/frame_rate_btn"
+            android:layout_alignTop="@+id/play_button"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/btn_default_small"
+            android:onClick="save_animation"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:drawable/ic_menu_compass" />
 
         <ImageButton
             android:id="@+id/frame_rate_btn"

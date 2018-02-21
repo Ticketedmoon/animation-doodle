@@ -9,10 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +36,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jcodec.api.SequenceEncoder;
+import org.jcodec.api.android.AndroidSequenceEncoder;
+import org.jcodec.common.io.NIOUtils;
+import org.jcodec.common.io.SeekableByteChannel;
+import org.jcodec.common.model.Picture;
+import org.jcodec.common.model.Rational;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -55,7 +66,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Input from user stored in these variables
     private static String value;
-    private static Integer frame_rate_value = 500;
+    private static Integer frame_rate_value = 2;
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -145,6 +156,68 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             this.pos = position;
             this.canvasView.invalidate();
+        }
+    }
+
+    // Save Animation Function, takes all frames in canvas
+    // Converts them to bitmaps and encodes them to mp4.
+    // *DYSFUNCTIONAL*
+    public void save_animation(View v) {
+        System.out.println("Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
+
+        // Store bitmaps in an array
+        Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();
+
+        // Start at first frame
+        for(int i = 0; i < pathways.size(); i++) {
+            // Initialise bitmap cache memory
+            v.setDrawingCacheEnabled(true);
+            v.buildDrawingCache(true);
+            // END
+
+            this.canvasView.newPaths = pathways.get(i);
+            Bitmap bitmap = this.canvasView.getDrawingCache();
+            canvas_bitmaps.put(i, bitmap);
+
+        }
+
+        // restore canvasView.newPath before the loop
+        this.canvasView.newPaths = pathways.get(pos);
+
+        // Array is now full of all bitmap images, encode them into a video:
+        SeekableByteChannel out = null;
+        try {
+            out = NIOUtils.writableFileChannel("/sdcard/Animation_Doodle_Images/output.mp4");
+            // for Android use: AndroidSequenceEncoder
+            AndroidSequenceEncoder encoder = new AndroidSequenceEncoder(out, Rational.R(25, 1));
+            for (int i = 0; i < canvas_bitmaps.size(); i++) {
+                // Generate the image, for Android use Bitmap
+
+                // START (Adjust code here)
+                Bitmap image = canvas_bitmaps.get(i);
+                //encoder.encodeImage(image); // Huge Delays (Fix this particular part)
+                // END (Finished)
+
+                System.out.println("Encoded Frame (" + i + ")");
+            }
+            // Finalize the encoding, i.e. clear the buffers, write the header, etc.
+            encoder.finish();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("==============\nError in (save_animation()) function\n==============");
+        }
+        finally {
+            v.setDrawingCacheEnabled(false);
+            NIOUtils.closeQuietly(out);
+            System.out.println("Animation Successfully Saved...");
+
+            // Testing...
+            System.out.println("\nTesting");
+            System.out.println("Current CanvasView paths: " + this.canvasView.newPaths);
+            System.out.println("pathways: " + pathways);
+            System.out.println("pathways Length: " + pathways.size());
+
         }
     }
 
@@ -406,10 +479,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void previous_frame(View v) {
         Integer currentIndex = this.pos;
-        List<Pair <Path, Paint>> mixed_frame = new ArrayList<>();
+        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
 
         if (currentIndex > 0) {
-            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
+            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex - 1); // -1 for previous version
             // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
