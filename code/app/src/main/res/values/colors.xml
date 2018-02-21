@@ -9,6 +9,7 @@
     <color name="colorOrange">#ffa500</color>
     <color name="ice_teal">#42c2f4</color>
     <color name="nice_grey">#88313131</color>
+    <color name="nice_blue">#00AFFF</color>
 
     <!-- Button Colour Transition -->
     <color name="button_pressed">#F0F0F0</color>
