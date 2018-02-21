@@ -35,7 +35,7 @@ public class FileUpload {
         File selectedFile = new File(file);
         if (!selectedFile.isFile()) {
             System.out.println("file does not exist");
-            return null;git
+            return null;
         }
 
         try {
