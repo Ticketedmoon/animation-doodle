@@ -492,7 +492,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // #33000000 == 20% transparent
             // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 -- link to colours
 
-            this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
+            // this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
             // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
@@ -500,7 +500,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             pathways.put(pos, mixed_frame);
             this.canvasView.newPaths = mixed_frame;
-            canvasView.invalidate();
+            this.canvasView.invalidate();
         }
     }
 }
