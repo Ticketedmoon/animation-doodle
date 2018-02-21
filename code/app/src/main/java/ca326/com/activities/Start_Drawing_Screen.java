@@ -9,16 +9,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -39,11 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jcodec.api.SequenceEncoder;
 import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.io.SeekableByteChannel;
-import org.jcodec.common.model.Picture;
 import org.jcodec.common.model.Rational;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -80,13 +72,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_PASSWORD = "password";
 
     // Image Buttons / Buttons
-    ImageButton onionButton;
-    ImageButton play;
-    ImageButton ham_menu;
-    ImageButton profile;
-    ImageButton top_rated;
+    private ImageButton onionButton;
+    private ImageButton play;
+    private ImageButton ham_menu;
+    private ImageButton profile;
+    private ImageButton top_rated;
 
-    // OTher Fields
+    // Other Fields
     public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
     private Paint mPaint;
@@ -110,7 +102,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.ham_menu = (ImageButton)findViewById(R.id.menu);
         this.ham_menu.setBackgroundColor(Color.TRANSPARENT);
 
-        this.profile = (ImageButton)findViewById(R.id.profile);
+        this.profile = (ImageButton)findViewById(R.id.profile_menu);
         this.profile.setBackgroundColor(Color.TRANSPARENT);
         this.profile.setImageResource(R.drawable.profile_background_colour);
 
@@ -239,6 +231,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // Disable back button on this screen
+
+    /*
     public void onBackPressed() {
         System.out.println("Back Button Pushed <Returning to Homescreen>");
         Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -247,6 +241,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         startActivity(startMain);
 
     }
+    */
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");

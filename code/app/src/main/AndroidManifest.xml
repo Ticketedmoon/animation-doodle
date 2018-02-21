@@ -22,11 +22,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+
+        <activity
+            android:name=".Main_Menu_Screen"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".Top_Rated_Screen"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
@@ -38,6 +44,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".Start_Drawing_Screen" />
+
         <activity
             android:name=".Intro_Animation_Transition_Screen"
             android:screenOrientation="portrait">
@@ -47,6 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Register_Screen"
             android:label="@string/title_activity_register__screen"
@@ -62,13 +70,17 @@
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".Play_Animation_Screen" />
+
+        <!-- Special Views -->
         <activity android:name=".MyVolleyRequest" />
         <activity android:name=".Video" />
         <activity android:name=".MyCardAdapter" />
         <activity android:name=".CustomVideoView" />
         <activity android:name=".Test_VideoPlayer" />
-        <activity android:name=".ProfileCardAdapter"></activity>
+        <activity android:name=".ProfileCardAdapter" />
+
     </application>
 
 </manifest>

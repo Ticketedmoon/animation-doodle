@@ -15,7 +15,7 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     public void initSplash(ConfigSplash configSplash) {
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.ice_teal); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.colorOrange); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(1500); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
@@ -35,7 +35,7 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
 
         //Customize Title
         configSplash.setTitleSplash("Animation Doodle");
-        configSplash.setTitleTextColor(R.color.colorWhite);
+        configSplash.setTitleTextColor(R.color.colorBlack);
         configSplash.setTitleTextSize(40f); //float value
         configSplash.setAnimTitleDuration(1500);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
@@ -46,8 +46,8 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     @Override
     public void animationsFinished() {
         //transit to another activity here
-        Intent canvas_memory = new Intent(Intro_Animation_Transition_Screen.this, Start_Drawing_Screen.class);
-        startActivity(canvas_memory);
+        Intent main_menu = new Intent(Intro_Animation_Transition_Screen.this, Main_Menu_Screen.class);
+        startActivity(main_menu);
     }
 
 }
