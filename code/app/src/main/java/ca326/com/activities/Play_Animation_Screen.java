@@ -17,7 +17,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
     // Normal fields
     private CanvasViewNonEditable cv;
     private Integer pos;
-    private boolean playButton = true;
+    public static Integer frame_rate;
 
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = Start_Drawing_Screen.pathways;
 
@@ -57,7 +57,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
 
                 // Delay needs to be here for pause / play button reasons
                 // instead of 1000 mention the delay in milliseconds
-                m_handler.postDelayed(m_handlerTask, 500);
+                m_handler.postDelayed(m_handlerTask, frame_rate);
 
                 // Doesn't require {} body since only 1 line following the IF conditional.
                 if (pos == pathways.size())

@@ -9,12 +9,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +30,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,6 +38,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jcodec.api.SequenceEncoder;
+import org.jcodec.api.android.AndroidSequenceEncoder;
+import org.jcodec.common.io.NIOUtils;
+import org.jcodec.common.io.SeekableByteChannel;
+import org.jcodec.common.model.Picture;
+import org.jcodec.common.model.Rational;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -53,7 +65,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Integer frame_counter = 1;
     public static List<Integer> frames = new ArrayList<Integer>();
     private List<String> frameNums = new ArrayList<String>();
+
+    // Input from user stored in these variables
     private static String value;
+    private static Integer frame_rate_value = 2;
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -147,6 +162,68 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
+    // Save Animation Function, takes all frames in canvas
+    // Converts them to bitmaps and encodes them to mp4.
+    // *DYSFUNCTIONAL*
+    public void save_animation(View v) {
+        System.out.println("Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
+
+        // Store bitmaps in an array
+        Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();
+
+        // Start at first frame
+        for(int i = 0; i < pathways.size(); i++) {
+            // Initialise bitmap cache memory
+            v.setDrawingCacheEnabled(true);
+            v.buildDrawingCache(true);
+            // END
+
+            this.canvasView.newPaths = pathways.get(i);
+            Bitmap bitmap = this.canvasView.getDrawingCache();
+            canvas_bitmaps.put(i, bitmap);
+
+        }
+
+        // restore canvasView.newPath before the loop
+        this.canvasView.newPaths = pathways.get(pos);
+
+        // Array is now full of all bitmap images, encode them into a video:
+        SeekableByteChannel out = null;
+        try {
+            out = NIOUtils.writableFileChannel("/sdcard/Animation_Doodle_Images/output.mp4");
+            // for Android use: AndroidSequenceEncoder
+            AndroidSequenceEncoder encoder = new AndroidSequenceEncoder(out, Rational.R(25, 1));
+            for (int i = 0; i < canvas_bitmaps.size(); i++) {
+                // Generate the image, for Android use Bitmap
+
+                // START (Adjust code here)
+                Bitmap image = canvas_bitmaps.get(i);
+                //encoder.encodeImage(image); // Huge Delays (Fix this particular part)
+                // END (Finished)
+
+                System.out.println("Encoded Frame (" + i + ")");
+            }
+            // Finalize the encoding, i.e. clear the buffers, write the header, etc.
+            encoder.finish();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("==============\nError in (save_animation()) function\n==============");
+        }
+        finally {
+            v.setDrawingCacheEnabled(false);
+            NIOUtils.closeQuietly(out);
+            System.out.println("Animation Successfully Saved...");
+
+            // Testing...
+            System.out.println("\nTesting");
+            System.out.println("Current CanvasView paths: " + this.canvasView.newPaths);
+            System.out.println("pathways: " + pathways);
+            System.out.println("pathways Length: " + pathways.size());
+
+        }
+    }
+
     private void adjust_timeline() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
         LinearLayoutManager horizontalLayoutManagaer
@@ -173,7 +250,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
-        get_file_input(this.canvasView);
+        get_file_input_save(this.canvasView);
         // Add and delete tmp file
         save("tmp");
         File file = new File("/sdcard/Animation_Doodle_Images/tmp.jpg");
@@ -212,7 +289,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public void get_file_input(View v) {
+    public void get_file_input_save(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Enter a filename");
@@ -227,6 +304,42 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 value = input.getText().toString();
                 // Do something with value!
                 save(value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.create().show();
+    }
+
+    // Adapt this function later to handle Integers rather than Strings more efficiently.
+    public void get_file_input_frame_rate(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Frame Rate Manager");
+        alert.setMessage("Enter how many Frames to display per second (FPS): ");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                try {
+                    Integer v = Integer.parseInt(input.getText().toString());
+                    if(v > 0)
+                        frame_rate_value = v;
+                    else
+                        Toast.makeText(getApplication(), "Impossible frame rate entered. Try Again.", Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("Entered a string value rather than an Integer");
+                    Toast.makeText(getApplication(), "Frame rate unchanged (Entered a non-number)", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -327,6 +440,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void play_animation(View v) {
+        // First Assign frame_rate (Default 1.5 frames per second)
+        Play_Animation_Screen.frame_rate = (int) (1000 / (frame_rate_value));
+        System.out.println("Frame rate set at: " + Integer.toString(Play_Animation_Screen.frame_rate));
+
         // Close Menu if open
         if (this.is_menu_open)
             shift_menu(menu);
@@ -338,6 +455,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         pos = this.frames.size()-1;
         Intent playing = new Intent(Start_Drawing_Screen.this, Play_Animation_Screen.class);
         startActivity(playing);
+    }
+
+    public void prompt_frame_rate(View v) {
+        // Integer value stored in class field.
+        get_file_input_frame_rate(canvasView);
     }
 
     public void add_frame(View v) {
@@ -360,13 +482,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void previous_frame(View v) {
         Integer currentIndex = this.pos;
-        List<Pair <Path, Paint>> mixed_frame = new ArrayList<>();
+        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
 
         if (currentIndex > 0) {
 
             List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
 
-            //example of transparent paint
+            //example of transparent paint , obviously not working properly
             // #80000000 == 50 % transparent
             // #33000000 == 20% transparent
             // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 -- link to colours
