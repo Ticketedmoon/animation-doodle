@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class FileUpload {
 
-    public static final String URL= "http://animationdoodle2017.com/videos/uploadFile.php";
+    public static final String URL= "http://animationdoodle2017.com/videos/videoUpload.php";
 
     private int responseFromServer;
 
@@ -75,6 +75,7 @@ public class FileUpload {
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
             responseFromServer = conn.getResponseCode();
+            System.out.println("rsponse is " + responseFromServer);
 
             fileInputStream.close();
             dos.flush();

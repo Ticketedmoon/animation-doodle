@@ -97,7 +97,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton top_rated;
 
     //Upload feature
-
+    private TextView textView;
+    private TextView textViewResponse;
     private static final int SELECT_VIDEO = 3;
 
     private String filePath;
@@ -114,7 +115,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
-
+        textView = (TextView) findViewById(R.id.textView);
+        textViewResponse = (TextView) findViewById(R.id.textViewResponse);
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
@@ -580,7 +582,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //set message for the user to see the progress
+                //set message for the user to see the pr
                 uploading = ProgressDialog.show(Start_Drawing_Screen.this, "uploading file to the database", "Please wait", false, false);
             }
 
@@ -589,8 +591,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 super.onPostExecute(s);
                 //gets rid of progress dialog
                 uploading.dismiss();
-               // textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
-               // textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+                textViewResponse.setText(Html.fromHtml("File uploaded!"));
+                textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
             @Override
