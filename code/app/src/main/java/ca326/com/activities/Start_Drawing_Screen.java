@@ -40,6 +40,24 @@ import org.jcodec.common.model.Rational;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.support.v4.content.CursorLoader;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.VideoView;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
     // Views
@@ -78,10 +96,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton profile;
     private ImageButton top_rated;
 
+    //Upload feature
+
+    private static final int SELECT_VIDEO = 3;
+
+    private String filePath;
+
+
     // Other Fields
     public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
-    private Paint mPaint;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,23 +114,25 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
 
+
+
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
-        this.onionButton = (ImageButton)findViewById(R.id.onionSkinningButton);
-        this.play = (ImageButton)findViewById((R.id.play_button));
+        this.onionButton = (ImageButton) findViewById(R.id.onionSkinningButton);
+        this.play = (ImageButton) findViewById((R.id.play_button));
         // END
 
         // Image button / Button onClick Listeners (For Style effects)
-        this.ham_menu = (ImageButton)findViewById(R.id.menu);
+        this.ham_menu = (ImageButton) findViewById(R.id.menu);
         this.ham_menu.setBackgroundColor(Color.TRANSPARENT);
 
-        this.profile = (ImageButton)findViewById(R.id.profile_menu);
+        this.profile = (ImageButton) findViewById(R.id.profile_menu);
         this.profile.setBackgroundColor(Color.TRANSPARENT);
         this.profile.setImageResource(R.drawable.profile_background_colour);
 
-        this.top_rated = (ImageButton)findViewById(R.id.top_rated);
+        this.top_rated = (ImageButton) findViewById(R.id.top_rated);
         this.top_rated.setBackgroundColor(Color.TRANSPARENT);
         this.top_rated.setImageResource(R.drawable.top_rated_background_colour);
 
@@ -125,13 +151,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Onion Button
         onionButton.setImageResource(R.drawable.onion);
-        onionButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view)
-            {
+        onionButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
                 //add onion layers
                 if (onionSkinning) {
                     for (int i = 0; i < pathways.size(); i++) {
-                        if (pos!=0) {
+                        if (pos != 0) {
                             canvasView.newPaths.addAll(pathways.get(pos - 1));
                             canvasView.invalidate();
                         }
@@ -141,6 +166,28 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 }
             }
         });
+    }
+
+    private void chooseVideo() {
+        Intent intent = new Intent();
+        //only search for videos on phone
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a video "), SELECT_VIDEO);
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_VIDEO) {
+                Uri imageUri = data.getData();
+                filePath = getPath(imageUri);
+                //textView.setText(filePath);
+            }
+        }
+
     }
 
     // When clicking a frame on the timeline, update some parameters
@@ -420,8 +467,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public void upload(View view){
-        
+    public void upload(View v){
+        uploadVideo();
+    }
+
+    public void choose(View v){
+        chooseVideo();
     }
 
     // TOOL BAR MODIFICATIONS
@@ -503,4 +554,54 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.invalidate();
         }
     }
+
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+    private void uploadVideo() {
+        class UploadVideo extends AsyncTask<Void, Void, String> {
+
+            ProgressDialog uploading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //set message for the user to see the progress
+                uploading = ProgressDialog.show(Start_Drawing_Screen.this, "uploading file to the database", "Please wait", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //gets rid of progress dialog
+                uploading.dismiss();
+               // textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
+               // textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                FileUpload upload = new FileUpload();
+                String msg = upload.uploadFile(filePath);
+                return msg;
+            }
+        }
+        UploadVideo uv = new UploadVideo();
+        uv.execute();
+    }
+
 }
