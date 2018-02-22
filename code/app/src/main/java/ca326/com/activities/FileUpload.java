@@ -75,7 +75,7 @@ public class FileUpload {
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
             responseFromServer = conn.getResponseCode();
-            System.out.println("rsponse is " + responseFromServer);
+            System.out.println("response is " + responseFromServer);
 
             fileInputStream.close();
             dos.flush();
@@ -103,4 +103,6 @@ public class FileUpload {
             return "Upload unsuccessfull";
         }
     }
+
+
 }
