@@ -96,7 +96,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     //just used to check if its a video being uploaded for onStartActivity
     private static final int video_code = 1;
     private Bitmap tmp;
-    private String filePath;
+    private String videoPath;
+    private String imagePath;
     private File newfile = null;
 
 
@@ -449,6 +450,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void choose(View v){
+
+        // the thumbnail of the video will be the frame halfway through the animation
         Integer middle = (this.pathways.size() / 2)-1;
         this.canvasView.newPaths = this.pathways.get(middle);
 
@@ -495,10 +498,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             if (requestCode == video_code) {
                 Uri imageUri = data.getData();
                 System.out.println("image uri is : " + imageUri);
-                //filePath = getPath(imageUri);
-                filePath = newfile.toString();
-                System.out.println("filepath == " + filePath);
-                textView.setText(filePath);
+                videoPath = getPath(imageUri);
+                imagePath = newfile.toString();
+                System.out.println("imagePath == " + imagePath);
+                textView.setText(imagePath);
             }
         }
 
@@ -637,9 +640,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             @Override
             protected String doInBackground(Void... params) {
                 FileUpload upload = new FileUpload();
-                System.out.println("file is " + filePath);
-                String msg = upload.uploadFile(filePath);
+                System.out.println("file is " + imagePath);
+                String msg = upload.uploadFile(imagePath);
+                String msg2 = upload.uploadFile(videoPath);
                 return msg;
+
             }
         }
         UploadVideo uv = new UploadVideo();
