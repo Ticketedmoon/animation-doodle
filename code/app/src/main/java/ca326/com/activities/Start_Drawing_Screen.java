@@ -69,6 +69,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Paint mDefaultPaint;
     private ImageButton colour_picker;
     private MyRecyclerViewAdapter adapter;
+    private AndroidSequenceEncoder encoder;
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
@@ -210,36 +211,38 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         System.out.println("Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
 
         // Store bitmaps in an array
-        Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();
+        Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
+        v.setDrawingCacheEnabled(true);
+        v.buildDrawingCache(true);
+        // END
+
+        // Assign pathways
+        pathways.put(pos, this.canvasView.newPaths);
 
         // Start at first frame
         for(int i = 0; i < pathways.size(); i++) {
-            // Initialise bitmap cache memory
-            v.setDrawingCacheEnabled(true);
-            v.buildDrawingCache(true);
-            // END
-
             this.canvasView.newPaths = pathways.get(i);
-            Bitmap bitmap = this.canvasView.getDrawingCache();
+            Bitmap bitmap = loadBitmapFromView(v);
             canvas_bitmaps.put(i, bitmap);
 
         }
 
         // restore canvasView.newPath before the loop
+        System.out.println(canvas_bitmaps);
         this.canvasView.newPaths = pathways.get(pos);
 
         // Array is now full of all bitmap images, encode them into a video:
         SeekableByteChannel out = null;
         try {
-            out = NIOUtils.writableFileChannel("/sdcard/Animation_Doodle_Images/output.mp4");
+            out = NIOUtils.writableFileChannel("/sdcard/Animation_Doodle_Images/outputx.mp4");
             // for Android use: AndroidSequenceEncoder
-            AndroidSequenceEncoder encoder = new AndroidSequenceEncoder(out, Rational.R(25, 1));
+            encoder = new AndroidSequenceEncoder(out, Rational.R(1, 4));
             for (int i = 0; i < canvas_bitmaps.size(); i++) {
                 // Generate the image, for Android use Bitmap
 
                 // START (Adjust code here)
                 Bitmap image = canvas_bitmaps.get(i);
-                //encoder.encodeImage(image); // Huge Delays (Fix this particular part)
+                encoder.encodeImage(image); // Huge Delays (Fix this particular part)
                 // END (Finished)
 
                 System.out.println("Encoded Frame (" + i + ")");
@@ -265,6 +268,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap( 800, 600, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(c);
+        return b;
+    }
+
     private void adjust_timeline() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
         LinearLayoutManager horizontalLayoutManagaer
@@ -280,17 +291,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // Disable back button on this screen
-
-    /*
-    public void onBackPressed() {
-        System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(startMain);
-
-    }
-    */
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
