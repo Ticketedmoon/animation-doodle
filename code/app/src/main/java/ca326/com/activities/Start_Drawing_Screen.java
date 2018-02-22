@@ -26,8 +26,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,21 +44,13 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.VideoView;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
@@ -100,9 +94,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     //Upload feature
     private TextView textView;
     private TextView textViewResponse;
-    private static final int SELECT_VIDEO = 3;
 
-    private String filePath;
+    //just used to check if its a video being uploaded for onStartActivity
+    private static final int video_code = 1;
+    private Bitmap tmp;
+    private String videoPath;
+    private String imagePath;
+    private File newfile = null;
 
 
     // Other Fields
@@ -171,27 +169,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         });
     }
 
-    private void chooseVideo() {
-        Intent intent = new Intent();
-        //only search for videos on phone
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a video "), SELECT_VIDEO);
-    }
-
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_VIDEO) {
-                Uri imageUri = data.getData();
-                filePath = getPath(imageUri);
-                //textView.setText(filePath);
-            }
-        }
-
-    }
 
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
@@ -474,7 +451,69 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void choose(View v){
+
+        // the thumbnail of the video will be the frame halfway through the animation
+        Integer middle = (this.pathways.size() / 2)-1;
+        this.canvasView.newPaths = this.pathways.get(middle);
+
+        try {
+
+            this.canvasView.setDrawingCacheEnabled(true);
+            tmp = this.canvasView.getDrawingCache();
+            this.canvasView.setDrawingCacheEnabled(true);
+            Canvas canvas = new Canvas(tmp);
+            canvas.drawColor(Color.WHITE);
+            this.canvasView.draw(canvas);
+
+            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+
+                /////   Very important
+                ///     here is where you will substitute this path into the method to upload
+
+                ///     f is now going to be the same as path
+
+                //// make the file name the same as the video file name + .jpg to differentiate
+                //// will change this later when save feature is done
+                newfile = new File(file.getAbsolutePath()+ file.separator + "video_namedddd" +".jpg");
+                System.out.println("file path is " + newfile);
+            }
+            FileOutputStream ostream = new FileOutputStream(newfile);
+            tmp.compress(Bitmap.CompressFormat.JPEG, 15, ostream);
+            ostream.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+
         chooseVideo();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == video_code) {
+                Uri imageUri = data.getData();
+                System.out.println("image uri is : " + imageUri);
+                videoPath = getPath(imageUri);
+                imagePath = newfile.toString();
+                System.out.println("imagePath == " + imagePath);
+                textView.setText(imagePath);
+            }
+        }
+
+    }
+
+    public void chooseVideo() {
+        Intent intent = new Intent();
+        //only search for videos on phone
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a video "), video_code);
     }
 
     // TOOL BAR MODIFICATIONS
@@ -564,14 +603,18 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
         cursor.close();
 
+        //this is important to change depending on whether your uploading videos or images
+
         cursor = getContentResolver().query(
                 android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
         cursor.moveToFirst();
+        System.out.println("cursor is  " + cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        System.out.println("the path is " + path);
         cursor.close();
-
         return path;
+
     }
 
     private void uploadVideo() {
@@ -598,8 +641,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             @Override
             protected String doInBackground(Void... params) {
                 FileUpload upload = new FileUpload();
-                String msg = upload.uploadFile(filePath);
+                System.out.println("file is " + imagePath);
+                String msg = upload.uploadFile(imagePath);
+                String msg2 = upload.uploadFile(videoPath);
                 return msg;
+
             }
         }
         UploadVideo uv = new UploadVideo();
