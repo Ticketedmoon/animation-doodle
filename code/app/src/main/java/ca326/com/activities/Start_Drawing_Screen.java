@@ -467,20 +467,30 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // the thumbnail of the video will be the frame halfway through the animation
 
+        //this next line remembers the canvas that the user is on when uploading video so it doesn't get overwritten by the thumbnail
+        this.pathways.put(this.pos, this.canvasView.newPaths);
+
         //first check if there is more than 1 frame in animation
         //if not then obviously the thumbnail is the first frame
         if (this.pathways.size() > 1) {
+            System.out.println("size of list is " + this.pathways.size());
             Integer middle = (this.pathways.size() / 2) - 1;
             this.canvasView.newPaths = this.pathways.get(middle);
+            System.out.println("size of list is " + this.canvasView.newPaths.size());
+            //System.out.println("size of list is " + this.canvasView.newPaths.get(middle));
         }
         try {
 
             this.canvasView.setDrawingCacheEnabled(true);
             tmp = this.canvasView.getDrawingCache();
-            this.canvasView.setDrawingCacheEnabled(true);
             Canvas canvas = new Canvas(tmp);
             canvas.drawColor(Color.WHITE);
             this.canvasView.draw(canvas);
+
+            //now retrieve the image for the right frame
+            this.canvasView.newPaths = this.pathways.get(this.pos);
+            this.canvasView.invalidate();
+
 
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
@@ -490,7 +500,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
-                newfile = new File(file.getAbsolutePath()+ file.separator + "name" +".jpg");
+                newfile = new File(file.getAbsolutePath()+ file.separator + "nammmme" +".jpg");
                 System.out.println("file path is " + newfile);
             }
             FileOutputStream outputStream = new FileOutputStream(newfile);
@@ -669,7 +679,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             protected String doInBackground(Void... params) {
                 try{
 
-                    //video and image upload
+                    //video and image object upload
 
                     FileUpload upload = new FileUpload();
                     System.out.println("file is " + imagePath);
@@ -723,8 +733,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             }
         }
-        UploadVideo uv = new UploadVideo();
-        uv.execute();
+        UploadVideo upload = new UploadVideo();
+        upload.execute();
     }
 
 }
