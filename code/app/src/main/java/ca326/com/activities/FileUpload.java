@@ -1,8 +1,5 @@
 package ca326.com.activities;
 
-import android.util.Log;
-
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;
