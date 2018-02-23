@@ -211,7 +211,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         v.buildDrawingCache(true);
         // END
 
-        // Assign pathways
+        // Assign pathways (IMPORTANT)
         pathways.put(pos, this.canvasView.newPaths);
 
         // Start at first frame
@@ -222,7 +222,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
 
         // restore canvasView.newPath before the loop
-        System.out.println(canvas_bitmaps);
         this.canvasView.newPaths = pathways.get(pos);
 
         // Array is now full of all bitmap images, now encode them into a video:
@@ -235,18 +234,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             if(!file.exists()){
                 file.mkdirs();
             }
-            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputy.mp4");
+            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputx.mp4");
             // for Android use: AndroidSequenceEncoder
             encoder = new AndroidSequenceEncoder(out, Rational.R(frame_rate_value, 1));
+
             // ASYNC TASK HERE
             for(int i = 0; i < canvas_bitmaps.size(); i++)
             {
                 // START (Adjust code here)
                 image = canvas_bitmaps.get(i);
+                // encoder.encodeImage(image) --- This line takes an extreme amount of time to process (ASYNC needed)
                 encoder.encodeImage(image);
-                System.out.println("Encoder: " + "Image (" + i + ") encoded!");
+                System.out.println("Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
             }
-
             encoder.finish();
         }
         catch (Exception e) {
@@ -266,7 +266,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(canvasView.getWidth()+25, canvasView.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap b = Bitmap.createBitmap(canvasView.getWidth()+16, canvasView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         c.drawColor(Color.WHITE);   // Essential
         canvasView.layout(canvasView.getLeft(), canvasView.getTop(), canvasView.getRight(), canvasView.getBottom());
