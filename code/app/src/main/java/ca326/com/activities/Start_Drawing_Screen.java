@@ -9,16 +9,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
@@ -27,8 +30,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +70,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton colour_picker;
     private MyRecyclerViewAdapter adapter;
     private AndroidSequenceEncoder encoder;
+    private Bitmap image;
+    private Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
+
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
@@ -188,7 +197,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         System.out.println("Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
 
         // Store bitmaps in an array
-        Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
         v.setDrawingCacheEnabled(true);
         v.buildDrawingCache(true);
         // END
@@ -201,14 +209,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.newPaths = pathways.get(i);
             Bitmap bitmap = loadBitmapFromView(v);
             canvas_bitmaps.put(i, bitmap);
-
         }
 
         // restore canvasView.newPath before the loop
         System.out.println(canvas_bitmaps);
         this.canvasView.newPaths = pathways.get(pos);
 
-        // Array is now full of all bitmap images, encode them into a video:
+        // Array is now full of all bitmap images, now encode them into a video:
         SeekableByteChannel out = null;
         try {
             // Verify Storage Permissions
@@ -218,26 +225,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             if(!file.exists()){
                 file.mkdirs();
             }
-
-            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputx.mp4");
+            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputy.mp4");
             // for Android use: AndroidSequenceEncoder
-            encoder = new AndroidSequenceEncoder(out, Rational.R(1, 4));
-            for (int i = 0; i < canvas_bitmaps.size(); i++) {
-                // Generate the image, for Android use Bitmap
-
-
+            encoder = new AndroidSequenceEncoder(out, Rational.R(frame_rate_value, 1));
+            // ASYNC TASK HERE
+            for(int i = 0; i < canvas_bitmaps.size(); i++)
+            {
                 // START (Adjust code here)
-                // ASYNC TASK HERE
-                Bitmap image = canvas_bitmaps.get(i);
-                encoder.encodeImage(image); // Huge Delays (Fix this particular part)
-                // END (Finished)
-
-                System.out.println("Encoded Frame (" + i + ")");
+                image = canvas_bitmaps.get(i);
+                encoder.encodeImage(image);
+                System.out.println("Encoder: " + "Image (" + i + ") encoded!");
             }
-            // Finalize the encoding, i.e. clear the buffers, write the header, etc.
+
             encoder.finish();
-            System.out.println("Animation Successfully Saved...");
-            Toast.makeText(getApplication(), "Animation successfully saved (/Animation_Doodle_Images)", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -248,7 +248,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             NIOUtils.closeQuietly(out);
 
             // Testing...
-            System.out.println("\nTesting");
             System.out.println("Current CanvasView paths: " + this.canvasView.newPaths);
             System.out.println("pathways: " + pathways);
             System.out.println("pathways Length: " + pathways.size());
@@ -257,8 +256,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap( 64, 64, Bitmap.Config.ARGB_8888);
+        Bitmap b = Bitmap.createBitmap(canvasView.getWidth()+25, canvasView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
+        c.drawColor(Color.WHITE);   // Essential
         canvasView.layout(canvasView.getLeft(), canvasView.getTop(), canvasView.getRight(), canvasView.getBottom());
         canvasView.draw(c);
         return b;
@@ -293,7 +293,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     private void save(String store_name) {
-
         verifyStoragePermissions(this);
 
         try {
@@ -496,8 +495,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         } catch(Exception e){
             e.printStackTrace();
         }
-
-
 
         chooseVideo();
     }
