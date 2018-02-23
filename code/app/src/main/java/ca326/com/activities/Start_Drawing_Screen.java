@@ -211,13 +211,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Array is now full of all bitmap images, encode them into a video:
         SeekableByteChannel out = null;
         try {
-            out = NIOUtils.writableFileChannel("/sdcard/Animation_Doodle_Images/outputx.mp4");
+            // Verify Storage Permissions
+            verifyStoragePermissions(this);
+            // If /Animation_Doodle_Images doesn't exist yet, generate it.
+            File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
+            if(!file.exists()){
+                file.mkdirs();
+            }
+
+            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputx.mp4");
             // for Android use: AndroidSequenceEncoder
             encoder = new AndroidSequenceEncoder(out, Rational.R(1, 4));
             for (int i = 0; i < canvas_bitmaps.size(); i++) {
                 // Generate the image, for Android use Bitmap
 
+
                 // START (Adjust code here)
+                // ASYNC TASK HERE
                 Bitmap image = canvas_bitmaps.get(i);
                 encoder.encodeImage(image); // Huge Delays (Fix this particular part)
                 // END (Finished)
@@ -226,6 +236,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
             // Finalize the encoding, i.e. clear the buffers, write the header, etc.
             encoder.finish();
+            System.out.println("Animation Successfully Saved...");
+            Toast.makeText(getApplication(), "Animation successfully saved (/Animation_Doodle_Images)", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -234,7 +246,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         finally {
             v.setDrawingCacheEnabled(false);
             NIOUtils.closeQuietly(out);
-            System.out.println("Animation Successfully Saved...");
 
             // Testing...
             System.out.println("\nTesting");
@@ -274,7 +285,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         get_file_input_save(this.canvasView);
         // Add and delete tmp file
         save("tmp");
-        File file = new File("/sdcard/Animation_Doodle_Images/tmp.jpg");
+        File file = new File(Environment.getExternalStorageDirectory(), "/Animation_Doodle_Images/tmp.jpg");
         boolean deleted = file.delete();
         System.out.println("tmp deleted: " + deleted);
         // Print out to log
@@ -284,8 +295,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private void save(String store_name) {
 
         verifyStoragePermissions(this);
-        // Bitmap bitmap = Bitmap.createBitmap(this.canvasView.width, this.canvasView.height, Bitmap.Config.ARGB_8888);
-        // this.canvasView.getDrawingCache();
 
         try {
             this.canvasView.setDrawingCacheEnabled(true);
