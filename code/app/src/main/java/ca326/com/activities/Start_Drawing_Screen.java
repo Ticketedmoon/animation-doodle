@@ -217,7 +217,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Start at first frame
         for(int i = 0; i < pathways.size(); i++) {
             this.canvasView.newPaths = pathways.get(i);
-            Bitmap bitmap = loadBitmapFromView(v);
+            Bitmap bitmap = loadBitmapFromView(canvasView);
             canvas_bitmaps.put(i, bitmap);
         }
 
@@ -245,7 +245,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 image = canvas_bitmaps.get(i);
                 // encoder.encodeImage(image) --- This line takes an extreme amount of time to process (ASYNC needed)
                 encoder.encodeImage(image);
-                System.out.println("Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
+                Log.i("save_animation", "Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
             }
             encoder.finish();
         }
@@ -256,6 +256,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         finally {
             v.setDrawingCacheEnabled(false);
             NIOUtils.closeQuietly(out);
+            Toast.makeText(getApplication(), "Animation successfully Downloaded (/sdcard/Animation_Doodle_Images)", Toast.LENGTH_SHORT).show();
 
             // Testing...
             System.out.println("Current CanvasView paths: " + this.canvasView.newPaths);
@@ -266,10 +267,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(canvasView.getWidth()+16, canvasView.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap b = Bitmap.createBitmap(canvasView.getWidth(), canvasView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         c.drawColor(Color.WHITE);   // Essential
-        canvasView.layout(canvasView.getLeft(), canvasView.getTop(), canvasView.getRight(), canvasView.getBottom());
         canvasView.draw(c);
         return b;
     }
