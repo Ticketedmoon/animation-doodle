@@ -500,7 +500,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
-                newfile = new File(file.getAbsolutePath()+ file.separator + "n" +".jpg");
+                newfile = new File(file.getAbsolutePath()+ file.separator + "nnnnn" +".jpg");
                 System.out.println("file path is " + newfile);
             }
             FileOutputStream outputStream = new FileOutputStream(newfile);
@@ -522,7 +522,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 videoPath = getPath(imageUri);
                 imagePath = newfile.toString();
                 System.out.println("imagePath == " + imagePath);
-                textView.setText(imagePath);
             }
         }
 

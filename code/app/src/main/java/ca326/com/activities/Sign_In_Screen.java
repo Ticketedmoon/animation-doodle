@@ -75,6 +75,10 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     public static final String PREF_PASSWORD = "password";
 
 
+    // user id for profile
+    public static Integer user_id;
+
+
 
 
     @Override
@@ -211,7 +215,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            Toast toast = Toast.makeText(this, "Signing up...", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER,0, 0);
             toast.show();
             new UserLoginTask(this).execute(email,password);
@@ -344,10 +348,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     }
 
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
+
     public class UserLoginTask extends AsyncTask<String, Void, String> {
 
         Activity instance;
@@ -389,6 +390,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                 while((line=br.readLine())!=null)
                 {
                     result+=line;
+                    System.out.println("result is " + result);
                 }
                 return result;
 
@@ -407,13 +409,12 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
-                    if (query_result.equals("SUCCESS")) {
-                        Intent intent = new Intent(Sign_In_Screen.this, Top_Rated_Screen.class);
-                        startActivity(intent);
-                    } else if (query_result.equals("FAILURE")) {
-                        Toast.makeText(instance, "Login details incorrect.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (query_result.equals("User signed in")) {
+                    //System.out.println("string is " + query_result);
+                    Integer user_result = jsonObj.getInt("user_result");
+                    System.out.println("the user id is : " + user_result);
+                    if (query_result.equals("User signed in")) {
+                        user_id = user_result;
+                        System.out.println("the user id is : " + user_id);
                         Toast.makeText(instance, "Welcome back!", Toast.LENGTH_SHORT).show();
                         SharedPreferences mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
                         SharedPreferences.Editor mEditor = mSharedPreference.edit();
@@ -423,6 +424,10 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                         Intent intent = new Intent(Sign_In_Screen.this,Start_Drawing_Screen.class);
                         startActivity(intent);
                     }
+                    else if (query_result.equals("FAILURE")) {
+                        Toast.makeText(instance, "Login details incorrect.", Toast.LENGTH_SHORT).show();
+                    }
+
                     else {
                         Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                     }
@@ -442,10 +447,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             showProgress(false);
         }
     }
-
-
-    // TODO: register the new account here.
-
 
 
     public class changePasswordToAsterix extends PasswordTransformationMethod {

@@ -36,7 +36,6 @@ import java.util.List;
 public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     private RelativeLayout drop_down_option_menu;
-    private Button logout;
 
     private List<Video> listVideos;
 
@@ -61,7 +60,6 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         setContentView(R.layout.activity_profile__screen);
 
         this.drop_down_option_menu = (RelativeLayout) findViewById(R.id.menu_layout);
-        this.logout = (Button) findViewById(R.id.log_out_button);
 
         //Initializing Views
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
