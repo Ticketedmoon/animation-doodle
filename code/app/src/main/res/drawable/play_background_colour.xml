@@ -3,8 +3,8 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/top_rated_icon_red" />
+        android:drawable="@drawable/play_red_bg" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/top_rated_icon_w" />
+        android:drawable="@drawable/play" />
 </selector>

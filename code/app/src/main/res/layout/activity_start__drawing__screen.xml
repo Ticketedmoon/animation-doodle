@@ -38,7 +38,7 @@
                 android:layout_width="55dp"
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/frame_rate_btn"
-                android:layout_alignTop="@+id/play_button"
+                android:layout_alignTop="@+id/prev_frame"
                 android:adjustViewBounds="true"
                 android:background="@android:drawable/btn_default_small"
                 android:onClick="save_animation"
@@ -98,10 +98,9 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
-                android:layout_alignBaseline="@+id/clear"
-                android:layout_alignBottom="@+id/clear"
-                android:layout_marginStart="12dp"
-                android:layout_toEndOf="@+id/clear"
+                android:layout_alignTop="@+id/onionSkinningButton"
+                android:layout_marginEnd="12dp"
+                android:layout_toStartOf="@+id/onionSkinningButton"
                 android:background="@android:color/holo_red_light"
                 android:onClick="choose"
                 android:text="Choose"
@@ -155,7 +154,9 @@
             <TextView
                 android:id="@+id/textViewResponse"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
 
             <Button
                 android:id="@+id/prev_frame"
@@ -170,16 +171,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="8sp" />
 
-            <ImageButton
-                android:id="@+id/play_button"
-                android:layout_width="55dp"
-                android:layout_height="40dp"
-                android:layout_alignStart="@+id/save"
-                android:layout_alignTop="@+id/prev_frame"
-                android:adjustViewBounds="true"
-                android:background="@android:drawable/btn_default_small"
-                android:onClick="play_animation"
-                app:srcCompat="@drawable/play" />
         </RelativeLayout>
 
 
@@ -204,15 +195,14 @@
             app:srcCompat="@drawable/button_background_colour" />
 
         <ImageButton
-            android:id="@+id/top_rated"
+            android:id="@+id/play_button"
             android:layout_width="130dp"
             android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
-            android:onClick="goToTopRatedAnimations"
-            android:src="@drawable/top_rated_icon_w" />
+            android:onClick="play_animation"
+            app:srcCompat="@drawable/play" />
 
         <ImageButton
             android:id="@+id/profile_menu"

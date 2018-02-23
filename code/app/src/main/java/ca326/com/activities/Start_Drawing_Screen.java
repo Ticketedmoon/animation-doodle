@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,8 +28,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -152,9 +148,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.profile.setBackgroundColor(Color.TRANSPARENT);
         this.profile.setImageResource(R.drawable.profile_background_colour);
 
-        this.top_rated = (ImageButton) findViewById(R.id.top_rated);
-        this.top_rated.setBackgroundColor(Color.TRANSPARENT);
-        this.top_rated.setImageResource(R.drawable.top_rated_background_colour);
+        this.play = (ImageButton) findViewById(R.id.play_button);
+        this.play.setBackgroundColor(Color.TRANSPARENT);
+        this.play.setImageResource(R.drawable.play_background_colour);
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
