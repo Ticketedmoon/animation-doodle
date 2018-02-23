@@ -504,7 +504,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
-                newfile = new File(file.getAbsolutePath()+ file.separator + "nammmme" +".jpg");
+                newfile = new File(file.getAbsolutePath()+ file.separator + "n" +".jpg");
                 System.out.println("file path is " + newfile);
             }
             FileOutputStream outputStream = new FileOutputStream(newfile);
@@ -645,6 +645,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         class UploadVideo extends AsyncTask<Void, Void, String> {
 
             ProgressDialog uploading;
+            Activity instance;
+
+            UploadVideo(Activity instance) {
+                this.instance = instance;
+
+            }
 
             @Override
             protected void onPreExecute() {
@@ -666,13 +672,20 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                         JSONObject jsonObj = new JSONObject(jsonStr);
                         String query_result = jsonObj.getString("query_result");
                         if (query_result.equals("SUCCESS")) {
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
 
+                        }
+                     else if (query_result.equals("FAILURE")) {
+                        Toast.makeText(instance, "Data could not be inserted.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(instance, "Couldn't connect to remote database.", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
+            }
 
                 uploading.dismiss();
                 textViewResponse.setText(Html.fromHtml("File uploaded!"));
@@ -705,6 +718,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                     newImagePath = imageLink += newImagePath;
                     String newVideoPath = videoPath.substring(44);
                     newVideoPath = videoLink += newVideoPath;
+                    System.out.println("strings are " + newVideoPath + " " + newImagePath);
                     String link = "http://animationdoodle2017.com/uploadLinks.php";
                     URL url = new URL(link);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -737,7 +751,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             }
         }
-        UploadVideo upload = new UploadVideo();
+        UploadVideo upload = new UploadVideo(this);
         upload.execute();
     }
 
