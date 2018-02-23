@@ -5,6 +5,7 @@ import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
@@ -72,6 +73,11 @@ public class Play_Animation_Screen extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // do something
+            Log.i("Play Animation Log", "Back button pushed while animation playing");
+            Log.i("Play Animation Log", "Resetting pos...");
+            pos=0;
+            cv.invalidate();
+
             m_handler.removeCallbacks(m_handlerTask);
             finish();
             return false;
