@@ -243,8 +243,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             {
                 // START (Adjust code here)
                 image = canvas_bitmaps.get(i);
-                // encoder.encodeImage(image) --- This line takes an extreme amount of time to process (ASYNC needed)
-                encoder.encodeImage(image);
+                encoder.encodeImage(image); // --- This line takes an extreme amount of time to process (ASYNC needed)
                 Log.i("save_animation", "Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
             }
             encoder.finish();
