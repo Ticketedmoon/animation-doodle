@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
@@ -27,9 +28,17 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +48,8 @@ import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.io.SeekableByteChannel;
 import org.jcodec.common.model.Rational;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -301,9 +312,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 }
                 f = new File(file.getAbsolutePath()+ file.separator + store_name +".jpg");
             }
-            FileOutputStream ostream = new FileOutputStream(f);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 15, ostream);
-            ostream.close();
+            FileOutputStream outputStream = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 15, outputStream);
+            outputStream.close();
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -452,9 +463,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void choose(View v){
 
         // the thumbnail of the video will be the frame halfway through the animation
-        Integer middle = (this.pathways.size() / 2)-1;
-        this.canvasView.newPaths = this.pathways.get(middle);
 
+        //first check if there is more than 1 frame in animation
+        //if not then obviously the thumbnail is the first frame
+        if (this.pathways.size() > 1) {
+            Integer middle = (this.pathways.size() / 2) - 1;
+            this.canvasView.newPaths = this.pathways.get(middle);
+        }
         try {
 
             this.canvasView.setDrawingCacheEnabled(true);
@@ -470,19 +485,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                     file.mkdirs();
                 }
 
-                /////   Very important
-                ///     here is where you will substitute this path into the method to upload
-
-                ///     f is now going to be the same as path
-
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
-                newfile = new File(file.getAbsolutePath()+ file.separator + "video_namedddd" +".jpg");
+                newfile = new File(file.getAbsolutePath()+ file.separator + "name" +".jpg");
                 System.out.println("file path is " + newfile);
             }
-            FileOutputStream ostream = new FileOutputStream(newfile);
-            tmp.compress(Bitmap.CompressFormat.JPEG, 15, ostream);
-            ostream.close();
+            FileOutputStream outputStream = new FileOutputStream(newfile);
+            tmp.compress(Bitmap.CompressFormat.JPEG, 15, outputStream);
+            outputStream.close();
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -629,9 +639,26 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
 
             @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+            protected void onPostExecute(String result) {
+                //super.onPostExecute(result);
                 //gets rid of progress dialog
+                StringBuilder sb = new StringBuilder();
+                sb.append(result + "\n");
+                String jsonStr = sb.toString();
+                Log.i("response",jsonStr);
+                if (jsonStr != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(jsonStr);
+                        String query_result = jsonObj.getString("query_result");
+                        if (query_result.equals("SUCCESS")) {
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                } else {
+                }
+
                 uploading.dismiss();
                 textViewResponse.setText(Html.fromHtml("File uploaded!"));
                 textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
@@ -639,11 +666,59 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             @Override
             protected String doInBackground(Void... params) {
-                FileUpload upload = new FileUpload();
-                System.out.println("file is " + imagePath);
-                String msg = upload.uploadFile(imagePath);
-                String msg2 = upload.uploadFile(videoPath);
-                return msg;
+                try{
+
+                    //video and image upload
+
+                    FileUpload upload = new FileUpload();
+                    System.out.println("file is " + imagePath);
+                    String msg = upload.uploadFile(imagePath);
+                    String msg2 = upload.uploadFile(videoPath);
+                    //delete file from phone as its now on the server
+                    //not sure if this is working or not, need to check later
+                    boolean deleted = newfile.delete();
+
+                    //you need to strip imagePath and videoPath to only their name + file extension
+                    ///storage/emulated/0/Animation_Doodle_Images/testing.mp4 becomes
+                    /// http://animationdoodle2017.com/videos/uploads/testing.mp4
+
+
+                    //insert the location of the files into the database
+                    String imageLink = "http://animationdoodle2017.com/videos/uploads/";
+                    String videoLink = "http://animationdoodle2017.com/videos/uploads/";
+                    String newImagePath = imagePath.substring(44);
+                    newImagePath = imageLink += newImagePath;
+                    String newVideoPath = videoPath.substring(44);
+                    newVideoPath = videoLink += newVideoPath;
+                    String link = "http://animationdoodle2017.com/uploadLinks.php";
+                    URL url = new URL(link);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    OutputStream out=con.getOutputStream();
+
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                    String post_data= URLEncoder.encode("imageFile","UTF-8")+"="+URLEncoder.encode(newImagePath,"UTF-8")+"&"+
+                        URLEncoder.encode("videoFile","UTF-8")+"="+URLEncoder.encode(newVideoPath,"UTF-8");
+                    writer.write(post_data);
+                    writer.flush();
+                    writer.close();
+                    out.close();
+                    InputStream in=con.getInputStream();
+                    BufferedReader br=new BufferedReader(new InputStreamReader(in,"iso-8859-1"));
+                    String line="";
+                    String result="";
+                    while((line=br.readLine())!=null)
+                {
+                        result+=line;
+                }
+                    return result;
+
+            }   catch (Exception e) {
+                    return new String("Exception: " + e.getMessage());
+            }
+
 
             }
         }
