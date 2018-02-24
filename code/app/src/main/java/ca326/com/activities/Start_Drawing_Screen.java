@@ -78,9 +78,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Paint mDefaultPaint;
     private ImageButton colour_picker;
     private MyRecyclerViewAdapter adapter;
-    private AndroidSequenceEncoder encoder;
-    private Bitmap image;
-    private Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
+    public Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
 
 
     // Animation & Timeline Logic
@@ -91,7 +89,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Input from user stored in these variables
     private static String value;
-    private static Integer frame_rate_value = 2;
+    public static Integer frame_rate_value = 2;
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -107,7 +105,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton profile;
-    private ImageButton top_rated;
 
     //Upload feature
     private TextView textView;
@@ -119,7 +116,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private String videoPath;
     private String imagePath;
     private File newfile = null;
-
 
     // Other Fields
     public static boolean onionSkinning = true;
@@ -202,18 +198,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
     // *DYSFUNCTIONAL*
-    public void save_animation(View v) {
-        System.out.println("Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
-
-        // Store bitmaps in an array
-        v.setDrawingCacheEnabled(true);
-        v.buildDrawingCache(true);
-        // END
+    public void download_animation(View v) {
+        Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
 
         // Assign pathways (IMPORTANT)
         pathways.put(pos, this.canvasView.newPaths);
 
-        // Start at first frame
+        // Build an array of bitmap images from different pathways
         for(int i = 0; i < pathways.size(); i++) {
             this.canvasView.newPaths = pathways.get(i);
             Bitmap bitmap = loadBitmapFromView(canvasView);
@@ -223,45 +214,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // restore canvasView.newPath before the loop
         this.canvasView.newPaths = pathways.get(pos);
 
-        // Array is now full of all bitmap images, now encode them into a video:
-        SeekableByteChannel out = null;
-        try {
-            // Verify Storage Permissions
-            verifyStoragePermissions(this);
-            // If /Animation_Doodle_Images doesn't exist yet, generate it.
-            File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputx.mp4");
-            // for Android use: AndroidSequenceEncoder
-            encoder = new AndroidSequenceEncoder(out, Rational.R(frame_rate_value, 1));
-
-            // ASYNC TASK HERE
-            for(int i = 0; i < canvas_bitmaps.size(); i++)
-            {
-                // START (Adjust code here)
-                image = canvas_bitmaps.get(i);
-                encoder.encodeImage(image); // --- This line takes an extreme amount of time to process (ASYNC needed)
-                Log.i("save_animation", "Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
-            }
-            encoder.finish();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("==============\nError in (save_animation()) function\n==============");
-        }
-        finally {
-            v.setDrawingCacheEnabled(false);
-            NIOUtils.closeQuietly(out);
-            Toast.makeText(getApplication(), "Animation successfully Downloaded (/sdcard/Animation_Doodle_Images)", Toast.LENGTH_SHORT).show();
-
-            // Testing...
-            System.out.println("Current CanvasView paths: " + this.canvasView.newPaths);
-            System.out.println("pathways: " + pathways);
-            System.out.println("pathways Length: " + pathways.size());
-
-        }
+        // ASYNC TASK HERE (Encode Images)
+        DownloadFilesTask task = new DownloadFilesTask(this);
+        task.execute();
     }
 
     public static Bitmap loadBitmapFromView(View v) {
@@ -650,7 +605,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             UploadVideo(Activity instance) {
                 this.instance = instance;
-
             }
 
             @Override

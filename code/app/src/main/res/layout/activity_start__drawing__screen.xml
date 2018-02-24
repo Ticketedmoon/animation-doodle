@@ -41,7 +41,7 @@
                 android:layout_alignTop="@+id/prev_frame"
                 android:adjustViewBounds="true"
                 android:background="@android:drawable/btn_default_small"
-                android:onClick="save_animation"
+                android:onClick="download_animation"
                 android:scaleType="fitCenter"
                 app:srcCompat="@android:drawable/ic_menu_compass" />
 
