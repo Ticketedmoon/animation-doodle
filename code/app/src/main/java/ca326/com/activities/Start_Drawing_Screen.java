@@ -64,6 +64,9 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import static ca326.com.activities.Sign_In_Screen.user_id;
+
+
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
     // Views
@@ -727,7 +730,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                     String post_data= URLEncoder.encode("imageFile","UTF-8")+"="+URLEncoder.encode(newImagePath,"UTF-8")+"&"+
-                        URLEncoder.encode("videoFile","UTF-8")+"="+URLEncoder.encode(newVideoPath,"UTF-8");
+                        URLEncoder.encode("videoFile","UTF-8")+"="+URLEncoder.encode(newVideoPath,"UTF-8")+"&"+
+                            URLEncoder.encode("id","UTF-8")+"="+user_id;
                     writer.write(post_data);
                     writer.flush();
                     writer.close();
