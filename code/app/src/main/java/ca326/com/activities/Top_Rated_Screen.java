@@ -172,8 +172,9 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         //If scrolled at last then
         if (isLastItemDisplaying(recyclerView)) {
-            //retrieve next page of videos
-            getData();
+            return;
         }
+        //retrieve next page of videos
+        getVideoFromDB(pageCount);
     }
 }

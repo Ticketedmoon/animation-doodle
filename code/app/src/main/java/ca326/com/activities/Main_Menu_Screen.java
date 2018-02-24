@@ -50,6 +50,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
 
+
         if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
             intent = new Intent(Main_Menu_Screen.this, Profile_Screen.class);
         }

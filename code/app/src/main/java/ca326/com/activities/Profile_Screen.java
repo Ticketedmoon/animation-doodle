@@ -36,7 +36,7 @@ import static ca326.com.activities.Sign_In_Screen.user_id;
 // __Author__ = James Collins
 
 
-public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
+public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener {
 
     public static String deciding_string;
 
@@ -83,9 +83,6 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //method to retrieve data from database
         getData();
 
-        //Adding an scroll change listener to recyclerview
-        recyclerView.setOnScrollChangeListener(this);
-
         //initializing our adapter with list of videos
         adapter = new ProfileCardAdapter(listVideos, this);
 
@@ -109,7 +106,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         progressBar.setVisibility(View.VISIBLE);
         setProgressBarIndeterminateVisibility(true);
         System.out.println("user_id is " + user_id);
-        //System.out.println("shared  " + mSharedPreference.getAll());
+       // System.out.println("shared  " + mSharedPreference.getAll());
 
 
         //set up jsonArrayRequest as the data retrieved using PHP script will be in a list format
@@ -177,21 +174,14 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     //check if reached bottom
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
         if (recyclerView.getAdapter().getItemCount() != 0) {
-            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            int lastVisibleItemPosition = ((GridLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            System.out.println("length is " + lastVisibleItemPosition);
+            System.out.println("list is " + recyclerView.getAdapter().getItemCount());
+            System.out.println("view is " + RecyclerView.NO_POSITION);
             if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
                 return true;
         }
         return false;
-    }
-
-    //detects scrolling
-    @Override
-    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        //If scrolled at last then
-        if (isLastItemDisplaying(recyclerView))
-            return;
-        //retrieve next page of videos
-        getData();
     }
     public void menu(View v) {
         System.out.println("clicked");
