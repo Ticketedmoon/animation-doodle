@@ -71,6 +71,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     //shared preferences
 
     public static final String PREFERENCE= "preference";
+    public static final String PREF_ID = "id";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
@@ -78,6 +79,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     // user id for profile
     public static Integer user_id;
 
+    public static SharedPreferences mSharedPreference;
 
 
 
@@ -416,11 +418,13 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                         user_id = user_result;
                         System.out.println("the user id is : " + user_id);
                         Toast.makeText(instance, "Welcome back!", Toast.LENGTH_SHORT).show();
-                        SharedPreferences mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+                        mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
                         SharedPreferences.Editor mEditor = mSharedPreference.edit();
+                        mEditor.putInt(PREF_ID,user_id);
                         mEditor.putString(PREF_EMAIL,email);
                         mEditor.putString(PREF_PASSWORD,password);
                         mEditor.apply();
+                        System.out.println("shared  " + mSharedPreference.getAll());
                         Intent intent = new Intent(Sign_In_Screen.this,Start_Drawing_Screen.class);
                         startActivity(intent);
                     }

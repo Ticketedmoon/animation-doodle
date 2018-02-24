@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ca326.com.activities.Profile_Screen.deciding_string;
+
 public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
     //list of videos
@@ -160,6 +162,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
     public void onItemClick(View view, int position) {
         this.position = position;
+        deciding_string = "topRated";
         Intent intent = new Intent (Top_Rated_Screen.this, Test_VideoPlayer.class);
         startActivity(intent);
 

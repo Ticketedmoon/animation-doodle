@@ -29,15 +29,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ca326.com.activities.Sign_In_Screen.mSharedPreference;
+import static ca326.com.activities.Sign_In_Screen.user_id;
+
 // __Author__ = Shane Creedon (Shane.creedon3@mail.dcu.ie)
 // __Author__ = James Collins
 
 
 public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
 
+    public static String deciding_string;
+
     private RelativeLayout drop_down_option_menu;
 
-    private List<Video> listVideos;
+    //list of videos
+    public static List<Video> listVideos;
+    public static Integer position2 = 0;
 
     //Creating Views
     private RecyclerView recyclerView;
@@ -101,9 +108,12 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //Displaying Progressbar
         progressBar.setVisibility(View.VISIBLE);
         setProgressBarIndeterminateVisibility(true);
+        System.out.println("user_id is " + user_id);
+        //System.out.println("shared  " + mSharedPreference.getAll());
+
 
         //set up jsonArrayRequest as the data retrieved using PHP script will be in a list format
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://animationdoodle2017.com/video_db.php?page=" + String.valueOf(pageCount),
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://animationdoodle2017.com/userVideos.php?page=" + String.valueOf(user_id),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -153,6 +163,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
                 e.printStackTrace();
             }
             //Add to the list
+            position2++;
             listVideos.add(video);
             System.out.println(video.getName());
             System.out.println(listVideos.size());
@@ -177,10 +188,10 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         //If scrolled at last then
-        if (isLastItemDisplaying(recyclerView)) {
-            //retrieve next page of videos
-            getData();
-        }
+        if (isLastItemDisplaying(recyclerView))
+            return;
+        //retrieve next page of videos
+        getData();
     }
     public void menu(View v) {
         System.out.println("clicked");
@@ -204,8 +215,10 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     }
 
     public void onItemClick(View view, int position) {
+        this.position2 = position;
         System.out.println("its clicked");
-        Intent intent = new Intent (Profile_Screen.this, Start_Drawing_Screen.class);
+        deciding_string = "profile";
+        Intent intent = new Intent (Profile_Screen.this, Test_VideoPlayer.class);
         startActivity(intent);
 
     }

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.VideoView;
 
+import static ca326.com.activities.Profile_Screen.deciding_string;
+import static ca326.com.activities.Profile_Screen.position2;
 import static ca326.com.activities.Top_Rated_Screen.position;
 
 public class Test_VideoPlayer extends AppCompatActivity {
@@ -20,9 +22,16 @@ public class Test_VideoPlayer extends AppCompatActivity {
 
         videoView = (VideoView) findViewById(R.id.videoViews);
 
-        Video video = Top_Rated_Screen.listVideos.get(position);
+        Video video;
 
-        System.out.println("position :"+ position + "  " + video.getVideoUrl());
+
+        if (deciding_string.equalsIgnoreCase("profile") ){
+            video = Profile_Screen.listVideos.get(position2);
+        }
+        else{
+            video = Top_Rated_Screen.listVideos.get(position);
+        }
+        System.out.println("position :"+ position2 + "  " + video.getVideoUrl());
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
         videoView.setVideoURI(videoUri);

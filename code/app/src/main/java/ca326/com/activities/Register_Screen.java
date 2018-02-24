@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static ca326.com.activities.Sign_In_Screen.user_id;
 
 /**
  * A login screen that offers login via email/password.
@@ -69,6 +70,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     private View mLoginFormView;
 
     public static final String PREFERENCE= "preference";
+    public static final String PREF_ID = "id";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
 
@@ -405,6 +407,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
                     if (query_result.equals("SUCCESS")) {
                         SharedPreferences mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
                         SharedPreferences.Editor mEditor = mSharedPreference.edit();
+                        mEditor.putInt(PREF_ID,user_id);
                         mEditor.putString(PREF_EMAIL,email);
                         mEditor.putString(PREF_PASSWORD,password);
                         mEditor.apply();
