@@ -28,7 +28,7 @@ import java.util.List;
 
 import static ca326.com.activities.Profile_Screen.deciding_string;
 
-public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener, RecyclerView.OnScrollChangeListener {
+public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener {
 
     //list of videos
     public static List<Video> listVideos;
@@ -64,9 +64,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
         //method to retrieve data from database
         getData();
-
-        //Adding an scroll change listener to recyclerview
-        recyclerView.setOnScrollChangeListener(this);
 
         //initializing our adapter with list of videos
         adapter = new MyCardAdapter(listVideos, this);
@@ -167,14 +164,5 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         startActivity(intent);
 
     }
-    //detects scrolling
-    @Override
-    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        //If scrolled at last then
-        if (isLastItemDisplaying(recyclerView)) {
-            return;
-        }
-        //retrieve next page of videos
-        getVideoFromDB(pageCount);
-    }
+
 }
