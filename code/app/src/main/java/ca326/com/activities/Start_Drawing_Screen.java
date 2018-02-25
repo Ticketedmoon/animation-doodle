@@ -8,9 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -26,11 +30,13 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -65,6 +71,8 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import com.bq.markerseekbar.MarkerSeekBar;
+
 import static ca326.com.activities.Sign_In_Screen.user_id;
 
 
@@ -80,7 +88,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton colour_picker;
     private MyRecyclerViewAdapter adapter;
     public Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
-
+    public MarkerSeekBar pen_size_adjuster;
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
@@ -121,6 +129,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Other Fields
     public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
+    public int pen_size;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,6 +191,35 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 }
             }
         });
+
+        // Seekbar (Change Pen Size)
+        this.pen_size_adjuster = (MarkerSeekBar) findViewById(R.id.seekbar);
+        this.pen_size_adjuster.setMarkerAnimationFrame(pen_size);
+        this.pen_size = 8;
+        this.pen_size_adjuster.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                pen_size = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+                Log.i("Seekbar", "Started Changing Pen Size");
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+                Log.i("Seekbar", "Finished Changing Pen Size");
+                Log.i("Seekbar", "Pen Size: " + pen_size);
+
+                // Update the canvasView paint stuff
+                canvasView.adjustPenSize(pen_size);
+            }
+        });
     }
 
     // When clicking a frame on the timeline, update some parameters
@@ -199,20 +237,26 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Converts them to bitmaps and encodes them to mp4.
     // *DYSFUNCTIONAL*
     public void download_animation(View v) {
-        Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/Animation_Doodle_Images");
+        Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
         // Assign pathways (IMPORTANT)
         pathways.put(pos, this.canvasView.newPaths);
 
         // Build an array of bitmap images from different pathways
         for(int i = 0; i < pathways.size(); i++) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
             this.canvasView.newPaths = pathways.get(i);
             Bitmap bitmap = loadBitmapFromView(canvasView);
-            canvas_bitmaps.put(i, bitmap);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 5, stream);
+
+            byte[] imageInByte = stream.toByteArray();
+            Bitmap bitmapM = BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length);
+            canvas_bitmaps.put(i, bitmapM);
         }
 
         // restore canvasView.newPath before the loop
         this.canvasView.newPaths = pathways.get(pos);
+        Log.i("Download", "Bitmap Conversion Complete");
 
         // ASYNC TASK HERE (Encode Images)
         DownloadFilesTask task = new DownloadFilesTask(this);
@@ -220,7 +264,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(canvasView.getWidth(), canvasView.getHeight(), Bitmap.Config.ARGB_8888);
+        // This line determines the speed of the download locally.
+        Bitmap b = Bitmap.createBitmap(canvasView.getWidth(), canvasView.getHeight(), Bitmap.Config.RGB_565);
+
         Canvas c = new Canvas(b);
         c.drawColor(Color.WHITE);   // Essential
         canvasView.draw(c);
@@ -248,7 +294,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         get_file_input_save(this.canvasView);
         // Add and delete tmp file
         save("tmp");
-        File file = new File(Environment.getExternalStorageDirectory(), "/Animation_Doodle_Images/tmp.jpg");
+        File file = new File(Environment.getExternalStorageDirectory(), "/AnimationDoodle/tmp.jpg");
         boolean deleted = file.delete();
         System.out.println("tmp deleted: " + deleted);
         // Print out to log
@@ -267,7 +313,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
             File f = null;
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
+                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
                 if(!file.exists()){
                     file.mkdirs();
                 }
@@ -358,7 +404,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             public void onCancel(AmbilWarnaDialog dialog) {}
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 mDefaultPaint = new Paint();
-                canvasView.setUpPaint(color, mDefaultPaint);
+                canvasView.setUpPaint(color, mDefaultPaint, pen_size);
+                canvasView.colour = color;
             }
         });
         colour_picker.show();

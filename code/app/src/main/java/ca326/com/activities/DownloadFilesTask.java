@@ -36,12 +36,12 @@ class DownloadFilesTask extends AsyncTask<Void, Void, String> {
         // Verify Storage Permissions
         instance.verifyStoragePermissions(instance);
         // If /Animation_Doodle_Images doesn't exist yet, generate it.
-        File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
+        File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
         if(!file.exists()){
             file.mkdirs();
         }
         try {
-            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/out.mp4");
+            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/AnimationDoodle/OUTPUT.mp4");
             encoder = new AndroidSequenceEncoder(out, Rational.R(instance.frame_rate_value, 1));
 
             for(int i = 0; i < instance.canvas_bitmaps.size(); i++)
