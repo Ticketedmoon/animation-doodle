@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -26,6 +27,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ca326.com.activities.MyCardAdapter.rateValue;
+import static ca326.com.activities.MyCardAdapter.ratingBar;
 import static ca326.com.activities.Profile_Screen.deciding_string;
 
 public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener {
@@ -72,6 +75,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         //Add adapter to recyclerview
         recyclerView.setAdapter(adapter);
 
+
     }
 
 
@@ -114,6 +118,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         pageCount++;
     }
 
+
+
     //used to parse the json data returned by the php script
     private void parseData(JSONArray array) {
         for (int i = 0; i < array.length(); i++) {
@@ -142,10 +148,13 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         //add to adapter
         adapter.notifyDataSetChanged();
     }
+
     public void rating(View view){
-        Toast.makeText(getApplicationContext(),
-                String.valueOf(MyCardAdapter.ratingBar.getRating()), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
     }
+
+
+
 
 
     public void onItemClick(View view, int position) {

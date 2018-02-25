@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
+
+import static ca326.com.activities.MyCardAdapter.ratingBar;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
@@ -29,6 +33,8 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
     private ItemClickListener mClickListener;
 
     public static RatingBar ratingBar;
+
+    public static String rateValue;
 
 
 
@@ -59,6 +65,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         //get the video for the right position
         Video video =  videos.get(position);
 
+        //Get thumbnail image of video for cardview position
         loadImage = MyVolleyRequest.getInstance(context).getImageLoader();
         //set temporary image i.e R.drawable.play
         loadImage.get(video.getImageUrl(), ImageLoader.getImageListener(holder.image, R.drawable.play, android.R.drawable.ic_dialog_alert));
@@ -72,31 +79,28 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
 
+        //Get the rating of each video stored in the database
         Float rating = video.getRating();
-        //have to replace this with the rating of the video stored in database
         ratingBar.setRating(rating);
         System.out.println(ratingBar);
         System.out.println("this is i : " + j);
         j++;
 
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                rateValue = String.valueOf(ratingBar.getRating());
+
+            }
+        });
+
 
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
         holder.textViewName.setText(video.getName());
-       // holder.textViewDescription.setText(video.getDescription());
-                /*
-                System.out.println("second click");
-                if (isPlaying){
-                    //holder.videoView.setBackground(null);
-                    holder.videoView.start();
-                    isPlaying = false;
-                }
-                else{
-                    holder.videoView.pause();
-                    isPlaying = true;
-                }
-                */
-            }
+    }
 
 
 

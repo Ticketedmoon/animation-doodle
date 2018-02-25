@@ -41,7 +41,7 @@ class DownloadFilesTask extends AsyncTask<Void, Void, String> {
             file.mkdirs();
         }
         try {
-            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/outputx.mp4");
+            out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/Animation_Doodle_Images/out.mp4");
             encoder = new AndroidSequenceEncoder(out, Rational.R(instance.frame_rate_value, 1));
 
             for(int i = 0; i < instance.canvas_bitmaps.size(); i++)
