@@ -183,7 +183,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         });
     }
 
-
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
         if (this.pos != position) {
