@@ -43,7 +43,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Start_Drawing_Screen" />
+        <activity
+            android:name=".Start_Drawing_Screen"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" />
 
         <activity
             android:name=".Intro_Animation_Transition_Screen"
@@ -67,11 +70,14 @@
 
         <activity
             android:name=".Profile_Screen"
+            android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".Play_Animation_Screen" />
+        <activity
+            android:name=".Play_Animation_Screen"
+            android:configChanges="orientation" />
 
         <!-- Special Views -->
         <activity android:name=".MyVolleyRequest" />

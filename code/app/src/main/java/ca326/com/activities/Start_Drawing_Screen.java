@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -182,7 +183,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
         });
     }
-
 
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
