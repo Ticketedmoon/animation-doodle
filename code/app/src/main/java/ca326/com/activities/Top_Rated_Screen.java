@@ -1,12 +1,17 @@
 package ca326.com.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -24,11 +29,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ca326.com.activities.MyCardAdapter.rateValue;
 import static ca326.com.activities.MyCardAdapter.ratingBar;
+import static ca326.com.activities.MyCardAdapter.ratingbar_map;
+import static ca326.com.activities.MyCardAdapter.videoUrl;
 import static ca326.com.activities.Profile_Screen.deciding_string;
 
 public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener {
@@ -47,6 +63,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
     private int pageCount = 1;
+    private String newUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +169,92 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
     public void rating(View view){
         Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
+        Video video =listVideos.get(position);
+        newUrl =  video.getVideoUrl();
+        changeRating(rateValue);
+
+    }
+
+    public void changeRating(String rateValue){
+        Float ratingInt =Float.parseFloat(rateValue);
+
+
+        //insert ratingInt into the rating column in database
+        new updateRatingValue(this).execute(ratingInt);
+
+    }
+
+    public class updateRatingValue extends AsyncTask<Float, Void, String> {
+
+        Activity instance;
+
+        updateRatingValue(Activity instance) {
+            this.instance = instance;
+
+        }
+
+
+        @Override
+        protected String doInBackground(Float... arg0) {
+
+            Float rate = arg0[0];
+            String link;
+
+            try {
+                link = "http://animationdoodle2017.com/updateRating.php";
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                OutputStream out = con.getOutputStream();
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                String post_data = URLEncoder.encode("rating", "UTF-8") + "=" + rate +"&"+
+                        URLEncoder.encode("video","UTF-8")+"="+URLEncoder.encode(newUrl,"UTF-8");
+                System.out.println("video url is " + newUrl);
+                writer.write(post_data);
+                writer.flush();
+                writer.close();
+                out.close();
+                InputStream in = con.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in, "iso-8859-1"));
+                String line = "";
+                String result = "";
+                while ((line = br.readLine()) != null) {
+                    result += line;
+                }
+                return result;
+
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(result + "\n");
+            String jsonStr = sb.toString();
+            Log.i("response", jsonStr);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    String query_result = jsonObj.getString("query_result");
+                    if (query_result.equals("SUCCESS")) {
+                    } else if (query_result.equals("FAILURE")) {
+                        Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 

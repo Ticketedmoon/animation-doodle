@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.HashMap;
 import java.util.List;
-
-import static ca326.com.activities.MyCardAdapter.ratingBar;
+import java.util.Map;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
     private Integer j=0;
+
+    public static String videoUrl;
 
 
     private Context context;
@@ -32,9 +32,10 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
     private ItemClickListener mClickListener;
 
+    public static String rateValue;
     public static RatingBar ratingBar;
 
-    public static String rateValue;
+    public static Map<Integer, RatingBar> ratingbar_map = new HashMap<Integer, RatingBar>();
 
 
 
@@ -76,26 +77,27 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
 
 
-        String url = video.getVideoUrl();
-        Uri videoUri = Uri.parse(url);
+        videoUrl = video.getVideoUrl();
+        Uri videoUri = Uri.parse(videoUrl);
 
         //Get the rating of each video stored in the database
         Float rating = video.getRating();
-        ratingBar.setRating(rating);
-        System.out.println(ratingBar);
+        holder.ratingBar.setRating(rating);
+        ratingbar_map.put(position,holder.ratingBar);
+
+        System.out.println(holder.ratingBar);
         System.out.println("this is i : " + j);
         j++;
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                rateValue = String.valueOf(ratingBar.getRating());
+                rateValue = String.valueOf(holder.ratingBar.getRating());
 
             }
         });
-
 
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
@@ -120,6 +122,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         public VideoView videoView;
         public NetworkImageView image;
         public TextView textViewName;
+        public  RatingBar ratingBar;
         //Initializing Views
         public ViewHolder(View itemView) {
             super(itemView);
