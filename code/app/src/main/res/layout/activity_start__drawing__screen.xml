@@ -181,7 +181,9 @@
                 android:layout_marginTop="30dp"
                 android:progress="8"
                 android:max="50"
-                app:markerColor="@color/colorOrange"
+                android:theme="@style/MySeekBarTheme"
+                app:markerColor="@color/colorRed"
+                app:markerTextAppearance="@color/colorRed"
                 app:markerTextColor="#ffffff" />
 
         </RelativeLayout>

@@ -7,7 +7,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,5 +19,10 @@
         <item name="colorControlActivated">@color/nice_grey</item></style>
 
     <!-- Animation Styling (Button Pressed) -->
+
+    <!-- Seekbar -->
+    <style name="MySeekBarTheme">
+        <item name="colorAccent">@color/colorRed</item>
+    </style>
 
 </resources>

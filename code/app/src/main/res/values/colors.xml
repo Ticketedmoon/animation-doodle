@@ -3,11 +3,13 @@
     <!-- Standard Colour resources -->
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="colorRed">#FACA0000</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ffa500</color>
     <color name="ice_teal">#42c2f4</color>
     <color name="nice_grey">#88313131</color>
+    <color name="nice_green">#F000AF00</color>
 
     <!-- Button Colour Transition -->
     <color name="button_focused">#F0F0F0</color>
