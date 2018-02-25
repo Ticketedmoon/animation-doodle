@@ -3,9 +3,12 @@ package ca326.com.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class Main_Menu_Screen extends AppCompatActivity {
@@ -37,6 +40,10 @@ public class Main_Menu_Screen extends AppCompatActivity {
         start_profile.setBackgroundResource(R.drawable.main_menu_btn_colour);
         start_popular_animations.setBackgroundResource(R.drawable.main_menu_btn_colour);
         // END
+
+        // Change status bar (Transparent -> looks better)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     // When button pressed, call this function

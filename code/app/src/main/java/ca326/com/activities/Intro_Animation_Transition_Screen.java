@@ -1,6 +1,10 @@
 package ca326.com.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
@@ -13,6 +17,10 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
+
+        // Change status bar (Transparent -> looks better)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         //Customize Circular Reveal
         configSplash.setBackgroundColor(R.color.colorOrange); //any color you want form colors.xml
