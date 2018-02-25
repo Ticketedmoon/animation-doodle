@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,9 +20,11 @@ public class CanvasView extends View {
     public Paint mPaint;
     public int width;
     public  int height;
+    public int colour;
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
+
     public Path mPath;
     Context context;
     AttributeSet attrbs;
@@ -37,7 +40,8 @@ public class CanvasView extends View {
 
         // Set up Paint object
         mPaint = new Paint();
-        setUpPaint(Color.BLACK, mPaint);
+        setUpPaint(Color.BLACK, mPaint, 8);
+        this.colour = Color.BLACK;
     }
 
     public CanvasView(Context context) {
@@ -46,7 +50,8 @@ public class CanvasView extends View {
 
         // Set up Paint object
         mPaint = new Paint();
-        setUpPaint(Color.BLACK, mPaint);
+        setUpPaint(Color.BLACK, mPaint, 8);
+        this.colour = Color.BLACK;
     }
 
     protected void onDraw(Canvas canvas) {
@@ -54,10 +59,13 @@ public class CanvasView extends View {
         for(int i = 0; i < newPaths.size(); i++) {
             canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
         }
-
     }
 
-    public void setUpPaint(int color, Paint mPaint) {
+    public void adjustPenSize(int value) {
+        setUpPaint(colour, new Paint(), value);
+    }
+
+    public void setUpPaint(int color, Paint mPaint, int value) {
         // Set up the paint object with a different selected colour.
         // Have to redo all the set-up steps.
         this.mPaint = mPaint;
@@ -67,7 +75,7 @@ public class CanvasView extends View {
         this.mPaint.setStyle(Paint.Style.STROKE);
         this.mPaint.setStrokeJoin(Paint.Join.ROUND);
         this.mPaint.setStrokeCap(Paint.Cap.ROUND);
-        this.mPaint.setStrokeWidth(10);
+        this.mPaint.setStrokeWidth(value); // 8 - 10 good default
     }
 
     public Path get_new_Path() {
