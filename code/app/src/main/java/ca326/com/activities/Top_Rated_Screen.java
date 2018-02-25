@@ -147,15 +147,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                 String.valueOf(MyCardAdapter.ratingBar.getRating()), Toast.LENGTH_LONG).show();
     }
 
-    //check if reached bottom
-    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
-        if (recyclerView.getAdapter().getItemCount() != 0) {
-            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
-                return true;
-        }
-        return false;
-    }
 
     public void onItemClick(View view, int position) {
         this.position = position;

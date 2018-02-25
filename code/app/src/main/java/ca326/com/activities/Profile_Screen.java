@@ -171,18 +171,6 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         adapter.notifyDataSetChanged();
     }
 
-    //check if reached bottom
-    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
-        if (recyclerView.getAdapter().getItemCount() != 0) {
-            int lastVisibleItemPosition = ((GridLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-            System.out.println("length is " + lastVisibleItemPosition);
-            System.out.println("list is " + recyclerView.getAdapter().getItemCount());
-            System.out.println("view is " + RecyclerView.NO_POSITION);
-            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
-                return true;
-        }
-        return false;
-    }
     public void menu(View v) {
         System.out.println("clicked");
         if (!menu_button){
