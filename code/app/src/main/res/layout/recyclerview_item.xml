@@ -10,12 +10,8 @@
     <View
         android:id="@+id/frameView"
         android:layout_width="70dp"
-        android:layout_height="match_parent"/>
-
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/imageView"
-        android:layout_width="70dp"
         android:layout_height="match_parent" />
+
 
     <TextView
         android:id="@+id/frameNum"

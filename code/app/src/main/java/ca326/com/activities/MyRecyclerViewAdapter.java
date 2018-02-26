@@ -1,16 +1,23 @@
 package ca326.com.activities;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.Collections;
 import java.util.List;
+
+import static ca326.com.activities.Start_Drawing_Screen.bitmap;
+import static ca326.com.activities.Start_Drawing_Screen.myDrawable;
+import static ca326.com.activities.Start_Drawing_Screen.set;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
@@ -40,9 +47,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         Integer res = mFrames.get(position);
         String animal = mFrameNum.get(position);
-        holder.myView.setBackgroundResource(res);
+        Log.i("set", "set is " + set);
+        if (set = false) {
+            holder.myView.setBackgroundResource(res);
+        }
+        else {
+            holder.myView.setBackground(myDrawable);
+        }
         holder.myTextView.setText(animal);
-        //holder.imageView.setImageBitmap();
+       // holder.imageView.setImageResource(R.drawable.play);
     }
 
     // total number of rows
@@ -55,7 +68,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View myView;
         public TextView myTextView;
-        public NetworkImageView imageView;
+        public ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);

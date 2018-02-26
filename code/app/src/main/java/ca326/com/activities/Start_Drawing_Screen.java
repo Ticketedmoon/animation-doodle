@@ -19,6 +19,8 @@ import android.graphics.Path;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +34,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -138,6 +141,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private boolean is_menu_open = false;
     public int pen_size;
 
+    public static ImageView imageView;
+    public static Bitmap bitmap;
+    public static Drawable myDrawable;
+
+    public Context context;
+
+    public static boolean set = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -147,6 +158,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         textView = (TextView) findViewById(R.id.textView);
         textViewResponse = (TextView) findViewById(R.id.textViewResponse);
+
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
@@ -232,12 +244,25 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
         if (this.pos != position) {
+            set = true;
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
 
             this.pos = position;
             this.canvasView.invalidate();
+            this.canvasView.setDrawingCacheEnabled(true);
+            bitmap = this.canvasView.getDrawingCache();
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawColor(Color.WHITE);
+            this.canvasView.draw(canvas);
+            myDrawable = new BitmapDrawable(getResources(), bitmap);
+            //myDrawable = getResources().getDrawable(R.drawable.play);
+            adapter.notifyDataSetChanged();
+            Log.i("bitmap","is " + bitmap);
+
         }
+    }
+    public void getImageView(CanvasView view){
     }
 
     // Save Animation Function, takes all frames in canvas
@@ -293,9 +318,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private void adjust_timeline() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
-        LinearLayoutManager horizontalLayoutManagaer
+        LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
         adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);

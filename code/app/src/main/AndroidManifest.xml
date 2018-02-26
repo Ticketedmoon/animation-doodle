@@ -74,7 +74,6 @@
             android:configChanges="orientation" />
 
         <!-- Special Views -->
-        <activity android:name=".UploadVideo"></activity>
     </application>
 
 </manifest>
