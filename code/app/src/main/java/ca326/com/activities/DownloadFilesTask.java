@@ -10,9 +10,7 @@ import android.widget.Toast;
 import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.io.SeekableByteChannel;
-import org.jcodec.common.model.Picture;
 import org.jcodec.common.model.Rational;
-import org.jcodec.scale.BitmapUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +69,7 @@ class DownloadFilesTask extends AsyncTask<Void, Void, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         Log.i("Download", "Starting Download...");
-        downloading = ProgressDialog.show(this.instance, "Downloading File Locally", "Downloading...", false, false);
+        downloading = ProgressDialog.show(this.instance, "Downloading File Locally", "Downloading...", false, true);
 
     }
 

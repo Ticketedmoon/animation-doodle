@@ -31,6 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     // Other Libraries
     testCompile 'junit:junit:4.12'
 
@@ -44,12 +45,9 @@ dependencies {
     compile 'org.jcodec:jcodec-android:0.2.2'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
     compile 'com.github.bq:markerseekbar:v0.9'
-    compile 'com.sothree.slidinguppanel:library:3.4.0'
 }
 
 
 repositories {
     maven { url "https://jitpack.io" }
-    mavenCentral()
-
 }

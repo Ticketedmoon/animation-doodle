@@ -248,6 +248,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Assign pathways (IMPORTANT)
         pathways.put(pos, this.canvasView.newPaths);
+        checkCanvasSize(canvasView);
 
         // Build an array of bitmap images from different pathways
         for(int i = 0; i < pathways.size(); i++) {
@@ -261,6 +262,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvas_bitmaps.put(i, bitmapM);
         }
 
+        Log.i("Download","Bitmap values: " + this.canvas_bitmaps.values());
+
         // restore canvasView.newPath before the loop
         this.canvasView.newPaths = pathways.get(pos);
         Log.i("Download", "Bitmap Conversion Complete");
@@ -270,17 +273,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         task.execute();
     }
 
+    private void checkCanvasSize(View v) {
+        if (canvasView.width % 2 != 0)
+            canvasView.width++;
+        if (canvasView.height % 2 != 0)
+            canvasView.height++;
+    }
+
     public Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(canvasView.getWidth(), canvasView.getHeight(), Bitmap.Config.RGB_565);
+        System.out.println(canvasView.width + "--" + canvasView.height);
+        Bitmap b = Bitmap.createBitmap(canvasView.width, canvasView.height, Bitmap.Config.RGB_565);
         Log.i("Downloading", "OWidth: " + b.getWidth() + " --- " + "OHeight: " +  b.getHeight());
 
         Canvas c = new Canvas(b);
         c.drawColor(Color.WHITE);   // Essential
-
         v.draw(c);
-        v.invalidate();
-        v.requestLayout();
-
         return b;
     }
 
@@ -441,11 +448,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             intent = new Intent(Start_Drawing_Screen.this, Register_Screen.class);
         }
 
-        startActivity(intent);
-    }
-
-    public void goToTopRatedAnimations(View view){
-        Intent intent = new Intent (Start_Drawing_Screen.this, Top_Rated_Screen.class);
         startActivity(intent);
     }
 
