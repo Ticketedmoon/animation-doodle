@@ -238,6 +238,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
         int correct_onion_frame;
+
         if (position == 0)
             correct_onion_frame = position;
         else
@@ -298,6 +299,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     private void checkCanvasSize(View v) {
+        // Method is just used to statically adjust width/height values to be even
+        // Even values necessary for video encoding.
         if (canvasView.width % 2 != 0)
             canvasView.width++;
         if (canvasView.height % 2 != 0)
@@ -627,12 +630,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // It is essential to -1 here from frame_counter.
         this.pathways.put(frame_counter-1, emptyArr);
 
+        // Change view to next frame
+        onItemClick(canvasView, frame_counter-1);
+
         frame_counter++;
         adjust_timeline();
 
-        // Change view to next frame
-        System.out.println(frames);
-        System.out.println("Pathways:" + pathways);
+        Log.i("Add Frame Button", "frames: " + (frames));
+        Log.i("Add Frame Button", "Pathways: " + pathways);
+
     }
 
     public void previous_frame(View v) {
