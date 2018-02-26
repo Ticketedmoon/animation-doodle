@@ -147,6 +147,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public Context context;
 
+    public static Integer adapterPosition = 20;
+
     public static boolean set = false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,9 +254,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.invalidate();
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
-            Canvas canvas = new Canvas(bitmap);
-            canvas.drawColor(Color.WHITE);
-            this.canvasView.draw(canvas);
+            //Canvas canvas = new Canvas(bitmap);
+            //canvas.drawColor(Color.WHITE);
+            //this.canvasView.draw(canvas);
+            adapterPosition = position;
             myDrawable = new BitmapDrawable(getResources(), bitmap);
             //myDrawable = getResources().getDrawable(R.drawable.play);
             adapter.notifyDataSetChanged();
