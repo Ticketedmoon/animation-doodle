@@ -21,10 +21,13 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
@@ -85,10 +88,13 @@ import static ca326.com.activities.Sign_In_Screen.user_id;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
+    // Saving recycle view (Timeline) functionality
+    private RecyclerView timeline_frames;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+
     // Views
     private static CanvasView canvasView;
     private RelativeLayout menu;
-    private RecyclerView timeline_frames;
 
     // Object creations
     private Paint mDefaultPaint;
@@ -203,7 +209,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.pen_size_adjuster = (MarkerSeekBar) findViewById(R.id.seekbar);
         this.pen_size_adjuster.setMarkerAnimationFrame(pen_size);
         this.pen_size = 8;
-        this.pen_size_adjuster.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        this.pen_size_adjuster.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -231,18 +237,30 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
+
         if (this.pos != position) {
+
+            // Add Onion Layering Functionality
+            // Make Paint Relatively transparent
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
+            // Set all paint objects to opaque.
+            List <Pair<Path, Paint>> onionSkin = pathways.get(pos);
+            for (int i = 0; i < onionSkin.size(); i++) {
+                Pair <Path, Paint> x = onionSkin.get(i);
+                x.second.setAlpha(42);
+            }
+            // Display Onion layer
+            this.canvasView.onionPaths.addAll(onionSkin);
 
             this.pos = position;
             this.canvasView.invalidate();
+
         }
     }
 
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
-    // *DYSFUNCTIONAL*
     public void download_animation(View v) {
         Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
