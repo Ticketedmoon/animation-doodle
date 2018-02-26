@@ -27,7 +27,6 @@ public class Play_Animation_Screen extends AppCompatActivity {
     // Handlers / Timed events
     private Handler m_handler;
     private Runnable m_handlerTask;
-    //private BottomSheetBehavior mBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,38 +36,6 @@ public class Play_Animation_Screen extends AppCompatActivity {
         // Initialisation
         this.pos = 0;
         this.cv = (CanvasViewNonEditable) findViewById(R.id.canvas2);
-        //View bottomSheet = findViewById(R.id.play_bar);
-
-        /* mBottomSheet = BottomSheetBehavior.from(bottomSheet);
-        mBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        Log.i("BottomSheet", "Collapsed");
-                        break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        Log.i("BottomSheet", "Dragging");
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        Log.i("BottomSheet", "Expanded");
-                        break;
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        Log.i("BottomSheet", "Hidden");
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        Log.i("BottomSheet", "Settling");
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-        */
         play_animation(cv);
     }
 
