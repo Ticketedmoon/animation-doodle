@@ -16,6 +16,9 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Picture;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -44,6 +47,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -56,6 +60,7 @@ import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.io.SeekableByteChannel;
 import org.jcodec.common.model.Rational;
+import org.jcodec.scale.BitmapUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,6 +77,8 @@ import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import com.bq.markerseekbar.MarkerSeekBar;
+
+import javax.microedition.khronos.opengles.GL10;
 
 import static ca326.com.activities.Sign_In_Screen.user_id;
 
@@ -263,13 +270,17 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         task.execute();
     }
 
-    public static Bitmap loadBitmapFromView(View v) {
-        // This line determines the speed of the download locally.
+    public Bitmap loadBitmapFromView(View v) {
         Bitmap b = Bitmap.createBitmap(canvasView.getWidth(), canvasView.getHeight(), Bitmap.Config.RGB_565);
+        Log.i("Downloading", "OWidth: " + b.getWidth() + " --- " + "OHeight: " +  b.getHeight());
 
         Canvas c = new Canvas(b);
         c.drawColor(Color.WHITE);   // Essential
-        canvasView.draw(c);
+
+        v.draw(c);
+        v.invalidate();
+        v.requestLayout();
+
         return b;
     }
 

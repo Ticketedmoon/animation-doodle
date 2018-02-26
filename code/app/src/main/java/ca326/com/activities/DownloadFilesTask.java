@@ -10,12 +10,12 @@ import android.widget.Toast;
 import org.jcodec.api.android.AndroidSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.io.SeekableByteChannel;
+import org.jcodec.common.model.Picture;
 import org.jcodec.common.model.Rational;
+import org.jcodec.scale.BitmapUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 class DownloadFilesTask extends AsyncTask<Void, Void, String> {
 
@@ -24,7 +24,6 @@ class DownloadFilesTask extends AsyncTask<Void, Void, String> {
     private AndroidSequenceEncoder encoder;
     private Bitmap image;
     private ProgressDialog downloading;
-
 
     public DownloadFilesTask(Start_Drawing_Screen instance) {
         this.instance = instance;

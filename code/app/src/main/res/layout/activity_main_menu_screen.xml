@@ -42,11 +42,10 @@
             android:layout_above="@+id/profile_menu"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="43dp"
-            android:fontFamily="@font/advent_pro_extralight"
             android:onClick="goToDrawingScreen"
             android:text="Start Drawing"
             android:textColor="@color/colorWhite"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="normal|bold" />
 
         <Button
@@ -55,11 +54,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/drawing_menu"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/advent_pro_extralight"
             android:onClick="goToRegisterOrProfile"
             android:text="Profile"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
         <Button
@@ -69,11 +67,10 @@
             android:layout_alignStart="@+id/profile_menu"
             android:layout_below="@+id/profile_menu"
             android:layout_marginTop="43dp"
-            android:fontFamily="@font/advent_pro_extralight"
             android:onClick="goToTopRated"
             android:text="Popular Animations"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
