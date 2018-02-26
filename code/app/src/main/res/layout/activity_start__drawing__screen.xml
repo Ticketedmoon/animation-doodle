@@ -14,7 +14,7 @@
         android:layout_above="@+id/timeline"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp">
+        android:layout_below="@+id/tool_bar">
 
         <ca326.com.activities.CanvasView
             android:id="@+id/canvas"
@@ -31,6 +31,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_border"
             android:elevation="2dp"
             android:visibility="invisible">
@@ -51,9 +52,9 @@
                 android:id="@+id/frame_rate_btn"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
-                android:layout_alignTop="@+id/save_animation"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/save_animation"
+                android:layout_above="@+id/seekbar"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
                 android:adjustViewBounds="true"
                 android:background="@android:drawable/btn_default_small"
                 android:onClick="prompt_frame_rate"
@@ -179,8 +180,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/save_animation"
                 android:layout_marginTop="30dp"
-                android:progress="8"
                 android:max="50"
+                android:progress="8"
                 android:theme="@style/MySeekBarTheme"
                 app:markerColor="@color/colorRed"
                 app:markerTextAppearance="@color/colorRed"

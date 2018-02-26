@@ -8,7 +8,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ffa500</color>
     <color name="ice_teal">#42c2f4</color>
-    <color name="nice_grey">#88313131</color>
+    <color name="nice_grey">#FFC0C0C0</color>
     <color name="nice_green">#F000AF00</color>
 
     <!-- Button Colour Transition -->
