@@ -51,8 +51,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
     //list of videos
     public static List<Video> listVideos;
+    public static Integer position2 = 10;
     public static Integer position;
-
     //Creating Views
     private RecyclerView recyclerView;
     private MyCardAdapter adapter;
@@ -76,7 +76,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         recyclerView.setHasFixedSize(true);
 
         //list 2 videos side by side in a grid
-        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         //Initializing video list
@@ -168,12 +168,11 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     }
 
     public void rating(View view){
-        Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
-        Video video =listVideos.get(position);
-        newUrl =  video.getVideoUrl();
-        changeRating(rateValue);
-
-    }
+            Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
+            Video video = listVideos.get(position);
+            newUrl = video.getVideoUrl();
+            changeRating(rateValue);
+        }
 
     public void changeRating(String rateValue){
         Float ratingInt =Float.parseFloat(rateValue);
