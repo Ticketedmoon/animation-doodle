@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+
     defaultConfig {
         applicationId "ca326.com.activities"
         minSdkVersion 23
@@ -43,9 +44,12 @@ dependencies {
     compile 'org.jcodec:jcodec-android:0.2.2'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
     compile 'com.github.bq:markerseekbar:v0.9'
+    compile 'com.sothree.slidinguppanel:library:3.4.0'
 }
 
 
 repositories {
     maven { url "https://jitpack.io" }
+    mavenCentral()
+
 }
