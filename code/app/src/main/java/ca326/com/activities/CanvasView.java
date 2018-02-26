@@ -51,6 +51,9 @@ public class CanvasView extends View {
         for(int i = 0; i < newPaths.size(); i++) {
             canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
         }
+        for(int i = 0; i < onionPaths.size(); i++) {
+            canvas.drawPath(onionPaths.get(i).first, onionPaths.get(i).second);
+        }
     }
 
     public void adjustPenSize(int value) {

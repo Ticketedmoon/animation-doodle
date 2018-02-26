@@ -237,6 +237,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
+        int correct_onion_frame;
+        if (position == 0)
+            correct_onion_frame = position;
+        else
+            correct_onion_frame = position-1;
+
+        // Destroy previous onion cache
+        this.canvasView.onionPaths.clear();
 
         if (this.pos != position) {
 
@@ -245,11 +253,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
             // Set all paint objects to opaque.
-            List <Pair<Path, Paint>> onionSkin = pathways.get(pos);
-            for (int i = 0; i < onionSkin.size(); i++) {
-                Pair <Path, Paint> x = onionSkin.get(i);
-                x.second.setAlpha(42);
-            }
+            List <Pair<Path, Paint>> onionSkin = onion_skin(correct_onion_frame);
+            Log.i("Onion Layering", "onions: " + onionSkin);
+
             // Display Onion layer
             this.canvasView.onionPaths.addAll(onionSkin);
 
@@ -636,14 +642,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         if (currentIndex > 0) {
 
             List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
-
-            //example of transparent paint , obviously not working properly
-            // #80000000 == 50 % transparent
-            // #33000000 == 20% transparent
-            // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 -- link to colours
-
-            // this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
-            // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
 
@@ -652,6 +650,26 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.newPaths = mixed_frame;
             this.canvasView.invalidate();
         }
+    }
+
+    public  List<Pair<Path, Paint>> onion_skin(int correct_onion_frame) {
+        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
+
+        ArrayList<Path> tmpPaths = new ArrayList<Path>();
+        ArrayList<Paint> tmpPaint = new ArrayList<Paint>();
+
+        Log.i("Onion Skin", "Altering Paint Objs...");
+        for(int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
+            tmpPaths.add(pathways.get(correct_onion_frame).get(i).first);
+            tmpPaint.add((new Paint(pathways.get(correct_onion_frame).get(i).second)));
+            tmpPaint.get(i).setAlpha(30);
+
+            Log.i("Onion Skin", "Paths: " + tmpPaths + " -- " + "Paints: " + tmpPaint);
+            Pair onion_skin_item = new Pair(tmpPaths.get(i), tmpPaint.get(i));
+            mixed_frame.add(onion_skin_item);
+        }
+
+        return mixed_frame;
     }
 
     public String getPath(Uri uri) {
