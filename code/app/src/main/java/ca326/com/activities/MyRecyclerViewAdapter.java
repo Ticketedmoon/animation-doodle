@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String animal = mFrameNum.get(position);
         holder.myView.setBackgroundResource(res);
         holder.myTextView.setText(animal);
+        //holder.imageView.setImageBitmap();
     }
 
     // total number of rows
@@ -52,11 +55,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View myView;
         public TextView myTextView;
+        public NetworkImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             myView = itemView.findViewById(R.id.frameView);
             myTextView = itemView.findViewById(R.id.frameNum);
+            imageView = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
         }
 

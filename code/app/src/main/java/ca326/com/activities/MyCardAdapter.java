@@ -1,6 +1,5 @@
 package ca326.com.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import java.util.Map;
 
 public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder> {
 
-    private Integer j=0;
 
     public static String videoUrl;
 
@@ -83,17 +81,14 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         //Get the rating of each video stored in the database
         Float rating = video.getRating();
         holder.ratingBar.setRating(rating);
-        ratingbar_map.put(position,holder.ratingBar);
 
         System.out.println(holder.ratingBar);
-        System.out.println("this is i : " + j);
-        j++;
+
 
         holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
                 rateValue = String.valueOf(holder.ratingBar.getRating());
 
             }
