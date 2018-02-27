@@ -113,7 +113,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private List<String> frameNums = new ArrayList<String>();
 
     // Input from user stored in these variables
-    private static String value;
     public static Integer frame_rate_value = 2;
 
     // IMPORTANT
@@ -142,19 +141,19 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private File newfile = null;
 
     // Other Fields
-    public static boolean onionSkinning = true;
     private boolean is_menu_open = false;
     public int pen_size;
+    private int image_counter = 1;
 
     public static ImageView imageView;
     public static Bitmap bitmap;
     public static Drawable myDrawable;
 
     public Context context;
+
     public static Map<Integer, Drawable> drawables = new HashMap<>();
 
     public static Integer adapterPosition = 20;
-
     public static boolean set = false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,17 +244,25 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Moved all logic to a method (REFACTORING)
             change_current_frame(position, correct_onion_frame);
 
-            /*
 
+            // Hide Onion layer in bitmap frames
+            canvasView.shouldShowOnionSkin = false;
+            canvasView.invalidate();
+
+            // Reshow Bitmap after bitmap saved
+            canvasView.shouldShowOnionSkin = true;
+
+        /*
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
             adapterPosition = position;
             myDrawable = new BitmapDrawable(getResources(), bitmap);
             drawables.put(this.pos,myDrawable);
 
-
-            //adapter.notifyDataSetChanged();
+            //adjust_timeline();
             */
+
+
         }
     }
     public void getImageView(CanvasView view){
@@ -359,22 +366,27 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void save_external(View v) {
-        System.out.println("Pushed Save Button");
-        get_file_input_save(this.canvasView);
+        Log.i("Save", "Pushed Save Button");
         // Add and delete tmp file
-        save("tmp");
+        save();
         File file = new File(Environment.getExternalStorageDirectory(), "/AnimationDoodle/tmp.jpg");
         boolean deleted = file.delete();
-        System.out.println("tmp deleted: " + deleted);
-        // Print out to log
-        System.out.println("File Saved");
+        image_counter++;
+
+        Log.i("Save", "Picture (" + image_counter + ") saved");
     }
 
-    private void save(String store_name) {
+    private void save() {
         verifyStoragePermissions(this);
+        String store_name = "picture" + image_counter;
 
         try {
             this.canvasView.setDrawingCacheEnabled(true);
+            // remove and then restore onion skin
+
+            // Hide onion skins
+            canvasView.shouldShowOnionSkin = false;
+            canvasView.invalidate();
             Bitmap bitmap = this.canvasView.getDrawingCache();
             Canvas canvas = new Canvas(bitmap);
             canvas.drawColor(Color.WHITE);
@@ -390,37 +402,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
             FileOutputStream outputStream = new FileOutputStream(f);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 15, outputStream);
+
+            //Reshow Onion Skin
+            canvasView.shouldShowOnionSkin = true;
             outputStream.close();
+
         } catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public void get_file_input_save(View v) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("Enter a filename");
-        alert.setMessage("Background Title: ");
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                value = input.getText().toString();
-                // Do something with value!
-                save(value);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.create().show();
     }
 
     // Adapt this function later to handle Integers rather than Strings more efficiently.
