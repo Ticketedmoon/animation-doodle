@@ -138,6 +138,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Bitmap tmp;
     public static String videoPath;
     public static String imagePath;
+    public static String video_description ="Video description will go here.";
     private File newfile = null;
 
     // Other Fields
@@ -302,6 +303,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
     public void download_animation(View v) {
+
+        video_description = "Video description will go here";
         Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
         // Assign pathways (IMPORTANT)

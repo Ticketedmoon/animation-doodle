@@ -28,6 +28,7 @@ import static ca326.com.activities.Sign_In_Screen.user_id;
 import static ca326.com.activities.Start_Drawing_Screen.imagePath;
 import static ca326.com.activities.Start_Drawing_Screen.textViewResponse;
 import static ca326.com.activities.Start_Drawing_Screen.videoPath;
+import static ca326.com.activities.Start_Drawing_Screen.video_description;
 
 class UploadVideo extends AsyncTask<Void, Void, String> {
 
@@ -101,7 +102,7 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     //insert the location of the files into the database
                     String imageLink = "http://animationdoodle2017.com/videos/uploads/";
                     String videoLink = "http://animationdoodle2017.com/videos/uploads/";
-                    String newImagePath = imagePath.substring(36);
+                    String newImagePath = imagePath.substring(44);
                     newImagePath = imageLink += newImagePath;
                     String newVideoPath = videoPath.substring(36);
                     newVideoPath = videoLink += newVideoPath;
@@ -117,7 +118,8 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                     String post_data = URLEncoder.encode("imageFile", "UTF-8") + "=" + URLEncoder.encode(newImagePath, "UTF-8") + "&" +
                             URLEncoder.encode("videoFile", "UTF-8") + "=" + URLEncoder.encode(newVideoPath, "UTF-8") + "&" +
-                            URLEncoder.encode("id", "UTF-8") + "=" + user_id;
+                            URLEncoder.encode("id", "UTF-8") + "=" + user_id + "&" +
+                            URLEncoder.encode("videoDescription", "UTF-8") + "=" + video_description;
                     writer.write(post_data);
                     writer.flush();
                     writer.close();
