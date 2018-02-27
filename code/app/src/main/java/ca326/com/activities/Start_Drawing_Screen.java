@@ -23,10 +23,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
@@ -88,10 +91,13 @@ import static ca326.com.activities.Sign_In_Screen.user_id;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
+    // Saving recycle view (Timeline) functionality
+    private RecyclerView timeline_frames;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+
     // Views
     private static CanvasView canvasView;
     private RelativeLayout menu;
-    private RecyclerView timeline_frames;
 
     // Object creations
     private Paint mDefaultPaint;
@@ -120,7 +126,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_PASSWORD = "password";
 
     // Image Buttons / Buttons
-    private ImageButton onionButton;
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton profile;
@@ -166,7 +171,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
-        this.onionButton = (ImageButton) findViewById(R.id.onionSkinningButton);
         this.play = (ImageButton) findViewById((R.id.play_button));
         // END
 
@@ -195,29 +199,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // set up the RecyclerView
         add_frame(timeline_frames);
 
-        // Onion Button
-        onionButton.setImageResource(R.drawable.onion);
-        onionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //add onion layers
-                if (onionSkinning) {
-                    for (int i = 0; i < pathways.size(); i++) {
-                        if (pos != 0) {
-                            canvasView.newPaths.addAll(pathways.get(pos - 1));
-                            canvasView.invalidate();
-                        }
-                    }
-                    // here we will make the button fade out to indicate onion skinning feature is turned on
-                    onionButton.setImageResource(R.drawable.onion);
-                }
-            }
-        });
-
         // Seekbar (Change Pen Size)
         this.pen_size_adjuster = (MarkerSeekBar) findViewById(R.id.seekbar);
         this.pen_size_adjuster.setMarkerAnimationFrame(pen_size);
         this.pen_size = 8;
-        this.pen_size_adjuster.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        this.pen_size_adjuster.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -245,13 +231,32 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
+        int correct_onion_frame;
+
+        if (position == 0)
+            correct_onion_frame = position;
+        else
+            correct_onion_frame = position-1;
+
+        // Destroy previous onion cache
+        this.canvasView.onionPaths.clear();
+
         if (this.pos != position) {
             set = true;
+            // Add Onion Layering Functionality
+            // Make Paint Relatively transparent
             this.pathways.put(this.pos, this.canvasView.newPaths);
             this.canvasView.newPaths = this.pathways.get(position);
+            // Set all paint objects to opaque.
+            List <Pair<Path, Paint>> onionSkin = onion_skin(correct_onion_frame);
+            Log.i("Onion Layering", "onions: " + onionSkin);
+
+            // Display Onion layer
+            this.canvasView.onionPaths.addAll(onionSkin);
 
             this.pos = position;
             this.canvasView.invalidate();
+
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
             //Canvas canvas = new Canvas(bitmap);
@@ -270,7 +275,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
-    // *DYSFUNCTIONAL*
     public void download_animation(View v) {
         Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
@@ -302,6 +306,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     private void checkCanvasSize(View v) {
+        // Method is just used to statically adjust width/height values to be even
+        // Even values necessary for video encoding.
         if (canvasView.width % 2 != 0)
             canvasView.width++;
         if (canvasView.height % 2 != 0)
@@ -638,12 +644,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // It is essential to -1 here from frame_counter.
         this.pathways.put(frame_counter-1, emptyArr);
 
+        // Change view to next frame
+        onItemClick(canvasView, frame_counter-1);
+
         frame_counter++;
         adjust_timeline();
 
-        // Change view to next frame
-        System.out.println(frames);
-        System.out.println("Pathways:" + pathways);
+        Log.i("Add Frame Button", "frames: " + (frames));
+        Log.i("Add Frame Button", "Pathways: " + pathways);
+
     }
 
 
@@ -654,9 +663,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         if (currentIndex > 0) {
 
             List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
-
-            // this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
-            // Combine Both the previous frame with the current frame
             mixed_frame.addAll(this.canvasView.newPaths);
             mixed_frame.addAll(prev_frame);
 
@@ -665,6 +671,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.newPaths = mixed_frame;
             this.canvasView.invalidate();
         }
+    }
+
+    public  List<Pair<Path, Paint>> onion_skin(int correct_onion_frame) {
+        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
+        Log.i("Onion Skin", "Altering Paint Objs...");
+
+        for(int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
+            Path tmp = pathways.get(correct_onion_frame).get(i).first;
+            Paint tmpPaint = new Paint(pathways.get(correct_onion_frame).get(i).second);
+            tmpPaint.setAlpha(30);
+
+            Log.i("Onion Skin", "Paths: " + tmp + " -- " + "Paints: " + tmpPaint);
+            Pair onion_skin_item = new Pair(tmp, tmpPaint);
+            mixed_frame.add(onion_skin_item);
+        }
+
+        return mixed_frame;
     }
 
     public String getPath(Uri uri) {

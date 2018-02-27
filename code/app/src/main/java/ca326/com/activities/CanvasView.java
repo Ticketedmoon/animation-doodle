@@ -31,7 +31,9 @@ public class CanvasView extends View {
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
+
     public static List<Pair <Path, Paint>> newPaths = new ArrayList<Pair<Path, Paint>>();
+    public static List<Pair <Path, Paint>> onionPaths = new ArrayList<Pair<Path, Paint>>();
 
     public CanvasView(Context c, AttributeSet attrbs) {
         super(c, attrbs);
@@ -44,20 +46,13 @@ public class CanvasView extends View {
         this.colour = Color.BLACK;
     }
 
-    public CanvasView(Context context) {
-        super(context);
-        this.context = context;
-
-        // Set up Paint object
-        mPaint = new Paint();
-        setUpPaint(Color.BLACK, mPaint, 8);
-        this.colour = Color.BLACK;
-    }
-
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for(int i = 0; i < newPaths.size(); i++) {
             canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
+        }
+        for(int i = 0; i < onionPaths.size(); i++) {
+            canvas.drawPath(onionPaths.get(i).first, onionPaths.get(i).second);
         }
     }
 
