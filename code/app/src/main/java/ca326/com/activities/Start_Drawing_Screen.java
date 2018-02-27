@@ -123,7 +123,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREF_PASSWORD = "password";
 
     // Image Buttons / Buttons
-    private ImageButton onionButton;
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton profile;
@@ -158,7 +157,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
-        this.onionButton = (ImageButton) findViewById(R.id.onionSkinningButton);
         this.play = (ImageButton) findViewById((R.id.play_button));
         // END
 
@@ -186,24 +184,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // set up the RecyclerView
         add_frame(timeline_frames);
-
-        // Onion Button
-        onionButton.setImageResource(R.drawable.onion);
-        onionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //add onion layers
-                if (onionSkinning) {
-                    for (int i = 0; i < pathways.size(); i++) {
-                        if (pos != 0) {
-                            canvasView.newPaths.addAll(pathways.get(pos - 1));
-                            canvasView.invalidate();
-                        }
-                    }
-                    // here we will make the button fade out to indicate onion skinning feature is turned on
-                    onionButton.setImageResource(R.drawable.onion);
-                }
-            }
-        });
 
         // Seekbar (Change Pen Size)
         this.pen_size_adjuster = (MarkerSeekBar) findViewById(R.id.seekbar);
@@ -661,18 +641,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public  List<Pair<Path, Paint>> onion_skin(int correct_onion_frame) {
         List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
-
-        ArrayList<Path> tmpPaths = new ArrayList<Path>();
-        ArrayList<Paint> tmpPaint = new ArrayList<Paint>();
-
         Log.i("Onion Skin", "Altering Paint Objs...");
-        for(int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
-            tmpPaths.add(pathways.get(correct_onion_frame).get(i).first);
-            tmpPaint.add((new Paint(pathways.get(correct_onion_frame).get(i).second)));
-            tmpPaint.get(i).setAlpha(30);
 
-            Log.i("Onion Skin", "Paths: " + tmpPaths + " -- " + "Paints: " + tmpPaint);
-            Pair onion_skin_item = new Pair(tmpPaths.get(i), tmpPaint.get(i));
+        for(int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
+            Path tmp = pathways.get(correct_onion_frame).get(i).first;
+            Paint tmpPaint = new Paint(pathways.get(correct_onion_frame).get(i).second);
+            tmpPaint.setAlpha(30);
+
+            Log.i("Onion Skin", "Paths: " + tmp + " -- " + "Paints: " + tmpPaint);
+            Pair onion_skin_item = new Pair(tmp, tmpPaint);
             mixed_frame.add(onion_skin_item);
         }
 
