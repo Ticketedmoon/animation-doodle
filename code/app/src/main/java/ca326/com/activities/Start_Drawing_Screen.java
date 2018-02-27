@@ -240,7 +240,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             correct_onion_frame = position-1;
 
         if (this.pos != position) {
-            set = true;
 
 
             // Moved all logic to a method (REFACTORING)
@@ -283,11 +282,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         this.pos = position;
         this.canvasView.invalidate();
+
+
         this.canvasView.setDrawingCacheEnabled(true);
         bitmap = this.canvasView.getDrawingCache();
         adapterPosition = position;
         myDrawable = new BitmapDrawable(getResources(), bitmap);
-        adapter.notifyDataSetChanged();
+        adjust_timeline();
+
     }
 
     // Save Animation Function, takes all frames in canvas
