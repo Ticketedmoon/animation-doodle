@@ -95,7 +95,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
-        holder.textViewName.setText(video.getName());
+        //holder.textViewName.setText(video.getName());
         if (video.getDescription().equals("null")){}
         else{
         holder.textView.setText(video.getDescription());
@@ -127,7 +127,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             super(itemView);
             image = (NetworkImageView) itemView.findViewById(R.id.imageView);
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
-            textViewName = (TextView) itemView.findViewById(R.id.textViewName);
+            //textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
             textView = (TextView) itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(this);
