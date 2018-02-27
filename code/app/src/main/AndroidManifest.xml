@@ -74,6 +74,10 @@
             android:name=".Play_Animation_Screen"
             android:configChanges="orientation" />
 
+        <activity
+            android:name=".Test_VideoPlayer"
+            android:configChanges="orientation" />
+
         <!-- Special Views -->
     </application>
 

@@ -30,8 +30,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
 
     private ItemClickListener mClickListener;
 
-    public static String rateValue;
-    public static RatingBar ratingBar;
+    public static String rateValue="0.0";
 
     public static Map<Integer, RatingBar> ratingbar_map = new HashMap<Integer, RatingBar>();
 
@@ -97,6 +96,10 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
         holder.textViewName.setText(video.getName());
+        if (video.getDescription().equals("null")){}
+        else{
+        holder.textView.setText(video.getDescription());
+        }
     }
 
 
@@ -118,6 +121,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         public NetworkImageView image;
         public TextView textViewName;
         public  RatingBar ratingBar;
+        public TextView textView;
         //Initializing Views
         public ViewHolder(View itemView) {
             super(itemView);
@@ -125,6 +129,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            textView = (TextView) itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(this);
         }
 

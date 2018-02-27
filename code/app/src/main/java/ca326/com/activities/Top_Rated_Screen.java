@@ -1,22 +1,18 @@
 package ca326.com.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 
 import com.android.volley.RequestQueue;
@@ -42,9 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ca326.com.activities.MyCardAdapter.rateValue;
-import static ca326.com.activities.MyCardAdapter.ratingBar;
-import static ca326.com.activities.MyCardAdapter.ratingbar_map;
-import static ca326.com.activities.MyCardAdapter.videoUrl;
 import static ca326.com.activities.Profile_Screen.deciding_string;
 
 public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter.ItemClickListener {
@@ -52,7 +45,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     //list of videos
     public static List<Video> listVideos;
     public static Integer position2 = 10;
-    public static Integer position;
+    public static Integer position =0;
     //Creating Views
     private RecyclerView recyclerView;
     private MyCardAdapter adapter;
@@ -168,16 +161,20 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     }
 
     public void rating(View view){
-            Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
-            Video video = listVideos.get(position);
-            newUrl = video.getVideoUrl();
-            changeRating(rateValue);
+        Video video = listVideos.get(position);
+        newUrl = video.getVideoUrl();
+        Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
+        changeRating(rateValue);
         }
 
     public void changeRating(String rateValue){
-        Float ratingInt =Float.parseFloat(rateValue);
-
-
+        Float ratingInt;
+        if (!rateValue.equals("0.0")){
+            ratingInt = Float.parseFloat(rateValue);
+        }
+        else {
+            ratingInt = 3.0f;
+        }
         //insert ratingInt into the rating column in database
         new updateRatingValue(this).execute(ratingInt);
 
@@ -244,14 +241,14 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(instance, "Couldn't set rating2.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, "Couldn't set rating3.", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(instance, "Couldn't set rating4.", Toast.LENGTH_SHORT).show();
             }
         }
     }

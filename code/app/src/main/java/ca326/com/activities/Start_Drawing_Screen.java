@@ -151,6 +151,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Drawable myDrawable;
 
     public Context context;
+    public static Map<Integer, Drawable> drawables = new HashMap<>();
 
     public static Integer adapterPosition = 20;
 
@@ -241,20 +242,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         if (this.pos != position) {
             set = true;
 
+
             // Moved all logic to a method (REFACTORING)
             change_current_frame(position, correct_onion_frame);
 
+            /*
+
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
-            //Canvas canvas = new Canvas(bitmap);
-            //canvas.drawColor(Color.WHITE);
-            //this.canvasView.draw(canvas);
             adapterPosition = position;
             myDrawable = new BitmapDrawable(getResources(), bitmap);
-            //myDrawable = getResources().getDrawable(R.drawable.play);
-            adapter.notifyDataSetChanged();
-            Log.i("bitmap","is " + bitmap);
+            drawables.put(this.pos,myDrawable);
 
+
+            //adapter.notifyDataSetChanged();
+            */
         }
     }
     public void getImageView(CanvasView view){
@@ -267,6 +269,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Add Onion Layering Functionality
         // Make Paint Relatively transparent
         this.pathways.put(this.pos, this.canvasView.newPaths);
+
         this.canvasView.newPaths = this.pathways.get(position);
         // Set all paint objects to opaque.
 
@@ -280,6 +283,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         this.pos = position;
         this.canvasView.invalidate();
+        this.canvasView.setDrawingCacheEnabled(true);
+        bitmap = this.canvasView.getDrawingCache();
+        adapterPosition = position;
+        myDrawable = new BitmapDrawable(getResources(), bitmap);
+        adapter.notifyDataSetChanged();
     }
 
     // Save Animation Function, takes all frames in canvas

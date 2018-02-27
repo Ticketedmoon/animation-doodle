@@ -12,12 +12,25 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageView"
-                android:layout_width="300dp"
+                android:layout_width="230dp"
                 android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="170dp"
+                android:layout_height="100dp"
+                android:paddingTop="20dp"
+                android:textSize="21dp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/imageView" />
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -25,7 +38,7 @@
 
             <VideoView
                 android:id="@+id/videoViews"
-                android:layout_width="wrap_content"
+                android:layout_width="230dp"
                 android:layout_height="0dp" />
 
 
@@ -41,8 +54,9 @@
                         android:id="@+id/textViewName"
                         android:layout_width="126dp"
                         android:layout_height="30dp"
-                        android:paddingLeft="32dp"
-                        android:textStyle="bold" />
+                        android:paddingLeft="50dp"
+                        android:textStyle="bold"
+                        android:textSize="20dp" />
 
                 </TableRow>
 
