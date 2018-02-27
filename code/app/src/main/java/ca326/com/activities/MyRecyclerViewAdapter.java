@@ -17,6 +17,7 @@ import java.util.List;
 
 import static ca326.com.activities.Start_Drawing_Screen.adapterPosition;
 import static ca326.com.activities.Start_Drawing_Screen.bitmap;
+import static ca326.com.activities.Start_Drawing_Screen.drawables;
 import static ca326.com.activities.Start_Drawing_Screen.myDrawable;
 import static ca326.com.activities.Start_Drawing_Screen.set;
 
@@ -50,11 +51,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String animal = mFrameNum.get(position);
         Log.i("set", "set is " + set);
         //if (set = false) {
-        if (position != adapterPosition) {
+        if (adapterPosition == 20) {
             holder.myView.setBackgroundResource(res);
         }
         else{
-            holder.myView.setBackground(myDrawable);
+            //get the drawable for the each position of the recyclerview using hashmap
+            holder.myView.setBackground(drawables.get(position));
         }
         holder.myTextView.setText(animal);
        // holder.imageView.setImageResource(R.drawable.play);

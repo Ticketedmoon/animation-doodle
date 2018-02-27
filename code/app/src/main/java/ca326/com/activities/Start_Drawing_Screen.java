@@ -151,6 +151,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Drawable myDrawable;
 
     public Context context;
+    public static Map<Integer, Drawable> drawables = new HashMap<>();
 
     public static Integer adapterPosition = 20;
 
@@ -246,6 +247,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Add Onion Layering Functionality
             // Make Paint Relatively transparent
             this.pathways.put(this.pos, this.canvasView.newPaths);
+
+            this.canvasView.setDrawingCacheEnabled(true);
+            bitmap = this.canvasView.getDrawingCache();
+            adapterPosition = position;
+            myDrawable = new BitmapDrawable(getResources(), bitmap);
+            Log.i("drawable", "posi "+ this.pos);
+            drawables.put(this.pos,myDrawable);
+
             this.canvasView.newPaths = this.pathways.get(position);
             // Set all paint objects to opaque.
             List <Pair<Path, Paint>> onionSkin = onion_skin(correct_onion_frame);
