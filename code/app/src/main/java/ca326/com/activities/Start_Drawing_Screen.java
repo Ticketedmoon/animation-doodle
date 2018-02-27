@@ -96,7 +96,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
     // Views
-    private static CanvasView canvasView;
+    public static CanvasView canvasView;
     private RelativeLayout menu;
 
     // Object creations
@@ -143,7 +143,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Other Fields
     private boolean is_menu_open = false;
     public int pen_size;
-    private int image_counter = 1;
+    public static int image_counter = 1;
 
     public static ImageView imageView;
     public static Bitmap bitmap;

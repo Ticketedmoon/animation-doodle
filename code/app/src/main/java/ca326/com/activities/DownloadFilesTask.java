@@ -41,20 +41,30 @@ class DownloadFilesTask extends AsyncTask<Void, Void, String> {
         try {
             out = NIOUtils.writableFileChannel(Environment.getExternalStorageDirectory() + "/AnimationDoodle/OUTPUTTESTING.mp4");
             File save_loc = new File(Environment.getExternalStorageDirectory(), "/AnimationDoodle");
-            //encoder = new AndroidSequenceEncoder(out, Rational.R(instance.frame_rate_value, 1));
+            encoder = new AndroidSequenceEncoder(out, Rational.R(instance.frame_rate_value, 1));
 
+            // Save all images
+            int old_pos = instance.pos;
 
+            for(int i = 0; i < instance.pathways.size(); i++) {
+                instance.canvasView.newPaths = instance.pathways.get(i);
+                instance.save_external(instance.canvasView);
+            }
+
+            instance.canvasView.newPaths = instance.pathways.get(old_pos);
+            instance.canvasView.invalidate();
+            // END
 
             for(int i = 0; i < instance.canvas_bitmaps.size(); i++)
             {
-                // START (Adjust code here)
                 image = instance.canvas_bitmaps.get(i);
-                //encoder.encodeImage(image); // --- This line takes an extreme amount of time to process (ASYNC needed)
-                File dir = save_loc;      //where image stores
+                encoder.encodeImage(image); // --- This line takes an extreme amount of time to process (ASYNC needed)
+
+                /*File dir = save_loc;      //where image stores
                 String filePrefix = "picture";  //imagename prefix
                 String fileExtn = ".jpg";       //image extention
-                File src = new File(dir, filePrefix + "%03d" + fileExtn);// image name should ne picture001, picture002,picture003 soon  ffmpeg takes as input valid
-                Log.i("Download ASYNC", "Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");
+                File src = new File(dir, filePrefix + Start_Drawing_Screen.image_counter + fileExtn);// image name should ne picture001, picture002,picture003 soon  ffmpeg takes as input valid
+                Log.i("Download ASYNC", "Encoder: " + "Image (" + i + ") encoded! (50 seconds encoding rate per frame)");*/
             }
             encoder.finish();
         }
