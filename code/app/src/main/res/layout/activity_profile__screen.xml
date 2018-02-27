@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/top_rated">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +16,6 @@
             android:layout_height="200dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/anime"
             android:elevation="4dp"
             android:paddingBottom="24dp">
 
@@ -87,26 +87,26 @@
             android:layout_below="@+id/profile_layout"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
-            android:background="#add8e6"
             android:id="@+id/gridLayout">
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="109dp"
                 android:layout_margin="5dp"
                 android:background="#fff"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
+                android:backgroundTint="#69000000"
                 android:text="fppp pfpfppg pfpvfpgfpg fdfpvpdfpvd dpvpfdvpdfpvp vnfgrho vdsvbuh vsdjbvwju vdb" />
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginTop="3dp"
-                android:background="#fff"
+                android:background="#69000000"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
@@ -115,19 +115,15 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/relativeLayout">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:visibility="visible"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="5dp"
+            android:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -136,4 +132,4 @@
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
-</RelativeLayout>
+
