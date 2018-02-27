@@ -238,24 +238,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         else
             correct_onion_frame = position-1;
 
-        // Destroy previous onion cache
-        this.canvasView.onionPaths.clear();
-
         if (this.pos != position) {
             set = true;
-            // Add Onion Layering Functionality
-            // Make Paint Relatively transparent
-            this.pathways.put(this.pos, this.canvasView.newPaths);
-            this.canvasView.newPaths = this.pathways.get(position);
-            // Set all paint objects to opaque.
-            List <Pair<Path, Paint>> onionSkin = onion_skin(correct_onion_frame);
-            Log.i("Onion Layering", "onions: " + onionSkin);
 
-            // Display Onion layer
-            this.canvasView.onionPaths.addAll(onionSkin);
-
-            this.pos = position;
-            this.canvasView.invalidate();
+            // Moved all logic to a method (REFACTORING)
+            change_current_frame(position, correct_onion_frame);
 
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
@@ -271,6 +258,28 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
     public void getImageView(CanvasView view){
+    }
+
+    private void change_current_frame(int position, int correct_onion_frame) {
+        // Destroy previous onion cache
+        this.canvasView.onionPaths.clear();
+
+        // Add Onion Layering Functionality
+        // Make Paint Relatively transparent
+        this.pathways.put(this.pos, this.canvasView.newPaths);
+        this.canvasView.newPaths = this.pathways.get(position);
+        // Set all paint objects to opaque.
+
+        // If on Frame 0 (Don't onion skin)
+        if (position != 0) {
+            List<Pair<Path, Paint>> onionSkin = get_onion_skin(correct_onion_frame);
+            Log.i("Onion Layering", "onions: " + onionSkin);
+            // Display Onion layer
+            this.canvasView.onionPaths.addAll(onionSkin);
+        }
+
+        this.pos = position;
+        this.canvasView.invalidate();
     }
 
     // Save Animation Function, takes all frames in canvas
@@ -338,8 +347,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static CanvasView getCView() {
         return canvasView;
     }
-
-    // Disable back button on this screen
 
     public void save_external(View v) {
         System.out.println("Pushed Save Button");
@@ -673,14 +680,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public  List<Pair<Path, Paint>> onion_skin(int correct_onion_frame) {
+    public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
         List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
         Log.i("Onion Skin", "Altering Paint Objs...");
-
-        for(int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
+        // Make sure user isn't on the first frame (No Onion Skin on first frame)
+        for (int i = 0; i < pathways.get(correct_onion_frame).size(); i++) {
             Path tmp = pathways.get(correct_onion_frame).get(i).first;
             Paint tmpPaint = new Paint(pathways.get(correct_onion_frame).get(i).second);
-            tmpPaint.setAlpha(30);
+            tmpPaint.setAlpha(20);
 
             Log.i("Onion Skin", "Paths: " + tmp + " -- " + "Paints: " + tmpPaint);
             Pair onion_skin_item = new Pair(tmp, tmpPaint);
@@ -711,5 +718,4 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
-
-    }
+}
