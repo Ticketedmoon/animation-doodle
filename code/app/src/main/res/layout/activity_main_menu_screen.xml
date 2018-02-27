@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/drawing_menu"
             android:layout_centerVertical="true"
-            android:onClick="goToRegisterOrProfile"
+            android:onClick="goToSignInOrProfile"
             android:text="Profile"
             android:textColor="@android:color/white"
             android:textSize="11sp"

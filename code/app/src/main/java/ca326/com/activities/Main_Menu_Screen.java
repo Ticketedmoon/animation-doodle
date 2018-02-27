@@ -53,7 +53,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
     }
 
     // When button pressed, call this function
-    public void goToRegisterOrProfile(View v) {
+    public void goToSignInOrProfile(View v) {
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
 
@@ -62,7 +62,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
             intent = new Intent(Main_Menu_Screen.this, Profile_Screen.class);
         }
         else{
-            intent = new Intent(Main_Menu_Screen.this, Register_Screen.class);
+            intent = new Intent(Main_Menu_Screen.this, Sign_In_Screen.class);
         }
 
         startActivity(intent);

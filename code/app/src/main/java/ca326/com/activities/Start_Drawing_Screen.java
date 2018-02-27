@@ -473,7 +473,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
         }
         else{
-            intent = new Intent(Start_Drawing_Screen.this, Register_Screen.class);
+            intent = new Intent(Start_Drawing_Screen.this, Sign_In_Screen.class);
         }
 
         startActivity(intent);
@@ -560,6 +560,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         chooseVideo();
     }
 
+    public void onBackPressed() {
+        System.out.println("Back Button Pushed <Returning to Homescreen>");
+        Intent startMain = new Intent(Start_Drawing_Screen.this, Main_Menu_Screen.class);
+        startActivity(startMain);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -640,6 +646,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         System.out.println("Pathways:" + pathways);
     }
 
+
     public void previous_frame(View v) {
         Integer currentIndex = this.pos;
         List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
@@ -647,11 +654,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         if (currentIndex > 0) {
 
             List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
-
-            //example of transparent paint , obviously not working properly
-            // #80000000 == 50 % transparent
-            // #33000000 == 20% transparent
-            // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 -- link to colours
 
             // this.canvasView.setUpPaint(Color.parseColor("#3B000000"),mDefaultPaint);
             // Combine Both the previous frame with the current frame
