@@ -149,7 +149,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static ImageView imageView;
     public static Bitmap bitmap;
     public static Bitmap newBitmap;
-    public Drawable myDrawable;
+    public static Drawable myDrawable;
     public Integer i=0;
 
     public Context context;
@@ -293,26 +293,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
         this.canvasView.invalidate();
         this.canvasView.setDrawingCacheEnabled(true);
-        if (i == 0){
-            bitmap = this.canvasView.getDrawingCache();
-            if(bitmap == null){
-                return;
-            }
-            newBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            myDrawable = new BitmapDrawable(getResources(), bitmap);
-            myDrawable.mutate();
-            drawables.put(this.pos,myDrawable);
-            adjust_timeline();
-        }
-        else {
-            newBitmap = this.canvasView.getDrawingCache();
-            myDrawable = new BitmapDrawable(getResources(), newBitmap);
-            drawables.put(this.pos, myDrawable);
-        }
+        bitmap = this.canvasView.getDrawingCache();
         adapterPosition = position;
-        Log.i("list","drawable list is"+i);
-        Log.i("list","drawable list is"+drawables);
-        Log.i("list","drawable list is"+drawables.size());
+        myDrawable = new BitmapDrawable(getResources(), bitmap);
         adjust_timeline();
         i++;
 

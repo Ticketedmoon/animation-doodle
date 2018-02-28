@@ -25,7 +25,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/main_menu_bg"
         tools:context=".MainActivity">
 
         <ImageView
@@ -70,7 +70,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/email"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_below="@+id/imageView2"
             android:layout_centerHorizontal="true"
@@ -82,9 +82,12 @@
             android:maxLines="1"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColor="#222222"
+            android:textColorHint="#999999"
             android:textStyle="italic"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:background="@color/colorWhite"
             tools:text="Email" />
 
         <EditText
@@ -100,11 +103,14 @@
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionUnspecified"
             android:inputType="text"
+            android:layout_marginBottom="10dp"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColor="#222222"
+            android:padding="10dp"
+            android:textColorHint="#999999"
             android:textStyle="italic"
+            android:background="@color/colorWhite"
             android:visibility="visible" />
 
         <Button
@@ -117,20 +123,24 @@
             android:layout_centerHorizontal="true"
             android:elevation="0dp"
             android:fontFamily="sans-serif"
+            android:background="@null"
             android:onClick="goToSignInScreen"
+            android:textStyle="bold"
             android:text="@string/action_sign_in_register" />
 
         <Button
             android:id="@+id/email_register_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_below="@+id/password"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="45dp"
             android:elevation="0dp"
             android:fontFamily="sans-serif"
             android:onClick="goToDrawingScreen"
-            android:text="@string/action_register" />
+            android:textColor="@color/colorBlack"
+            android:text="Register" />
 
     </RelativeLayout>
 
