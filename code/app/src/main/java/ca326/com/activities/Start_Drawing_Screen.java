@@ -148,7 +148,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public static ImageView imageView;
     public static Bitmap bitmap;
-    public static Drawable myDrawable;
+    public static Bitmap newBitmap;
+    public Drawable myDrawable;
+    public Integer i=0;
 
     public Context context;
 
@@ -277,6 +279,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Make Paint Relatively transparent
         this.pathways.put(this.pos, this.canvasView.newPaths);
 
+
+
         this.canvasView.newPaths = this.pathways.get(position);
         // Set all paint objects to opaque.
 
@@ -287,33 +291,41 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Display Onion layer
             this.canvasView.onionPaths.addAll(onionSkin);
         }
+        this.canvasView.invalidate();
+        this.canvasView.setDrawingCacheEnabled(true);
+        if (i == 0){
+            bitmap = this.canvasView.getDrawingCache();
+            if(bitmap == null){
+                return;
+            }
+            newBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            myDrawable = new BitmapDrawable(getResources(), bitmap);
+            myDrawable.mutate();
+            drawables.put(this.pos,myDrawable);
+            adjust_timeline();
+        }
+        else {
+            newBitmap = this.canvasView.getDrawingCache();
+            myDrawable = new BitmapDrawable(getResources(), newBitmap);
+            drawables.put(this.pos, myDrawable);
+        }
+        adapterPosition = position;
+        Log.i("list","drawable list is"+i);
+        Log.i("list","drawable list is"+drawables);
+        Log.i("list","drawable list is"+drawables.size());
+        adjust_timeline();
+        i++;
 
         this.pos = position;
-        this.canvasView.invalidate();
 
 
-        this.canvasView.setDrawingCacheEnabled(true);
-        bitmap = this.canvasView.getDrawingCache();
-        adapterPosition = position;
-        myDrawable = new BitmapDrawable(getResources(), bitmap);
-        adjust_timeline();
+
+
+
+
 
     }
 
-    public void update_frame (){
-        this.pathways.put(this.pos, this.canvasView.newPaths);
-
-
-        this.canvasView.invalidate();
-
-
-        this.canvasView.setDrawingCacheEnabled(true);
-        bitmap = this.canvasView.getDrawingCache();
-        Log.i("bitmap","is " + bitmap );
-        adapterPosition = pos;
-        myDrawable = new BitmapDrawable(bitmap);
-        adapter.notifyDataSetChanged();
-    }
 
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
