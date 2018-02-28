@@ -756,7 +756,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
 
         //used to test if loading bitmap is working.It is.
-        imageView.setImageBitmap(newBitmap);
+        //imageView.setImageBitmap(newBitmap);
 
         /* This method isn't working. Need to figure out whats wrong
         Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
