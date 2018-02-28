@@ -13,14 +13,7 @@ import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
-import org.jcodec.api.android.AndroidSequenceEncoder;
-import org.jcodec.codecs.h264.H264Encoder;
-import org.jcodec.common.io.NIOUtils;
-import org.jcodec.common.io.SeekableByteChannel;
-import org.jcodec.common.model.Rational;
-
 import java.io.File;
-import java.io.IOException;
 
 class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
 
@@ -28,6 +21,7 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
     private ProgressDialog downloading;
     private FFmpeg ffmpeg;
     private int frame_num = 1;
+    private File dir;
 
     public DownloadAnimationTask(Start_Drawing_Screen instance) {
         this.instance = instance;
@@ -44,13 +38,13 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
         if(!file.exists()){
             file.mkdirs();
         }
-        File dir = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodle/Temp");
+        dir = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodle/Temp");
         String filePrefix = "frame"; //imagename prefix
         String fileExtn = ".jpg";//image extention
         File src = new File(dir, filePrefix + "%d" + fileExtn);// image name should ne picture001, picture002,picture003 soon  ffmpeg takes as input valid
         Log.i("TEST", src.toString());
         loadFFmpeg();
-        String [] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=2*PTS", "-pix_fmt", "yuv420p", "-crf", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/" + "Video" + frame_num +".mp4"};
+        String [] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-pix_fmt", "yuv420p", "-crf", "10", "-r", Integer.toString(1), "-y", "/storage/emulated/0/" + "AnimationDoodle/" + "Video" + frame_num +".mp4"};
         executeFFmpeg(complexCommand);
 
         return "Complete";
@@ -102,7 +96,9 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
                 public void onStart() {}
 
                 @Override
-                public void onProgress(String message) {}
+                public void onProgress(String message) {
+                    Log.i("FFmpeg", message);
+                }
 
                 @Override
                 public void onFailure(String message) {}
@@ -113,9 +109,19 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
                 @Override
                 public void onFinish() {
                     Log.i("Download", "FFmpeg Execute finished");
-                    Log.i("Download", result);
+                    Log.i("Download", "Download Complete");
                     Toast.makeText(instance.getApplication(), "Animation successfully Downloaded (/sdcard/AnimationDoodle)", Toast.LENGTH_SHORT).show();
                     downloading.dismiss();
+
+                    // Delete tmp folder
+                    if (dir.isDirectory())
+                    {
+                        String[] children = dir.list();
+                        for (int i = 0; i < children.length; i++)
+                        {
+                            new File(dir, children[i]).delete();
+                        }
+                    }
                 }
             });
         } catch (FFmpegCommandAlreadyRunningException e) {

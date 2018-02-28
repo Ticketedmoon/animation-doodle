@@ -247,24 +247,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Moved all logic to a method (REFACTORING)
             change_current_frame(position, correct_onion_frame);
 
-
-            // Hide Onion layer in bitmap frames
-            canvasView.shouldShowOnionSkin = false;
-            canvasView.invalidate();
-
             // Reshow Bitmap after bitmap saved
             canvasView.shouldShowOnionSkin = true;
-
-        /*
-            this.canvasView.setDrawingCacheEnabled(true);
-            bitmap = this.canvasView.getDrawingCache();
-            adapterPosition = position;
-            myDrawable = new BitmapDrawable(getResources(), bitmap);
-            drawables.put(this.pos,myDrawable);
-
-            //adjust_timeline();
-            */
-
 
         }
     }
@@ -292,6 +276,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.pos = position;
         this.canvasView.invalidate();
 
+        // Hide Onion layer in bitmap frames
+        canvasView.shouldShowOnionSkin = false;
 
         this.canvasView.setDrawingCacheEnabled(true);
         bitmap = this.canvasView.getDrawingCache();
