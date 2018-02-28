@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -49,6 +50,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     //Creating Views
     private RecyclerView recyclerView;
     private ProfileCardAdapter adapter;
+    private TextView textViewAbout;
 
 
     private boolean menu_button = false;
@@ -71,6 +73,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //Initializing Views
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+        textViewAbout = (TextView) findViewById(R.id.textViewAbout);
 
         //list 2 videos side by side in a grid
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);

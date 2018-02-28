@@ -90,6 +90,7 @@
             android:id="@+id/gridLayout">
 
             <TextView
+                android:id="@+id/textViewAbout"
                 android:layout_width="300dp"
                 android:layout_height="109dp"
                 android:layout_margin="5dp"

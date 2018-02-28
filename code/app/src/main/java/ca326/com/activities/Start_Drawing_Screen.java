@@ -149,11 +149,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private String value;
     private int canvas_height;
 
-    public static ImageView imageView;
     public static Bitmap bitmap;
     public static Bitmap newBitmap;
     public static Drawable myDrawable;
     public Integer i=0;
+
+    private ImageView imageView;
 
     public Context context;
 
@@ -168,6 +169,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // This function below creates the nice fade in / out transition between activities.
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_start__drawing__screen);
+
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         textView = (TextView) findViewById(R.id.textView);
         textViewResponse = (TextView) findViewById(R.id.textViewResponse);
@@ -271,7 +274,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         }
     }
-    public void getImageView(CanvasView view){}
+
 
     private void change_current_frame(int position, int correct_onion_frame) {
         // Destroy previous onion cache
@@ -745,31 +748,22 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("file2","file " + backgroundPath);
         File file2 = new File(backgroundPath);
         BitmapFactory.Options bit = new BitmapFactory.Options();
-        Log.i("file2","file " + file2);
+        Log.i("file2","file " +bit);
         Bitmap background = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
+
+        newBitmap = background.copy(Bitmap.Config.ARGB_8888, true);
         Log.i("file2","file " + background);
+
+
+        //used to test if loading bitmap is working.It is.
+        imageView.setImageBitmap(newBitmap);
+
+        /* This method isn't working. Need to figure out whats wrong
         Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
-        canvas.drawBitmap(background,0,0,mDefaultPaint);
-        //canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(bitmap,0,0,mDefaultPaint);
         this.canvasView.draw(canvas);
         this.canvasView.invalidate();
-
-        /*
-        Integer currentIndex = this.pos;
-        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
-
-        if (currentIndex > 0) {
-
-            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
-            mixed_frame.addAll(this.canvasView.newPaths);
-            mixed_frame.addAll(prev_frame);
-
-
-            pathways.put(pos, mixed_frame);
-            this.canvasView.newPaths = mixed_frame;
-            this.canvasView.invalidate();
-        }
-        */
+*/
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
