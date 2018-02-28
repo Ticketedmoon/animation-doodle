@@ -28,6 +28,7 @@ public class CanvasView extends View {
     public Path mPath;
     Context context;
     AttributeSet attrbs;
+    Start_Drawing_Screen screen = new Start_Drawing_Screen();
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
@@ -124,6 +125,8 @@ public class CanvasView extends View {
                 // No longer pressing here
                 touch_up();
                 invalidate();
+                screen.update_frame();
+
                 break;
         }
         return true;

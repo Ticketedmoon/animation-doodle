@@ -96,13 +96,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
     // Views
-    private static CanvasView canvasView;
+    public static CanvasView canvasView;
     private RelativeLayout menu;
 
     // Object creations
     private Paint mDefaultPaint;
     private ImageButton colour_picker;
-    private MyRecyclerViewAdapter adapter;
+    public static MyRecyclerViewAdapter adapter;
     public Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
     public MarkerSeekBar pen_size_adjuster;
 
@@ -298,6 +298,21 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         myDrawable = new BitmapDrawable(getResources(), bitmap);
         adjust_timeline();
 
+    }
+
+    public void update_frame (){
+        this.pathways.put(this.pos, this.canvasView.newPaths);
+
+
+        this.canvasView.invalidate();
+
+
+        this.canvasView.setDrawingCacheEnabled(true);
+        bitmap = this.canvasView.getDrawingCache();
+        Log.i("bitmap","is " + bitmap );
+        adapterPosition = pos;
+        myDrawable = new BitmapDrawable(bitmap);
+        adapter.notifyDataSetChanged();
     }
 
     // Save Animation Function, takes all frames in canvas
