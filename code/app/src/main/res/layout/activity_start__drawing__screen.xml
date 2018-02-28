@@ -159,8 +159,8 @@
                 android:layout_marginStart="15dp"
                 android:layout_toEndOf="@+id/upload"
                 android:background="@color/colorPrimary"
-                android:onClick="previous_frame"
-                android:text="Previous"
+                android:onClick="chooseImage"
+                android:text="Set Background"
                 android:textColor="@android:color/white"
                 android:textSize="8sp" />
 
