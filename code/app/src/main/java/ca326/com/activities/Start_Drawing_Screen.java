@@ -96,7 +96,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
     // Views
-    private static CanvasView canvasView;
+    public static CanvasView canvasView;
     private RelativeLayout menu;
 
     // Object creations
@@ -144,7 +144,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Other Fields
     private boolean is_menu_open = false;
     public int pen_size;
-    private int image_counter = 1;
+    public static int image_counter = 1;
+    private String value;
+    private int canvas_height;
 
     public static ImageView imageView;
     public static Bitmap bitmap;
@@ -266,8 +268,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         }
     }
-    public void getImageView(CanvasView view){
-    }
+    public void getImageView(CanvasView view){}
 
     private void change_current_frame(int position, int correct_onion_frame) {
         // Destroy previous onion cache
@@ -323,6 +324,18 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvas_bitmaps.put(i, bitmapM);
         }
 
+        // Save all images
+        int old_pos = pos;
+
+        for(int i = 0; i < pathways.size(); i++) {
+            canvasView.newPaths = pathways.get(i);
+            save_external(canvasView);
+        }
+
+        canvasView.newPaths = pathways.get(old_pos);
+        canvasView.invalidate();
+        // END
+
         Log.i("Download","Bitmap values: " + this.canvas_bitmaps.values());
 
         // restore canvasView.newPath before the loop
@@ -330,8 +343,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("Download", "Bitmap Conversion Complete");
 
         // ASYNC TASK HERE (Encode Images)
-        DownloadFilesTask task = new DownloadFilesTask(this);
-        task.execute();
+        //DownloadFilesTask task = new DownloadFilesTask(this);
+        //task.execute();
     }
 
     private void checkCanvasSize(View v) {
@@ -370,18 +383,17 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void save_external(View v) {
         Log.i("Save", "Pushed Save Button");
-        // Add and delete tmp file
-        save();
-        File file = new File(Environment.getExternalStorageDirectory(), "/AnimationDoodle/tmp.jpg");
-        boolean deleted = file.delete();
-        image_counter++;
 
-        Log.i("Save", "Picture (" + image_counter + ") saved");
+        // Store canvas_width (Some reason gets overwritten, so store and then restore)
+        canvas_height = canvasView.height;
+
+        // ASYCN call to file name
+        get_file_input(this.canvasView);
     }
 
-    private void save() {
+    private void save(String store_name) {
         verifyStoragePermissions(this);
-        String store_name = "picture" + image_counter;
+        Log.i("Download Image", "Canvas Width: " + canvasView.width + " -- " + "Canvas Height: " + canvasView.height );
 
         try {
             this.canvasView.setDrawingCacheEnabled(true);
@@ -390,14 +402,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Hide onion skins
             canvasView.shouldShowOnionSkin = false;
             canvasView.invalidate();
-            Bitmap bitmap = this.canvasView.getDrawingCache();
-            Canvas canvas = new Canvas(bitmap);
-            canvas.drawColor(Color.WHITE);
-            this.canvasView.draw(canvas);
+
+            // Restore
+            canvasView.height = canvas_height;
+
+            // Method which creates the correct bitmap
+            Bitmap bitmap = loadBitmapFromView(canvasView);
 
             File f = null;
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
+                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
                 if(!file.exists()){
                     file.mkdirs();
                 }
@@ -414,6 +428,38 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             e.printStackTrace();
         }
     }
+
+    public void get_file_input(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Enter a filename");
+        alert.setMessage("Background Title: ");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        final int prev_h = canvasView.height;
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.i("Save", "Picture (" + image_counter + ") saved");
+                value = input.getText().toString();
+                image_counter++;
+
+                // Do something with value!
+                save(value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.create().show();
+    }
+
 
     // Adapt this function later to handle Integers rather than Strings more efficiently.
     public void get_file_input_frame_rate(View v) {
