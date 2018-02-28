@@ -253,24 +253,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Moved all logic to a method (REFACTORING)
             change_current_frame(position, correct_onion_frame);
 
-
-            // Hide Onion layer in bitmap frames
-            canvasView.shouldShowOnionSkin = false;
-            canvasView.invalidate();
-
             // Reshow Bitmap after bitmap saved
             canvasView.shouldShowOnionSkin = true;
-
-        /*
-            this.canvasView.setDrawingCacheEnabled(true);
-            bitmap = this.canvasView.getDrawingCache();
-            adapterPosition = position;
-            myDrawable = new BitmapDrawable(getResources(), bitmap);
-            drawables.put(this.pos,myDrawable);
-
-            //adjust_timeline();
-            */
-
 
         }
     }
@@ -297,6 +281,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.onionPaths.addAll(onionSkin);
         }
         this.canvasView.invalidate();
+
+        // Hide Onion layer in bitmap frames
+        canvasView.shouldShowOnionSkin = false;
+
         this.canvasView.setDrawingCacheEnabled(true);
         bitmap = this.canvasView.getDrawingCache();
         adapterPosition = position;
@@ -305,12 +293,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         i++;
 
         this.pos = position;
-
-
-
-
-
-
 
     }
 
@@ -326,39 +308,30 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         pathways.put(pos, this.canvasView.newPaths);
         checkCanvasSize(canvasView);
 
-        // Build an array of bitmap images from different pathways
-        for(int i = 0; i < pathways.size(); i++) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            this.canvasView.newPaths = pathways.get(i);
-            Bitmap bitmap = loadBitmapFromView(canvasView);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 5, stream);
+        // Extract all images (Bitmaps)
+        verifyStoragePermissions(this);
+        ArrayList<Bitmap> bit_frames = new ArrayList<Bitmap>();
 
-            byte[] imageInByte = stream.toByteArray();
-            Bitmap bitmapM = BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length);
-            canvas_bitmaps.put(i, bitmapM);
-        }
+        // Store canvas_width (Some reason gets overwritten, so store and then restore)
+        canvas_height = canvasView.height;
 
-        // Save all images
-        int old_pos = pos;
-
+        Log.i("Download", "Bitmap Conversion Starting...");
         for(int i = 0; i < pathways.size(); i++) {
             canvasView.newPaths = pathways.get(i);
-            save_external(canvasView);
+            Bitmap frameX = prepare_animation_frame();
+            bit_frames.add(frameX);
         }
 
-        canvasView.newPaths = pathways.get(old_pos);
-        canvasView.invalidate();
-        // END
-
-        Log.i("Download","Bitmap values: " + this.canvas_bitmaps.values());
-
         // restore canvasView.newPath before the loop
-        this.canvasView.newPaths = pathways.get(pos);
-        Log.i("Download", "Bitmap Conversion Complete");
+        canvasView.newPaths = pathways.get(pos);
+        canvasView.invalidate();
 
-        // ASYNC TASK HERE (Encode Images)
-        //DownloadFilesTask task = new DownloadFilesTask(this);
-        //task.execute();
+        Log.i("Download", "Bitmap Conversion Complete");
+        Log.i("Download", "Starting JPEG Conversion...");
+
+        // ASYNC TASK (Save images in AnimationDoodle/Temp directory
+        DownloadFrameTask download_images = new DownloadFrameTask(bit_frames, this);
+        download_images.execute();
     }
 
     private void checkCanvasSize(View v) {
@@ -366,6 +339,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Even values necessary for video encoding.
         if (canvasView.width % 2 != 0)
             canvasView.width++;
+
         if (canvasView.height % 2 != 0)
             canvasView.height++;
     }
@@ -401,7 +375,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Store canvas_width (Some reason gets overwritten, so store and then restore)
         canvas_height = canvasView.height;
 
-        // ASYCN call to file name
+        // ASYNC call to file name
         get_file_input(this.canvasView);
     }
 
@@ -410,9 +384,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("Download Image", "Canvas Width: " + canvasView.width + " -- " + "Canvas Height: " + canvasView.height );
 
         try {
-            this.canvasView.setDrawingCacheEnabled(true);
-            // remove and then restore onion skin
-
             // Hide onion skins
             canvasView.shouldShowOnionSkin = false;
             canvasView.invalidate();
@@ -426,9 +397,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             File f = null;
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
-                if(!file.exists()){
-                    file.mkdirs();
-                }
                 f = new File(file.getAbsolutePath()+ file.separator + store_name +".jpg");
             }
             FileOutputStream outputStream = new FileOutputStream(f);
@@ -441,6 +409,24 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private Bitmap prepare_animation_frame() {
+        Log.i("Download Image", "Canvas Width: " + canvasView.width + " -- " + "Canvas Height: " + canvasView.height );
+        // Hide onion skins
+        canvasView.shouldShowOnionSkin = false;
+        canvasView.invalidate();
+
+        // Restore
+        canvasView.height = canvas_height;
+
+        // Method which creates the correct bitmap
+        Bitmap bitmap = loadBitmapFromView(canvasView);
+
+        //Reshow Onion Skin
+        canvasView.shouldShowOnionSkin = true;
+
+        return bitmap;
     }
 
     public void get_file_input(View v) {

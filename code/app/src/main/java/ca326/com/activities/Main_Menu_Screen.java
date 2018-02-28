@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import java.io.File;
 
 public class Main_Menu_Screen extends AppCompatActivity {
 
@@ -44,7 +47,38 @@ public class Main_Menu_Screen extends AppCompatActivity {
         // Change status bar (Transparent -> looks better)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // Build necessary directories
+        build_local_directories();
     }
+
+    private void build_local_directories() {
+
+        // BASE DIRECTORY
+        File baseDirectory = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
+        if(!baseDirectory.exists()){
+            baseDirectory.mkdirs();
+        }
+
+        // IMPORTABLE BACKGROUNDS DIRECTORY
+        File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        // TEMP IMAGE HOLDERS (USED TO ENCODE VIDEO) DIRECTORY
+        File tempDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Temp");
+        if (!tempDirectory.exists()) {
+            tempDirectory.mkdirs();
+        }
+
+        // ANIMATIONS DIRECTORY
+        File animationDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Animations");
+        if (!animationDirectory.exists()) {
+            animationDirectory.mkdirs();
+        }
+    }
+
 
     // When button pressed, call this function
     public void goToDrawingScreen(View v) {
