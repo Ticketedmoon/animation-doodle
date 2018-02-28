@@ -34,11 +34,8 @@ class DownloadFrameTask extends AsyncTask<Void, Void, String> {
         File f = null;
         for (Bitmap bitmap : frames) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                File file = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Temp");
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                f = new File(file.getAbsolutePath() + file.separator + "frame" + image_counter + ".jpg");
+                File tempDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Temp");
+                f = new File(tempDirectory.getAbsolutePath() + tempDirectory.separator + "frame" + image_counter + ".jpg");
                 Log.i("Download", "frame (" + image_counter +").jpg downloaded");
             }
             try {

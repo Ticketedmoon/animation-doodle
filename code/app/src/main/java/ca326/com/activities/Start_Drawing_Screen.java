@@ -387,9 +387,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             File f = null;
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
-                if(!file.exists()){
-                    file.mkdirs();
-                }
                 f = new File(file.getAbsolutePath()+ file.separator + store_name +".jpg");
             }
             FileOutputStream outputStream = new FileOutputStream(f);

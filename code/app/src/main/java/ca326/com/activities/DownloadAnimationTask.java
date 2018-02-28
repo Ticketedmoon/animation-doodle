@@ -33,18 +33,14 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
 
         // Verify Storage Permissions
         instance.verifyStoragePermissions(instance);
-        // If /Animation_Doodle_Images doesn't exist yet, generate it.
-        File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
-        if(!file.exists()){
-            file.mkdirs();
-        }
         dir = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodle/Temp");
         String filePrefix = "frame"; //imagename prefix
         String fileExtn = ".jpg";//image extention
         File src = new File(dir, filePrefix + "%d" + fileExtn);// image name should ne picture001, picture002,picture003 soon  ffmpeg takes as input valid
         Log.i("TEST", src.toString());
         loadFFmpeg();
-        String [] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-pix_fmt", "yuv420p", "-crf", "10", "-r", Integer.toString(1), "-y", "/storage/emulated/0/" + "AnimationDoodle/" + "Video" + frame_num +".mp4"};
+
+        String[] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=N/(" + instance.frame_rate_value.toString() + "*TB)", "-pix_fmt", "yuv420p", "-crf", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/Animations/" + "VideoX" + frame_num + ".mp4"};
         executeFFmpeg(complexCommand);
 
         return "Complete";
