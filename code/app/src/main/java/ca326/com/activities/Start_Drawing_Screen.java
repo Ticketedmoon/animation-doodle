@@ -102,7 +102,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Object creations
     private Paint mDefaultPaint;
     private ImageButton colour_picker;
-    private MyRecyclerViewAdapter adapter;
+    public static MyRecyclerViewAdapter adapter;
     public Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
     public MarkerSeekBar pen_size_adjuster;
 
@@ -138,6 +138,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Bitmap tmp;
     public static String videoPath;
     public static String imagePath;
+    private String backgroundPath;
     public static String video_description ="Video description will go here.";
     private File newfile = null;
 
@@ -150,7 +151,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public static ImageView imageView;
     public static Bitmap bitmap;
+    public static Bitmap newBitmap;
     public static Drawable myDrawable;
+    public Integer i=0;
 
     public Context context;
 
@@ -262,6 +265,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Make Paint Relatively transparent
         this.pathways.put(this.pos, this.canvasView.newPaths);
 
+
+
         this.canvasView.newPaths = this.pathways.get(position);
         // Set all paint objects to opaque.
 
@@ -272,8 +277,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Display Onion layer
             this.canvasView.onionPaths.addAll(onionSkin);
         }
-
-        this.pos = position;
         this.canvasView.invalidate();
 
         // Hide Onion layer in bitmap frames
@@ -284,8 +287,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         adapterPosition = position;
         myDrawable = new BitmapDrawable(getResources(), bitmap);
         adjust_timeline();
+        i++;
+
+        this.pos = position;
 
     }
+
 
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
@@ -620,7 +627,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == video_code) {
+            if (set){
+                Uri imageUri = data.getData();
+                backgroundPath = getImagePath(imageUri);
+                set=false;
+                set_background();
+                return;
+            }
+            else if (!set & requestCode == video_code) {
                 Uri imageUri = data.getData();
                 System.out.println("image uri is : " + imageUri);
                 videoPath = getPath(imageUri);
@@ -637,6 +651,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select a video "), video_code);
+
     }
 
     // TOOL BAR MODIFICATIONS
@@ -700,8 +715,32 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    public void chooseImage(View v){
+        set = true;
+        Intent intent = new Intent();
+        //only search for videos on phone
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
 
-    public void previous_frame(View v) {
+    }
+
+
+    public void set_background() {
+
+        Log.i("file2","file " + backgroundPath);
+        File file2 = new File(backgroundPath);
+        BitmapFactory.Options bit = new BitmapFactory.Options();
+        Log.i("file2","file " + file2);
+        Bitmap background = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
+        Log.i("file2","file " + background);
+        Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
+        canvas.drawBitmap(background,0,0,mDefaultPaint);
+        //canvas.drawColor(Color.WHITE);
+        this.canvasView.draw(canvas);
+        this.canvasView.invalidate();
+
+        /*
         Integer currentIndex = this.pos;
         List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
 
@@ -716,6 +755,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             this.canvasView.newPaths = mixed_frame;
             this.canvasView.invalidate();
         }
+        */
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
@@ -750,6 +790,27 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         cursor.moveToFirst();
         System.out.println("cursor is  " + cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        System.out.println("the path is " + path);
+        cursor.close();
+        return path;
+
+    }
+
+    public String getImagePath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        //this is important to change depending on whether your uploading videos or images
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        System.out.println("cursor is  " + cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         System.out.println("the path is " + path);
         cursor.close();
         return path;
