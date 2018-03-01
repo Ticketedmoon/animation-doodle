@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import java.net.URLEncoder;
 
 import static ca326.com.activities.Sign_In_Screen.user_id;
 import static ca326.com.activities.Start_Drawing_Screen.imagePath;
-import static ca326.com.activities.Start_Drawing_Screen.textViewResponse;
 import static ca326.com.activities.Start_Drawing_Screen.videoPath;
 import static ca326.com.activities.Start_Drawing_Screen.video_description;
 
@@ -77,8 +77,9 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                 }
 
                 uploading.dismiss();
-                textViewResponse.setText(Html.fromHtml("File uploaded!"));
-                textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+                Toast toast = Toast.makeText(instance, "File uploaded!", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
 
             @Override
