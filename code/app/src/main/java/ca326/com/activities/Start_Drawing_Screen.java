@@ -275,6 +275,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             Log.i("RESTORE TIMELINE", "RESUMED INSTANCE NOT NULL *!*");
             horizontalLayoutManager.onRestoreInstanceState(mListState);
             Log.i("RESTORE TIMELINE", "PATHWAYS: " + pathways);
+            // READD EVERYTHING
             for(int i = 1; i < pathways.size(); i++) {
                 add_frame(canvasView);
             }
