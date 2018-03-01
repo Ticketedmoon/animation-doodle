@@ -15,6 +15,8 @@ import android.view.View;
 import java.util.List;
 import java.util.Map;
 
+import static ca326.com.activities.Start_Drawing_Screen.newDrawable;
+
 public class Play_Animation_Screen extends AppCompatActivity {
 
     // Normal fields
@@ -54,6 +56,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
             public void run() {
                 System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
                 cv.newPaths = pathways.get(pos);
+                cv.setBackground(newDrawable);
                 cv.invalidate();
                 pos++;
 

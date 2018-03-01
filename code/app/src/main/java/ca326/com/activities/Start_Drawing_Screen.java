@@ -136,6 +136,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Bitmap bitmap;
     public static Bitmap newBitmap;
     public static Drawable myDrawable;
+    public static Drawable newDrawable;
     public Integer i=0;
 
     private ImageView imageView;
@@ -778,22 +779,24 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("file2","file " + backgroundPath);
         File file2 = new File(backgroundPath);
         BitmapFactory.Options bit = new BitmapFactory.Options();
-        Log.i("file2","file " +bit);
+        Log.i("bitmap","bitmap: " +bit);
         Bitmap background = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
 
         newBitmap = background.copy(Bitmap.Config.ARGB_8888, true);
         Log.i("file2","file " + background);
 
-
-        //used to test if loading bitmap is working.It is.
+        // used to test if loading bitmap is working.It is.
         //imageView.setImageBitmap(newBitmap);
 
-        /* This method isn't working. Need to figure out whats wrong
+        // This method isn't working. Need to figure out whats wrong. Bitmap is loading properly, just not setting on the canvas
         Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
-        canvas.drawBitmap(bitmap,0,0,mDefaultPaint);
+        canvas.drawBitmap(newBitmap,0,0,mDefaultPaint);
+
+        newDrawable = new BitmapDrawable(getResources(), newBitmap);
+        this.canvasView.setBackground(newDrawable);
         this.canvasView.draw(canvas);
+        this.pathways.put(this.pos,this.canvasView.newPaths);
         this.canvasView.invalidate();
-*/
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
