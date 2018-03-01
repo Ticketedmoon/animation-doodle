@@ -581,7 +581,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public void set_video_description(View v){
+    public void set_video_description(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Enter a brief description of video (200 characters Max)");
@@ -612,6 +612,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void upload(){
         UploadVideo upload = new UploadVideo(this);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+
+        //clear the shared preferences for the animation name
         mEditor.remove("animationName");
         mEditor.apply();
         Log.i("shared pref","new shared "+mSharedPreferences.getAll());
@@ -691,6 +693,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 System.out.println("imagePath == " + imagePath);
             }
         }
+
+        set_video_description();
 
     }
 
