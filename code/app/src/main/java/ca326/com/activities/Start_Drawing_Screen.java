@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import java.util.Random;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,9 +18,11 @@ import android.graphics.Path;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,24 +37,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
-
-
-import java.io.File;
-import java.io.FileOutputStream;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import yuku.ambilwarna.AmbilWarnaDialog;
-
-
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -61,15 +47,24 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Duration;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
-    private static boolean temp = false;
+    private static boolean temp= false;
 
     // Saving recycle view (Timeline) functionality
     private RecyclerView timeline_frames;
     private final String KEY_RECYCLER_STATE = "recycler_state";
     private LinearLayoutManager horizontalLayoutManager;
-    private static Bundle mBundleRecyclerViewState;
     private Parcelable mListState = null;
 
     // Views
@@ -103,7 +98,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
 
     // Login Credentials
-    private SharedPreferences mSharedPreferences;
+    public static SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     public static final String PREFERENCE= "preference";
     public static final String PREF_EMAIL = "email";
@@ -131,6 +126,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static int image_counter = 1;
     private int canvas_height;
     public int pen_size;
+
     private String value;
 
     public static Bitmap bitmap;
@@ -223,6 +219,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Log.i("shared pref","pref name is " + mSharedPreferences.getAll());
         String temp = mSharedPreferences.getString("animationName",null);
+        Log.i("shared pref", "TEMP: " + temp);
+
         if(temp==null) {
             canvasView.postDelayed(new Runnable() {
 
