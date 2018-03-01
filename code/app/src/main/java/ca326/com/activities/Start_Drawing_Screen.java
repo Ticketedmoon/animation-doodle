@@ -108,17 +108,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static final String PREFERENCE= "preference";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
-    public static final String PREFERENCENAME= "preference";
     public static final String PREF_ANIMATION_NAME = "animationName";
 
     // Image Buttons / Buttons
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton profile;
-
-    // Upload feature
-    public static TextView textView;
-    public static TextView textViewResponse;
 
     // just used to check if its a video being uploaded for onStartActivity
     private static final int video_code = 1;
@@ -161,8 +156,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        textView = (TextView) findViewById(R.id.textView);
-        textViewResponse = (TextView) findViewById(R.id.textViewResponse);
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
