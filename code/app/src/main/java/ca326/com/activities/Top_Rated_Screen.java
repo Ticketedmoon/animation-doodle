@@ -46,6 +46,9 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     public static List<Video> listVideos;
     public static Integer position2 = 10;
     public static Integer position =0;
+
+    public static Float ratingCounter;
+    public static Float averageRating;
     //Creating Views
     private RecyclerView recyclerView;
     private MyCardAdapter adapter;
@@ -68,7 +71,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        //list 2 videos side by side in a grid
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -112,8 +114,6 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressBar.setVisibility(View.GONE);
-                        //If an error occurs means no more videos on db to load
-                        Toast.makeText(Top_Rated_Screen.this, "No More Items Available", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -142,8 +142,14 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                 json = array.getJSONObject(i);
 
                 //Adding data to the video object
+                String ratingCounterTemp = (json.getString("rating counter"));
+                ratingCounter = Float.parseFloat(ratingCounterTemp);
+                Log.i("rating value","counter is " + ratingCounter);
+
                 String rating =(json.getString("rating"));
                 Float number = Float.parseFloat(rating);
+                averageRating = (number * ratingCounter);
+                Log.i("rating value","average is " + averageRating);
                 video.setRating(number);
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
@@ -164,18 +170,26 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         Video video = listVideos.get(position);
         newUrl = video.getVideoUrl();
         Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
+        Log.i("rating value","value is " + rateValue);
         changeRating(rateValue);
+
         }
 
     public void changeRating(String rateValue){
         Float ratingInt;
+        ratingCounter ++;
+        Log.i("rating value","average2 is " + averageRating);
+        Log.i("rating value","counter2 is " + ratingCounter);
         if (!rateValue.equals("0.0")){
-            ratingInt = Float.parseFloat(rateValue);
+            ratingInt = (averageRating + Float.parseFloat(rateValue)) / ratingCounter;
+            Log.i("rating value","new rating is " + ratingInt);
         }
         else {
-            ratingInt = 3.0f;
+            ratingInt = averageRating / ratingCounter;
+            Log.i("rating value","new rating 2 is " + ratingInt);
         }
         //insert ratingInt into the rating column in database
+
         new updateRatingValue(this).execute(ratingInt);
 
     }
@@ -207,8 +221,9 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                 String post_data = URLEncoder.encode("rating", "UTF-8") + "=" + rate +"&"+
-                        URLEncoder.encode("video","UTF-8")+"="+URLEncoder.encode(newUrl,"UTF-8");
-                System.out.println("video url is " + newUrl);
+                        URLEncoder.encode("video","UTF-8")+"="+URLEncoder.encode(newUrl,"UTF-8") +"&"+
+                        URLEncoder.encode("ratingCounter","UTF-8")+"="+ ratingCounter;
+                Log.i("rating value","counter 2 is " + ratingCounter);
                 writer.write(post_data);
                 writer.flush();
                 writer.close();

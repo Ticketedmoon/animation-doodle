@@ -73,7 +73,6 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
 
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
-        holder.textViewName.setText(video.getName());
         // holder.textViewDescription.setText(video.getDescription());
                 /*
                 System.out.println("second click");
@@ -112,7 +111,6 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
             super(itemView);
             image = (NetworkImageView) itemView.findViewById(R.id.imageView);
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
-            textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             itemView.setOnClickListener(this);
         }
 

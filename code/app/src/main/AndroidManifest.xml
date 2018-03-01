@@ -43,9 +43,8 @@
         <activity
             android:name=".Start_Drawing_Screen"
             android:configChanges="orientation"
-	    android:screenOrientation="portrait" />
-
-    <activity
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Intro_Animation_Transition_Screen"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -73,7 +72,6 @@
         <activity
             android:name=".Play_Animation_Screen"
             android:configChanges="orientation" />
-
         <activity
             android:name=".Test_VideoPlayer"
             android:configChanges="orientation" />

@@ -98,8 +98,7 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:backgroundTint="#69000000"
-                android:text="fppp pfpfppg pfpvfpgfpg fdfpvpdfpvd dpvpfdvpdfpvp vnfgrho vdsvbuh vsdjbvwju vdb" />
+                android:backgroundTint="#69000000" />
 
             <TextView
                 android:layout_width="300dp"
