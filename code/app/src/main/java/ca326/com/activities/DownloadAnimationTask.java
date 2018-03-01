@@ -1,17 +1,29 @@
 package ca326.com.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Duration;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 import java.io.File;
 
@@ -20,8 +32,10 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
     private Start_Drawing_Screen instance;
     private ProgressDialog downloading;
     private FFmpeg ffmpeg;
-    private int frame_num = 1;
     private File dir;
+
+    // Store Animation Title
+    public static String ANIMATION_TITLE;
 
     public DownloadAnimationTask(Start_Drawing_Screen instance) {
         this.instance = instance;
@@ -39,7 +53,7 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
         Log.i("TEST", src.toString());
         loadFFmpeg();
 
-        String[] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=N/(" + instance.frame_rate_value.toString() + "*TB)", "-pix_fmt", "yuv420p", "-crf", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/Animations/" + "VideoX" + frame_num + ".mp4"};
+        String[] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=N/(" + instance.frame_rate_value.toString() + "*TB)", "-pix_fmt", "yuv420p", "-crf", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/Animations/" + instance.ANIMATION_TITLE  + ".mp4"};
         executeFFmpeg(complexCommand);
 
         return "Complete";
@@ -52,7 +66,8 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        downloading = ProgressDialog.show(this.instance, "Downloading File Locally", "Downloading...", false, false);
+        // After show progress Dialog
+        downloading = ProgressDialog.show(instance, "Downloading File Locally", "Downloading...", false, false);
         Log.i("Download", "Starting Download...");
     }
 

@@ -14,16 +14,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,7 +52,12 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bq.markerseekbar.MarkerSeekBar;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Duration;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
@@ -75,6 +83,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Input from user stored in these variables
     public static Integer frame_rate_value = 2;
+    public static String ANIMATION_TITLE = "_nameless_";
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -199,6 +208,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 canvasView.adjustPenSize(pen_size);
             }
         });
+
+        // Get Animation Title upon load since ASYNC by nature
+        // Must delay it to let the pending transition finish (OverridePendingTransition)
+        canvasView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                get_animation_name();
+            }
+        }, 1000);
     }
 
     // When clicking a frame on the timeline, update some parameters
@@ -211,14 +229,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             correct_onion_frame = position-1;
 
         if (this.pos != position) {
-
-
-            // Moved all logic to a method (REFACTORING)
+            // Bitmap is hidden inside the method before the bitmap is saved.
             change_current_frame(position, correct_onion_frame);
-
             // Reshow Bitmap after bitmap saved
             canvasView.shouldShowOnionSkin = true;
-
         }
     }
 
@@ -781,6 +795,67 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         cursor.close();
         return path;
 
+    }
+
+    // Extract title from animation (Using MaterialStyleDialog Library)
+    // Stores the title of the animation in ANIMATION_TITLE
+    // Pass to ASYNC Download Animation Task after...
+    public void get_animation_name() {
+        // EMPTY POP UP DIALOG BOX
+        Log.i("Dialog Box", "Initiating");
+        Log.d("Dialog Box", "Animation name: " + ANIMATION_TITLE);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = inflater.inflate(R.layout.custom_dialog, null);
+
+        final EditText customText = (EditText) customView.findViewById(R.id.animation_name);
+        TextView text_help = (TextView) customView.findViewById(R.id.text_help);
+
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/Roboto-Light.ttf");
+        Typeface custom_font_med = Typeface.createFromAsset(getAssets(),  "fonts/CaviarDreams.ttf");
+
+        customText.setTypeface(custom_font);
+        text_help.setTypeface(custom_font_med);
+
+        // Dialog Box
+        new MaterialStyledDialog.Builder(this)
+                .setHeaderDrawable(R.drawable.sun_bg)
+                .setStyle(Style.HEADER_WITH_ICON)
+                .setIcon(R.drawable.black_tiger)
+
+                .withIconAnimation(true)
+                // Old standard padding: .setCustomView(your_custom_view, 20, 20, 20, 0)
+                .setCustomView(customView, 20, 30, 20, 0)
+
+                .withDialogAnimation(true)
+                .withDialogAnimation(true, Duration.SLOW)
+                .setPositiveText("Accept")
+
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Log.d("MaterialStyledDialogs", "Accept Button Pushed!");
+                        ANIMATION_TITLE = customText.getText().toString();
+
+                        // Logging
+                        Log.d("MaterialStyledDialogs", "Animation Name: " + ANIMATION_TITLE);
+                    }
+                })
+
+                .withDivider(true)  // Divider between buttons
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Log.d("MaterialStyledDialogs", "Decline Button Pushed!");
+
+                        // Logging
+                        Log.d("MaterialStyledDialogs", "Animation Name: " + ANIMATION_TITLE);
+                    }
+                })
+
+                // Must be here
+                .setNegativeText("Decline")
+                .show();
     }
 
 }
