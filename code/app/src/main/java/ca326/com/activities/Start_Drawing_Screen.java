@@ -62,6 +62,8 @@ import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
+    private static boolean temp = false;
+
     // Saving recycle view (Timeline) functionality
     private RecyclerView timeline_frames;
     private final String KEY_RECYCLER_STATE = "recycler_state";
@@ -91,9 +93,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Login Credentials
     private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
     public static final String PREFERENCE= "preference";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
+    public static final String PREFERENCENAME= "preference";
+    public static final String PREF_ANIMATION_NAME = "animationName";
 
     // Image Buttons / Buttons
     private ImageButton play;
@@ -214,12 +219,18 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Get Animation Title upon load since ASYNC by nature
         // Must delay it to let the pending transition finish (OverridePendingTransition)
-        canvasView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                get_animation_name();
-            }
-        }, 1000);
+        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        Log.i("shared pref","pref name is " + mSharedPreferences.getAll());
+        String temp = mSharedPreferences.getString("animationName",null);
+        if(temp==null) {
+            canvasView.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    get_animation_name();
+                }
+            }, 1000);
+        }
     }
 
     // When clicking a frame on the timeline, update some parameters
@@ -570,6 +581,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public void upload(){
         UploadVideo upload = new UploadVideo(this);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.remove("animationName");
+        mEditor.apply();
+        Log.i("shared pref","new shared "+mSharedPreferences.getAll());
         upload.execute();
     }
 
@@ -868,6 +883,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         Log.d("MaterialStyledDialogs", "Accept Button Pushed!");
                         ANIMATION_TITLE = customText.getText().toString();
+
+                        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+                        mEditor.putString(PREF_ANIMATION_NAME,ANIMATION_TITLE);
+                        mEditor.commit();
+                        Log.i("shared pref","pref name is " + mSharedPreferences.getAll());
 
                         // Logging
                         Log.d("MaterialStyledDialogs", "Animation Name: " + ANIMATION_TITLE);
