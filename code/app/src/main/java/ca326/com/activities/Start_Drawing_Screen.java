@@ -21,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +67,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Saving recycle view (Timeline) functionality
     private RecyclerView timeline_frames;
     private final String KEY_RECYCLER_STATE = "recycler_state";
+    private LinearLayoutManager horizontalLayoutManager;
+    private static Bundle mBundleRecyclerViewState;
+    private Parcelable mListState = null;
 
     // Views
     public static CanvasView canvasView;
@@ -76,6 +80,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton colour_picker;
     public static MyRecyclerViewAdapter adapter;
     public MarkerSeekBar pen_size_adjuster;
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     // Animation & Timeline Logic
     public static Integer pos = 0;
@@ -101,11 +112,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton ham_menu;
     private ImageButton profile;
 
-    //Upload feature
+    // Upload feature
     public static TextView textView;
     public static TextView textViewResponse;
 
-    //just used to check if its a video being uploaded for onStartActivity
+    // just used to check if its a video being uploaded for onStartActivity
     private static final int video_code = 1;
     private Bitmap tmp;
     public static String videoPath;
@@ -118,12 +129,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Other Fields
     private boolean is_menu_open = false;
     private String backgroundTitle;
-    private String AnimationTitle;
     public static int image_counter = 1;
     private int canvas_height;
     public int pen_size;
     private String value;
-
 
     public static Bitmap bitmap;
     public static Bitmap newBitmap;
@@ -150,7 +159,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         textView = (TextView) findViewById(R.id.textView);
         textViewResponse = (TextView) findViewById(R.id.textViewResponse);
-
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
@@ -223,6 +231,46 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }, 1000);
     }
 
+    // MAINTAIN / SAVE TIMELINE AFTER LEAVING ACTIVITY
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        Log.i("RESTORE TIMELINE", "SAVED INSTANCE");
+
+        // Save list state
+        mListState = horizontalLayoutManager.onSaveInstanceState();
+        state.putParcelable(KEY_RECYCLER_STATE, mListState);
+    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        Log.i("RESTORE TIMELINE", "RESTORE INSTANCE");
+
+        // Retrieve list state and list/item positions
+        if (state != null) {
+            Log.i("RESTORE TIMELINE", "RESTORE INSTANCE NOT NULL *!*");
+            mListState = state.getParcelable(KEY_RECYCLER_STATE);
+        }
+    }
+
+    protected void onResume() {
+        super.onResume();
+        Log.i("RESTORE TIMELINE", "RESUMED INSTANCE");
+
+        if (mListState != null) {
+            Log.i("RESTORE TIMELINE", "RESUMED INSTANCE NOT NULL *!*");
+            horizontalLayoutManager.onRestoreInstanceState(mListState);
+        }
+        else{
+            Log.i("RESTORE TIMELINE", "RESUMED INSTANCE NOT NULL *!*");
+            horizontalLayoutManager.onRestoreInstanceState(mListState);
+            Log.i("RESTORE TIMELINE", "PATHWAYS: " + pathways);
+            for(int i = 1; i < pathways.size(); i++) {
+                add_frame(canvasView);
+            }
+        }
+    }
+    // END SAVE TIMELINE
+
     // When clicking a frame on the timeline, update some parameters
     public void onItemClick(View view, int position) {
         int correct_onion_frame;
@@ -239,7 +287,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvasView.shouldShowOnionSkin = true;
         }
     }
-
 
     private void change_current_frame(int position, int correct_onion_frame) {
         // Destroy previous onion cache
@@ -272,7 +319,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.pos = position;
 
     }
-
 
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
@@ -333,7 +379,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     private void adjust_timeline() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.frames);
-        LinearLayoutManager horizontalLayoutManager
+        horizontalLayoutManager
                 = new LinearLayoutManager(Start_Drawing_Screen.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
         adapter = new MyRecyclerViewAdapter(this, frames, frameNums);
@@ -514,17 +560,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         startActivity(intent);
     }
-
-    // Sync both activities
-    // goToTopRatedAnimations brings the user to the top-rated animations page
-    // Only signed in users can upload, rate etc...
-
-    // Storage Permissions
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     // Check Storage permissions (Mandatory)
     public static void verifyStoragePermissions(Activity activity) {
@@ -707,7 +742,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         List <Pair <Path, Paint>> emptyArr =  new ArrayList <Pair <Path, Paint>>();
 
         // It is essential to -1 here from frame_counter.
-        this.pathways.put(frame_counter-1, emptyArr);
+        // IF STATEMENT IS ESSENTIAL FOR MAINTAINING TIMELINE THROUGH ACTIVITIES
+        if(this.pathways.size() <= frame_counter)
+            this.pathways.put(frame_counter-1, emptyArr);
 
         // Change view to next frame
         onItemClick(canvasView, frame_counter-1);
