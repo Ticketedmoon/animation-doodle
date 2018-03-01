@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -100,8 +102,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static String videoPath;
     public static String imagePath;
     private String backgroundPath;
-    public static String video_description ="Video description will go here.";
+    public static String video_description;
     private File newfile = null;
+    private Random rand = new Random();
 
     // Other Fields
     private boolean is_menu_open = false;
@@ -110,6 +113,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static int image_counter = 1;
     private int canvas_height;
     public int pen_size;
+    private String value;
 
 
     public static Bitmap bitmap;
@@ -260,7 +264,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Converts them to bitmaps and encodes them to mp4.
     public void download_animation(View v) {
 
-        video_description = "Video description will go here";
         Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
         // Assign pathways (IMPORTANT)
@@ -524,7 +527,35 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
     }
 
-    public void upload(View v){
+    public void set_video_description(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Enter a brief description of video (200 characters Max)");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        final int prev_h = canvasView.height;
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                value = input.getText().toString();
+                image_counter++;
+                video_description = value;
+                upload();
+
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelled.
+            }
+        });
+
+        alert.create().show();
+    }
+
+    public void upload(){
         UploadVideo upload = new UploadVideo(this);
         upload.execute();
     }
@@ -547,6 +578,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
         try {
 
+            int value = rand.nextInt(1000);
+
             this.canvasView.setDrawingCacheEnabled(true);
             tmp = this.canvasView.getDrawingCache();
             Canvas canvas = new Canvas(tmp);
@@ -563,7 +596,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
-                newfile = new File(file.getAbsolutePath()+ file.separator + "nnnnn" +".jpg");
+                newfile = new File(file.getAbsolutePath()+ file.separator + "imageName" + value +".jpg");
                 System.out.println("file path is " + newfile);
             }
             FileOutputStream outputStream = new FileOutputStream(newfile);

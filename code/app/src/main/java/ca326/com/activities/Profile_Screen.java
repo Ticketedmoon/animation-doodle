@@ -50,12 +50,13 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     //Creating Views
     private RecyclerView recyclerView;
     private ProfileCardAdapter adapter;
-    private TextView textViewAbout;
+    public static TextView textViewAbout;
 
 
     private boolean menu_button = false;
 
     private RequestQueue requestQueue;
+    private RequestQueue requestQueue2;
 
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
@@ -82,9 +83,12 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //Initializing video list
         listVideos = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
+        requestQueue2 = Volley.newRequestQueue(this);
 
         //method to retrieve data from database
         getData();
+
+        get_profile_data();
 
         //initializing our adapter with list of videos
         adapter = new ProfileCardAdapter(listVideos, this);
@@ -113,7 +117,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
 
         //set up jsonArrayRequest as the data retrieved using PHP script will be in a list format
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://animationdoodle2017.com/userVideos.php?page=" + String.valueOf(user_id),
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://animationdoodle2017.com/userVideos.php?id=" + String.valueOf(user_id),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -172,6 +176,12 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
         //add to adapter
         adapter.notifyDataSetChanged();
+    }
+
+    public void get_profile_data(){
+        ProfileData data = new ProfileData();
+        requestQueue2.add(data.getData(user_id));
+
     }
 
     public void menu(View v) {
