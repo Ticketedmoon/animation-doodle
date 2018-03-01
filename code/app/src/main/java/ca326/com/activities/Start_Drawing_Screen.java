@@ -232,6 +232,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // MAINTAIN / SAVE TIMELINE AFTER LEAVING ACTIVITY
+    // Data is remembered however you must Re-apply the frames to timeline. (FUNCTIONING)
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
         Log.i("RESTORE TIMELINE", "SAVED INSTANCE");
@@ -539,12 +540,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         colour_picker.show();
     }
 
-    // Left Arrow & Right Arrow pushed
-    // goToProfile brings the user to the sign-in / profile screen for viewing
-    // If already signed in, bring to profile... (We can make an IF statement check later to see if they are signed in)
-    // Sync both activities
-    // Animations
-
     public void goToProfile(View view){
         // OnTouch change background colour to red
 
@@ -766,7 +761,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
 
     }
-
 
     public void set_background() {
 
