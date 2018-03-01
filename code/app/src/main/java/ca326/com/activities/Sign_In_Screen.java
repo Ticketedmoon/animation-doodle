@@ -334,7 +334,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
     public void onBackPressed() {
         System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Sign_In_Screen.this, Start_Drawing_Screen.class);
+        Intent startMain = new Intent(Sign_In_Screen.this, Main_Menu_Screen.class);
         startActivity(startMain);
     }
 
