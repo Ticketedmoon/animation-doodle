@@ -100,7 +100,7 @@
                 android:layout_alignStart="@+id/choose"
                 android:layout_below="@+id/textView"
                 android:background="@android:color/holo_red_light"
-                android:onClick="upload"
+                android:onClick="set_video_description"
                 android:text="Upload"
                 android:textSize="8sp" />
 

@@ -104,7 +104,7 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     String videoLink = "http://animationdoodle2017.com/videos/uploads/";
                     String newImagePath = imagePath.substring(44);
                     newImagePath = imageLink += newImagePath;
-                    String newVideoPath = videoPath.substring(36);
+                    String newVideoPath = videoPath.substring(45);
                     newVideoPath = videoLink += newVideoPath;
                     System.out.println("strings are " + newVideoPath + " " + newImagePath);
                     String link = "http://animationdoodle2017.com/uploadLinks.php";
