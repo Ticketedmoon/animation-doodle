@@ -8,33 +8,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Picture;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -43,51 +33,23 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
-import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jcodec.api.android.AndroidSequenceEncoder;
-import org.jcodec.common.io.NIOUtils;
-import org.jcodec.common.io.SeekableByteChannel;
-import org.jcodec.common.model.Rational;
-import org.jcodec.scale.BitmapUtil;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 
-import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import com.bq.markerseekbar.MarkerSeekBar;
-
-import javax.microedition.khronos.opengles.GL10;
-
-import static ca326.com.activities.Sign_In_Screen.user_id;
-
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
@@ -103,7 +65,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private Paint mDefaultPaint;
     private ImageButton colour_picker;
     public static MyRecyclerViewAdapter adapter;
-    public Map<Integer, Bitmap> canvas_bitmaps = new HashMap<Integer, Bitmap>();            // Initialise bitmap cache memory
     public MarkerSeekBar pen_size_adjuster;
 
     // Animation & Timeline Logic
@@ -144,10 +105,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Other Fields
     private boolean is_menu_open = false;
-    public int pen_size;
+    private String backgroundTitle;
+    private String AnimationTitle;
     public static int image_counter = 1;
-    private String value;
     private int canvas_height;
+    public int pen_size;
+
 
     public static ImageView imageView;
     public static Bitmap bitmap;
@@ -261,12 +224,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Destroy previous onion cache
         this.canvasView.onionPaths.clear();
 
-        // Add Onion Layering Functionality
-        // Make Paint Relatively transparent
+        // Add Onion Layering Functionality (Transparent previous frame, don't include in actual drawing)
         this.pathways.put(this.pos, this.canvasView.newPaths);
-
-
-
         this.canvasView.newPaths = this.pathways.get(position);
         // Set all paint objects to opaque.
 
@@ -373,7 +332,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         canvas_height = canvasView.height;
 
         // ASYNC call to file name
-        get_file_input(this.canvasView);
+        get_background_name(this.canvasView);
     }
 
     private void save(String store_name) {
@@ -426,7 +385,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         return bitmap;
     }
 
-    public void get_file_input(View v) {
+    public void get_background_name(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Enter a filename");
@@ -440,11 +399,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Log.i("Save", "Picture (" + image_counter + ") saved");
-                value = input.getText().toString();
+                backgroundTitle = input.getText().toString();
                 image_counter++;
 
-                // Do something with value!
-                save(value);
+                // Do something with backgroundTitle!
+                save(backgroundTitle);
             }
         });
 
@@ -456,7 +415,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         alert.create().show();
     }
-
 
     // Adapt this function later to handle Integers rather than Strings more efficiently.
     public void get_file_input_frame_rate(View v) {
@@ -479,7 +437,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                         Toast.makeText(getApplication(), "Impossible frame rate entered. Try Again.", Toast.LENGTH_SHORT).show();
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    System.out.println("Entered a string value rather than an Integer");
+                    System.out.println("Entered a string backgroundTitle rather than an Integer");
                     Toast.makeText(getApplication(), "Frame rate unchanged (Entered a non-number)", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -598,10 +556,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
 
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                File file = new File(Environment.getExternalStorageDirectory(),"Animation_Doodle_Images");
-                if(!file.exists()){
-                    file.mkdirs();
-                }
+                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done
@@ -688,7 +643,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void prompt_frame_rate(View v) {
-        // Integer value stored in class field.
+        // Integer backgroundTitle stored in class field.
         get_file_input_frame_rate(canvasView);
     }
 

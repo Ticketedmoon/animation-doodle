@@ -40,12 +40,14 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.devbrackets.android:exomedia:4.1.0'
-    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
-    compile 'org.jcodec:jcodec:0.2.2'
-    compile 'org.jcodec:jcodec-android:0.2.2'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
+
+    // GitHub Libraries we are using:
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile 'com.github.bq:markerseekbar:v0.9'
     compile 'com.writingminds:FFmpegAndroid:0.3.2'
+    compile 'com.github.javiersantos:BottomDialogs:1.2.1'
+
 }
 
 

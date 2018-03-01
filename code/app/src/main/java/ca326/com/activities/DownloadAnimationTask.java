@@ -25,7 +25,6 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
 
     public DownloadAnimationTask(Start_Drawing_Screen instance) {
         this.instance = instance;
-        this.downloading = downloading;
     }
 
     @Override

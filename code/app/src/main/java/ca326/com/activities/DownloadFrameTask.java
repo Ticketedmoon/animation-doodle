@@ -1,17 +1,9 @@
 package ca326.com.activities;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.jcodec.api.android.AndroidSequenceEncoder;
-import org.jcodec.codecs.h264.H264Encoder;
-import org.jcodec.common.io.NIOUtils;
-import org.jcodec.common.io.SeekableByteChannel;
-import org.jcodec.common.model.Rational;
 
 import java.io.File;
 import java.io.FileOutputStream;
