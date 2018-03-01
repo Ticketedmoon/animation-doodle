@@ -23,14 +23,4 @@
         <item name="colorAccent">@color/colorRed</item>
     </style>
 
-    <style name="dialogTheme" >
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay" >@null</item >
-        <item name="android:colorBackgroundCacheHint" >@null</item >
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:background" >@color/ice_teal_trans</item >
-    </style >
-
 </resources>

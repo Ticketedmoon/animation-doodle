@@ -37,12 +37,25 @@
             android:elevation="2dp"
             android:visibility="invisible">
 
+            <Button
+                android:id="@+id/prev_frame"
+                android:layout_width="55dp"
+                android:layout_height="40dp"
+                android:layout_alignStart="@+id/set_background"
+                android:layout_alignTop="@+id/change_colour"
+                android:background="@color/fillColor"
+                android:onClick="previous_frame"
+                android:text="Previous"
+                android:textColor="@android:color/white"
+                android:textSize="8sp" />
+
             <ImageButton
                 android:id="@+id/save_animation"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
                 android:layout_alignTop="@+id/frame_rate_btn"
-                android:layout_toEndOf="@+id/clear"
+                android:layout_marginEnd="7dp"
+                android:layout_toStartOf="@+id/frame_rate_btn"
                 android:adjustViewBounds="true"
                 android:background="@android:drawable/btn_default_small"
                 android:onClick="download_animation"
@@ -66,9 +79,8 @@
                 android:id="@+id/change_colour"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
+                android:layout_alignStart="@+id/clear"
                 android:layout_alignTop="@+id/save_animation"
-                android:layout_marginStart="54dp"
-                android:layout_toEndOf="@+id/choose"
                 android:adjustViewBounds="true"
                 android:background="@android:drawable/btn_default_small"
                 android:scaleType="fitCenter"
@@ -79,9 +91,9 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
-                android:layout_alignStart="@+id/change_colour"
                 android:layout_below="@+id/textView"
-                android:layout_marginStart="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_toStartOf="@+id/save"
                 android:background="@android:color/holo_red_light"
                 android:onClick="clearCanvas"
                 android:text="@string/clear"
@@ -132,7 +144,6 @@
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/save_animation"
                 android:layout_below="@+id/textView"
-                android:layout_marginStart="10dp"
                 android:background="@android:color/holo_orange_dark"
                 android:onClick="save_external"
                 android:text="SAVE"
@@ -152,7 +163,7 @@
                 android:layout_alignParentTop="true" />
 
             <Button
-                android:id="@+id/prev_frame"
+                android:id="@+id/set_background"
                 android:layout_width="55dp"
                 android:layout_height="40dp"
                 android:layout_below="@+id/textView"

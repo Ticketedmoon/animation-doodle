@@ -695,22 +695,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.canvasView.draw(canvas);
         this.canvasView.invalidate();
 
-        /*
-        Integer currentIndex = this.pos;
-        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
-
-        if (currentIndex > 0) {
-
-            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
-            mixed_frame.addAll(this.canvasView.newPaths);
-            mixed_frame.addAll(prev_frame);
-
-
-            pathways.put(pos, mixed_frame);
-            this.canvasView.newPaths = mixed_frame;
-            this.canvasView.invalidate();
-        }
-        */
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
@@ -728,6 +712,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
 
         return mixed_frame;
+    }
+
+    public void previous_frame(View v) {
+        Integer currentIndex = this.pos;
+        List<Pair<Path, Paint>> mixed_frame = new ArrayList<>();
+
+        if (currentIndex > 0) {
+
+            List<Pair<Path, Paint>> prev_frame = pathways.get(currentIndex-1); // -1 for previous version
+            mixed_frame.addAll(this.canvasView.newPaths);
+            mixed_frame.addAll(prev_frame);
+
+
+            pathways.put(pos, mixed_frame);
+            this.canvasView.newPaths = mixed_frame;
+            this.canvasView.invalidate();
+        }
     }
 
     public String getPath(Uri uri) {

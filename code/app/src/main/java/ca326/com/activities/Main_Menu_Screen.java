@@ -90,34 +90,11 @@ public class Main_Menu_Screen extends AppCompatActivity {
     }
 
     public void get_animation_name(View v) {
-
-        // Set up the input
-        final EditText input = new EditText(this);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        new BottomDialog.Builder(this)
-                .setTitle("Animation Name: ")
-                .setContent("Please enter a title for your animation!")
-                .setCustomView(input)
-
-                .setPositiveText("OK")
-                .setPositiveBackgroundColorResource(R.color.colorPrimary)
-                .setPositiveTextColorResource(android.R.color.white)
-
-                .setNegativeText("Exit")
-                .setNegativeTextColorResource(R.color.colorAccent)
-
-                .onPositive(new BottomDialog.ButtonCallback() {
-                    @Override
-                    public void onClick(BottomDialog dialog) {
-                        ANIMATION_TITLE = input.getText().toString();
-                        Log.d("DialogBox", "Animation name: " + ANIMATION_TITLE);
-                        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
-                        startActivity(drawing_screen);
-                    }
-                }).show();
-
+        // EMPTY POP UP DIALOG BOX
+        Log.i("Dialog Box", "Initiating");
+        Log.d("Dialog Box", "Animation name: " + ANIMATION_TITLE);
+        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
+        startActivity(drawing_screen);
     }
 
     // When button pressed, call this function
