@@ -3,14 +3,21 @@ package ca326.com.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.github.javiersantos.bottomdialogs.BottomDialog;
 
 import java.io.File;
 
@@ -26,6 +33,9 @@ public class Main_Menu_Screen extends AppCompatActivity {
     private Button start_drawing;
     private Button start_profile;
     private Button start_popular_animations;
+
+    // Store Animation Title
+    public static String ANIMATION_TITLE;
 
     // Main Menu standard onCreate function.
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +89,17 @@ public class Main_Menu_Screen extends AppCompatActivity {
         }
     }
 
+    public void get_animation_name(View v) {
+        // EMPTY POP UP DIALOG BOX
+        Log.i("Dialog Box", "Initiating");
+        Log.d("Dialog Box", "Animation name: " + ANIMATION_TITLE);
+        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
+        startActivity(drawing_screen);
+    }
 
     // When button pressed, call this function
     public void goToDrawingScreen(View v) {
-        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
-        startActivity(drawing_screen);
+        get_animation_name(v);
     }
 
     // When button pressed, call this function

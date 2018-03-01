@@ -18,8 +18,6 @@
         <item name="colorControlNormal">@color/nice_grey</item>
         <item name="colorControlActivated">#191919</item></style>
 
-    <!-- Animation Styling (Button Pressed) -->
-
     <!-- Seekbar -->
     <style name="MySeekBarTheme">
         <item name="colorAccent">@color/colorRed</item>
