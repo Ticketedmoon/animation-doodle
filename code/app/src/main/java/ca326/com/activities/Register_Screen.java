@@ -328,7 +328,11 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
         int IS_PRIMARY = 1;
     }
 
-    // Sync both activities
+    public void onBackPressed() {
+        System.out.println("Back Button Pushed <Returning to Homescreen>");
+        Intent startMain = new Intent(Register_Screen.this, Main_Menu_Screen.class);
+        startActivity(startMain);
+    }
 
     public void goToDrawingScreen(View view){
         Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
@@ -384,6 +388,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
                 while((line=br.readLine())!=null)
                 {
                     result+=line;
+                    Log.i("result","is " + result);
                 }
                 return result;
 
@@ -396,15 +401,17 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
         protected void onPostExecute(String result) {
             String email = mEmailView.getText().toString();
             String password = mPasswordView.getText().toString();
-            StringBuilder sb = new StringBuilder();
-            sb.append(result + "\n");
-            String jsonStr = sb.toString();
+            String jsonStr = result;
             Log.i("response",jsonStr);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
+                    Log.i("resulttttttttttttt","query is " + query_result);
+                    Integer user_result2 = jsonObj.getInt("user_result");
+                    Log.i("resulttttttttttttt","user is " + user_result2);
                     if (query_result.equals("SUCCESS")) {
+                        user_id = user_result2;
                         SharedPreferences mSharedPreference = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
                         SharedPreferences.Editor mEditor = mSharedPreference.edit();
                         mEditor.putInt(PREF_ID,user_id);
