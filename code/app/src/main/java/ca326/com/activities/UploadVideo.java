@@ -96,17 +96,22 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     //not sure if this is working or not, need to check later
 
                     //you need to strip imagePath and videoPath to only their name + file extension
-                    ///storage/emulated/0/Animation_Doodle_Images/testing.mp4 becomes
                     /// http://animationdoodle2017.com/videos/uploads/testing.mp4
 
 
                     //insert the location of the files into the database
                     String imageLink = "http://animationdoodle2017.com/videos/uploads/";
                     String videoLink = "http://animationdoodle2017.com/videos/uploads/";
-                    String newImagePath = imagePath.substring(44);
+                    int index = imagePath.lastIndexOf("/");
+                    int index2 = videoPath.lastIndexOf("/");
+                    Log.i("file path","is: "+ index);
+
+                    String newImagePath = imagePath.substring(index+1);
                     newImagePath = imageLink += newImagePath;
-                    String newVideoPath = videoPath.substring(45);
+                    Log.i("file path","is: "+ newImagePath);
+                    String newVideoPath = videoPath.substring(index2+1);
                     newVideoPath = videoLink += newVideoPath;
+                    Log.i("file path","is: "+ newVideoPath);
                     System.out.println("strings are " + newVideoPath + " " + newImagePath);
                     String link = "http://animationdoodle2017.com/uploadLinks.php";
                     URL url = new URL(link);
