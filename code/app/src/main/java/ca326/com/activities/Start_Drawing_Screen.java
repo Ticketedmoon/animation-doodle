@@ -69,6 +69,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Views
     public static CanvasView canvasView;
+    public static  CanvasView canvasView2;
     private RelativeLayout menu;
 
     // Object creations
@@ -143,7 +144,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Map<Integer, Drawable> drawables = new HashMap<>();
 
     public static Integer adapterPosition = 20;
-    public static boolean set = false;
+    public static boolean set = true;
+    public static boolean set2 = true;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +158,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
+        this.canvasView2 = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
         this.timeline_frames = (RecyclerView) findViewById(R.id.frames);
         this.play = (ImageButton) findViewById((R.id.play_button));
@@ -182,6 +185,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
+        this.mDefaultPaint = canvasView2.mPaint;
         this.colour_picker = (ImageButton) findViewById(R.id.change_colour);
         this.colour_picker.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -302,6 +306,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private void change_current_frame(int position, int correct_onion_frame) {
         // Destroy previous onion cache
         this.canvasView.onionPaths.clear();
+
+        newDrawable = drawables.get(position);
+        this.canvasView2.setBackground(newDrawable);
 
         // Add Onion Layering Functionality (Transparent previous frame, don't include in actual drawing)
         this.pathways.put(this.pos, this.canvasView.newPaths);
@@ -798,11 +805,24 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
 
         newDrawable = new BitmapDrawable(getResources(), newBitmap);
-        this.canvasView.setBackground(newDrawable);
+        Log.i("set","set is " + set);
+        if (set2) {
+            this.canvasView2.setBackground(newDrawable);
+            drawables.put(this.pos,newDrawable);
+            //set2=false;
+        }
+        /*
+        else{
+            this.canvasView.newPaths = this.pathways.get(this.pos);
+            this.canvasView2.setBackground(null);
+            set2=true;
+        }
+        */
         //canvas.drawBitmap(newBitmap,0,0,mDefaultPaint);
         //this.canvasView.draw(canvas);
-        this.pathways.put(this.pos,this.canvasView.newPaths);
-        this.canvasView.invalidate();
+        this.canvasView2.invalidate();
+        Log.i("canvas","1 is " + canvasView.newPaths.size());
+        Log.i("canvas","1 is " + canvasView.newPaths.size());
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
