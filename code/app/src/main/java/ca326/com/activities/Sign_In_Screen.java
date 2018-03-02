@@ -69,12 +69,10 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     private View mLoginFormView;
 
     //shared preferences
-
     public static final String PREFERENCE= "preference";
     public static final String PREF_ID = "id";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
-
 
     // user id for profile
     public static Integer user_id;

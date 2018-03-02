@@ -1,9 +1,6 @@
 package ca326.com.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -54,6 +51,8 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     @Override
     public void animationsFinished() {
         //transit to another activity here
+        // clear Animation Title
+
         Intent main_menu = new Intent(Intro_Animation_Transition_Screen.this, Main_Menu_Screen.class);
         startActivity(main_menu);
     }
