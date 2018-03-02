@@ -8,6 +8,7 @@ public class Video {
     private String name;
     private String description;
     private Float rating;
+    private Integer ratingCounter;
 
     //Getters and Setters
     public String getVideoUrl() {
@@ -25,6 +26,15 @@ public class Video {
     public void setRating(Float rating) {
         this.rating = rating;
     }
+
+    public Integer getRatingCounter() {
+        return ratingCounter;
+    }
+
+    public void setRatingCounter(Integer ratingCounter) {
+        this.ratingCounter = ratingCounter;
+    }
+
 
 
     public String getImageUrl() {

@@ -46,8 +46,10 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     public static List<Video> listVideos;
     public static Integer position2 = 10;
     public static Integer position =0;
+    public static Integer rating_counter;
 
-    public static Float ratingCounter;
+    public static Float number;
+
     public static Float averageRating;
     //Creating Views
     private RecyclerView recyclerView;
@@ -143,18 +145,17 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
                 //Adding data to the video object
                 String ratingCounterTemp = (json.getString("rating counter"));
-                ratingCounter = Float.parseFloat(ratingCounterTemp);
-                Log.i("rating value","counter is " + ratingCounter);
+                rating_counter = Integer.parseInt(ratingCounterTemp);
 
                 String rating =(json.getString("rating"));
-                Float number = Float.parseFloat(rating);
-                averageRating = (number * ratingCounter);
+                number = Float.parseFloat(rating);
                 Log.i("rating value","average is " + averageRating);
                 video.setRating(number);
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
                 video.setName(json.getString("name"));
                 video.setDescription(json.getString("video description"));
+                video.setRatingCounter(rating_counter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -169,6 +170,9 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     public void rating(View view){
         Video video = listVideos.get(position);
         newUrl = video.getVideoUrl();
+        rating_counter = video.getRatingCounter();
+        number = video.getRating();
+        averageRating = (number * rating_counter);
         Toast.makeText(getApplicationContext(), rateValue, Toast.LENGTH_SHORT).show();
         Log.i("rating value","value is " + rateValue);
         changeRating(rateValue);
@@ -177,15 +181,14 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
     public void changeRating(String rateValue){
         Float ratingInt;
-        ratingCounter ++;
+        rating_counter ++;
         Log.i("rating value","average2 is " + averageRating);
-        Log.i("rating value","counter2 is " + ratingCounter);
         if (!rateValue.equals("0.0")){
-            ratingInt = (averageRating + Float.parseFloat(rateValue)) / ratingCounter;
+            ratingInt = (averageRating + Float.parseFloat(rateValue)) / rating_counter;
             Log.i("rating value","new rating is " + ratingInt);
         }
         else {
-            ratingInt = averageRating / ratingCounter;
+            ratingInt = averageRating / rating_counter;
             Log.i("rating value","new rating 2 is " + ratingInt);
         }
         //insert ratingInt into the rating column in database
@@ -222,8 +225,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                 String post_data = URLEncoder.encode("rating", "UTF-8") + "=" + rate +"&"+
                         URLEncoder.encode("video","UTF-8")+"="+URLEncoder.encode(newUrl,"UTF-8") +"&"+
-                        URLEncoder.encode("ratingCounter","UTF-8")+"="+ ratingCounter;
-                Log.i("rating value","counter 2 is " + ratingCounter);
+                        URLEncoder.encode("ratingCounter","UTF-8")+"="+ rating_counter;
                 writer.write(post_data);
                 writer.flush();
                 writer.close();
@@ -253,17 +255,18 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
+                        Toast.makeText(instance, "Video rated !", Toast.LENGTH_SHORT).show();
                     } else if (query_result.equals("FAILURE")) {
-                        Toast.makeText(instance, "Couldn't set rating.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(instance, "Couldn't set rating. Database error", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(instance, "Couldn't set rating2.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(instance, "Couldn't set rating3.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, "Couldn't set rating. Check internet connection", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(instance, "Couldn't set rating4.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(instance, "Couldn't set rating. Check internet connection.", Toast.LENGTH_SHORT).show();
             }
         }
     }

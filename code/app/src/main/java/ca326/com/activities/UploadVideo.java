@@ -89,6 +89,8 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     //video and image object upload
 
                     FileUpload upload = new FileUpload();
+                    SetLimit setLimit = new SetLimit();
+
                     System.out.println("file is " + imagePath);
                     String msg = upload.uploadFile(imagePath);
                     String msg2 = upload.uploadFile(videoPath);

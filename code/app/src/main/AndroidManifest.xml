@@ -80,8 +80,7 @@
         <activity
             android:name=".BlocklyActivity"
             android:theme="@style/BlocklyTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
     </application>
 
 </manifest>

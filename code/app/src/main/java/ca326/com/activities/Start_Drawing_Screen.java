@@ -30,6 +30,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -628,6 +629,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void choose(View v){
+        //check if user has reached their limit of videos
+        if (limitCounter = 5){
+            Toast toast = Toast.makeText(getApplicationContext(), "Reached your limit of uploaded videos!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
 
         // the thumbnail of the video will be the frame halfway through the animation
 
