@@ -82,12 +82,6 @@
             android:theme="@style/BlocklyTheme"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
-
-        <activity
-            android:name=".SimpleFragment"
-            android:theme="@style/BlocklyTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
     </application>
 
 </manifest>
