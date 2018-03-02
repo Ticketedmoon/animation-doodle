@@ -9,8 +9,7 @@
     <FrameLayout
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
 
         <include layout="@layout/simple_fragment" />
     </FrameLayout>
@@ -20,6 +19,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="split"
-        android:textIsSelectable="true"
-        />
+        android:textIsSelectable="true" />
+
 </LinearLayout>

@@ -3,5 +3,4 @@
     android:id="@+id/simple_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="ca326.com.activities.SimpleFragment"
-    />
+    android:name="ca326.com.activities.SimpleFragment" />
