@@ -1,8 +1,11 @@
 package ca326.com.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -10,6 +13,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
+
+import static ca326.com.activities.Start_Drawing_Screen.PREFERENCE;
 
 public class Intro_Animation_Transition_Screen extends AwesomeSplash {
 
@@ -54,6 +59,17 @@ public class Intro_Animation_Transition_Screen extends AwesomeSplash {
     @Override
     public void animationsFinished() {
         //transit to another activity here
+        SharedPreferences mSharedPreferences;
+        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String temp = mSharedPreferences.getString("animationName",null);
+        if(temp!=null) {
+            SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+
+            //clear the shared preferences for the animation name
+            mEditor.remove("animationName");
+            mEditor.apply();
+        }
+
         Intent main_menu = new Intent(Intro_Animation_Transition_Screen.this, Main_Menu_Screen.class);
         startActivity(main_menu);
     }
