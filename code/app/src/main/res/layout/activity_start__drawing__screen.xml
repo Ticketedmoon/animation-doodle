@@ -195,27 +195,6 @@
                 app:srcCompat="@drawable/button_background_colour" />
 
 
-            <ImageButton
-                android:id="@+id/play_button"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:adjustViewBounds="true"
-                android:onClick="play_animation"
-                app:srcCompat="@drawable/play" />
-
-            <ImageButton
-                android:id="@+id/profile_menu"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:adjustViewBounds="true"
-                android:onClick="goToProfile"
-                android:src="@drawable/profile_w" />
-
         </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -232,8 +211,8 @@
             android:id="@+id/add_frame_btn"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:adjustViewBounds="true"
             android:onClick="add_frame"
             app:srcCompat="@drawable/plus" />
@@ -245,6 +224,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="false"
+            android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:adjustViewBounds="true"
             android:background="@color/button_focused"
@@ -260,6 +240,16 @@
             app:reverseLayout="true">
 
         </android.support.v7.widget.RecyclerView>
+
+        <ImageButton
+            android:id="@+id/play_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/add_frame_btn"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:onClick="play_animation"
+            app:srcCompat="@drawable/video_play" />
 
     </RelativeLayout>
 

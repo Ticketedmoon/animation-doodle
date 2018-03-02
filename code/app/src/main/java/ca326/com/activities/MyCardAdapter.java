@@ -66,7 +66,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         //Get thumbnail image of video for cardview position
         loadImage = MyVolleyRequest.getInstance(context).getImageLoader();
         //set temporary image i.e R.drawable.play
-        loadImage.get(video.getImageUrl(), ImageLoader.getImageListener(holder.image, R.drawable.play, android.R.drawable.ic_dialog_alert));
+        loadImage.get(video.getImageUrl(), ImageLoader.getImageListener(holder.image, R.drawable.video_play, android.R.drawable.ic_dialog_alert));
 
         //Showing data on the views
 

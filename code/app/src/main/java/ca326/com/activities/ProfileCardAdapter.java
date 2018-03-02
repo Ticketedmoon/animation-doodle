@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -58,18 +56,13 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
 
         loadImage = MyVolleyRequest.getInstance(context).getImageLoader();
         //set temporary image i.e R.drawable.play
-        loadImage.get(video.getImageUrl(), ImageLoader.getImageListener(holder.image, R.drawable.play, android.R.drawable.ic_dialog_alert));
+        loadImage.get(video.getImageUrl(), ImageLoader.getImageListener(holder.image, R.drawable.video_play, android.R.drawable.ic_dialog_alert));
 
         //Showing data on the views
-
         holder.image.setImageUrl(video.getImageUrl(), loadImage);
-
-
 
         String url = video.getVideoUrl();
         Uri videoUri = Uri.parse(url);
-
-
 
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
@@ -88,16 +81,10 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
                 */
     }
 
-
-
-
-
-
     @Override
     public int getItemCount() {
         return videos.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //Views
@@ -113,7 +100,6 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             itemView.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View view) {
