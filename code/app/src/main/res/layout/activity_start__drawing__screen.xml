@@ -235,7 +235,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
-            android:background="@color/button_focused"
             android:onClick="add_frame"
             app:srcCompat="@drawable/plus" />
 

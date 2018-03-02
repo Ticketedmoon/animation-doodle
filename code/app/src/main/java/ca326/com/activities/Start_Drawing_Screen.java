@@ -109,6 +109,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton profile;
+    private ImageButton add_frame;
 
     // just used to check if its a video being uploaded for onStartActivity
     private static final int video_code = 1;
@@ -152,7 +153,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
-
         // Drawing Functionality
         this.canvasView = (CanvasView) findViewById(R.id.canvas);
         this.menu = (RelativeLayout) findViewById(R.id.layout_menu);
@@ -164,13 +164,20 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         this.ham_menu = (ImageButton) findViewById(R.id.menu);
         this.ham_menu.setBackgroundColor(Color.TRANSPARENT);
 
+        // Profile Image Button (CHANGE)
         this.profile = (ImageButton) findViewById(R.id.profile_menu);
         this.profile.setBackgroundColor(Color.TRANSPARENT);
         this.profile.setImageResource(R.drawable.profile_background_colour);
 
+        // PLAY IMAGE BUTTON
         this.play = (ImageButton) findViewById(R.id.play_button);
         this.play.setBackgroundColor(Color.TRANSPARENT);
         this.play.setImageResource(R.drawable.play_background_colour);
+
+        // Add Frame btn settings
+        this.add_frame = (ImageButton) findViewById(R.id.add_frame_btn);
+        this.add_frame.setBackgroundColor(Color.TRANSPARENT);
+        this.add_frame.setImageResource(R.drawable.add_frame_bg);
 
         // Colour Picker Stuff
         this.mDefaultPaint = canvasView.mPaint;
