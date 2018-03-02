@@ -48,6 +48,10 @@ dependencies {
     compile 'com.github.javiersantos:BottomDialogs:1.2.1'
     compile 'com.github.javiersantos:MaterialStyledDialogs:2.1'
 
+    //blockly
+    compile 'com.google.blockly.android:blocklylib-vertical:0.9-beta.20171003'
+    compile 'com.android.support:support-v4:26.0.1'
+
     // GitHub Libraries we are using (implementation):
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 

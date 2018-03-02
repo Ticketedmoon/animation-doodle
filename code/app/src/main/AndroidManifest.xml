@@ -77,6 +77,11 @@
             android:configChanges="orientation" />
 
         <!-- Special Views -->
+        <activity
+            android:name=".BlocklyActivity"
+            android:theme="@style/BlocklyTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
     </application>
 
 </manifest>

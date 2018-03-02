@@ -635,7 +635,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
         try {
 
-            int value = rand.nextInt(1000);
+            int value = rand.nextInt(10000);
 
             this.canvasView.setDrawingCacheEnabled(true);
             tmp = this.canvasView.getDrawingCache();
@@ -793,11 +793,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // This method isn't working. Need to figure out whats wrong. Bitmap is loading properly, just not setting on the canvas
         Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
-        canvas.drawBitmap(newBitmap,0,0,mDefaultPaint);
 
         newDrawable = new BitmapDrawable(getResources(), newBitmap);
         this.canvasView.setBackground(newDrawable);
-        this.canvasView.draw(canvas);
+        //canvas.drawBitmap(newBitmap,0,0,mDefaultPaint);
+        //this.canvasView.draw(canvas);
         this.pathways.put(this.pos,this.canvasView.newPaths);
         this.canvasView.invalidate();
     }

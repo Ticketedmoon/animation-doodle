@@ -40,9 +40,22 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/profile_menu"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="32dp"
             android:onClick="goToDrawingScreen"
             android:text="Start Drawing"
+            android:textColor="@color/colorWhite"
+            android:textSize="11sp"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/blockly"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:layout_alignStart="@+id/drawing_menu"
+            android:onClick="goToBlocklyScreen"
+            android:text="Blockly"
             android:textColor="@color/colorWhite"
             android:textSize="11sp"
             android:textStyle="normal|bold" />
