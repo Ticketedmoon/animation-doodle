@@ -5,13 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +25,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca326.com.activities.Sign_In_Screen.mSharedPreference;
 import static ca326.com.activities.Sign_In_Screen.user_id;
 
 // __Author__ = Shane Creedon (Shane.creedon3@mail.dcu.ie)
@@ -101,7 +95,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
     public void onBackPressed() {
         System.out.println("Back Button Pushed <Returning to Homescreen>");
-        Intent startMain = new Intent(Profile_Screen.this, Start_Drawing_Screen.class);
+        Intent startMain = new Intent(Profile_Screen.this, Main_Menu_Screen.class);
         startActivity(startMain);
     }
 
