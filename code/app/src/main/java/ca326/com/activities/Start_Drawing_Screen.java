@@ -38,7 +38,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -489,38 +488,58 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Adapt this function later to handle Integers rather than Strings more efficiently.
     public void get_file_input_frame_rate(View v) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder popDialog = new AlertDialog.Builder(this, R.style.custom_alert_dialog);
+        final MarkerSeekBar seek = new MarkerSeekBar(this);
+        final int old_frame_rate = frame_rate_value;
 
-        alert.setTitle("Frame Rate Manager");
-        alert.setMessage("Enter how many Frames to display per second (FPS): ");
+        seek.setMax(30);
+        seek.setProgress(frame_rate_value);
 
-        // Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
+        popDialog.setIcon(R.drawable.frame_rate);
+        popDialog.setTitle("Frame rate manager");
+        popDialog.setMessage("Readjust your animation frame rate");
+        popDialog.setView(seek);
+        popDialog.setCancelable(true);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                try {
-                    Integer v = Integer.parseInt(input.getText().toString());
-                    if(v > 0)
-                        frame_rate_value = v;
-                    else
-                        Toast.makeText(getApplication(), "Impossible frame rate entered. Try Again.", Toast.LENGTH_SHORT).show();
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    System.out.println("Entered a string backgroundTitle rather than an Integer");
-                    Toast.makeText(getApplication(), "Frame rate unchanged (Entered a non-number)", Toast.LENGTH_SHORT).show();
-                }
+        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //add code here
+                Log.i("Frame Rate Button", "SeekBar no longer touched");
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //add code here
+                Log.i("Frame Rate Button", "SeekBar touched");
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                //add code here
+                Log.i("Frame Rate Button", "SeekBar slider moved!");
+                Log.i("Frame Rate Button", "Value: " + progress);
+                frame_rate_value = progress;
+
             }
         });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+        // Button OK
+        popDialog.setPositiveButton("Accept",
+        new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
-
-        alert.create().show();
+        popDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        frame_rate_value = old_frame_rate;
+                    }
+                });
+        popDialog.create();
+        popDialog.show();
     }
 
     public void clearCanvas(View v) {
@@ -542,22 +561,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }
         });
         colour_picker.show();
-    }
-
-    public void goToProfile(View view){
-        // OnTouch change background colour to red
-
-        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        Intent intent;
-
-        if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
-            intent = new Intent(Start_Drawing_Screen.this, Profile_Screen.class);
-        }
-        else{
-            intent = new Intent(Start_Drawing_Screen.this, Sign_In_Screen.class);
-        }
-
-        startActivity(intent);
     }
 
     // Check Storage permissions (Mandatory)
