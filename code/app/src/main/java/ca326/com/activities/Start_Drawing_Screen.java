@@ -638,7 +638,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         }
         try {
 
-            int value = rand.nextInt(1000);
+            int value = rand.nextInt(10000);
 
             this.canvasView.setDrawingCacheEnabled(true);
             tmp = this.canvasView.getDrawingCache();

@@ -24,6 +24,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
     private Button start_drawing;
     private Button start_profile;
     private Button start_popular_animations;
+    private Button start_blockly;
 
     // Main Menu standard onCreate function.
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,13 @@ public class Main_Menu_Screen extends AppCompatActivity {
         start_drawing = (Button) findViewById(R.id.drawing_menu);
         start_profile = (Button) findViewById(R.id.profile_menu);
         start_popular_animations = (Button) findViewById(R.id.popAn_menu);
+        start_blockly = (Button) findViewById(R.id.blockly);
 
         // Assign Background Colour
         start_drawing.setBackgroundResource(R.drawable.main_menu_btn_colour);
         start_profile.setBackgroundResource(R.drawable.main_menu_btn_colour);
         start_popular_animations.setBackgroundResource(R.drawable.main_menu_btn_colour);
+        start_blockly.setBackgroundResource(R.drawable.main_menu_btn_colour);
         // END
 
         // Change status bar (Transparent -> looks better)
@@ -86,6 +89,12 @@ public class Main_Menu_Screen extends AppCompatActivity {
     // When button pressed, call this function
     public void goToDrawingScreen(View v) {
         get_animation_name(v);
+    }
+
+    public void goToBlocklyScreen(View v){
+        Intent intent;
+        intent = new Intent(Main_Menu_Screen.this, BlocklyActivity.class);
+        startActivity(intent);
     }
 
     // When button pressed, call this function
