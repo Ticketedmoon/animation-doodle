@@ -750,7 +750,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
         Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
-                + "/AnimationDoodle/Animations");
+                + "/AnimationDoodle/Animations/");
         intent.setDataAndType(uri, "video/*");
         startActivityForResult(Intent.createChooser(intent, "Select a video "), video_code);
 
@@ -825,7 +825,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
             Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
-                    + "/AnimationDoodle/Backgrounds");
+                    + "/AnimationDoodle/Backgrounds/");
             Log.i("string","is  " + uri);
             Log.i("string","is  " + Environment.getExternalStorageDirectory());
             intent.setDataAndType(uri, "image/*");
