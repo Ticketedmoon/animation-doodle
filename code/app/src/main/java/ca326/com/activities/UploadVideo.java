@@ -25,8 +25,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import static ca326.com.activities.Sign_In_Screen.PREF_ID;
 import static ca326.com.activities.Sign_In_Screen.user_id;
 import static ca326.com.activities.Start_Drawing_Screen.imagePath;
+import static ca326.com.activities.Start_Drawing_Screen.limitCounter;
+import static ca326.com.activities.Start_Drawing_Screen.mSharedPreferences;
 import static ca326.com.activities.Start_Drawing_Screen.videoPath;
 import static ca326.com.activities.Start_Drawing_Screen.video_description;
 
@@ -89,7 +92,7 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     //video and image object upload
 
                     FileUpload upload = new FileUpload();
-                    SetLimit setLimit = new SetLimit();
+
 
                     System.out.println("file is " + imagePath);
                     String msg = upload.uploadFile(imagePath);
@@ -107,7 +110,7 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     int index = imagePath.lastIndexOf("/");
                     int index2 = videoPath.lastIndexOf("/");
                     Log.i("file path","is: "+ index);
-
+                    user_id = mSharedPreferences.getInt(PREF_ID,0);
                     String newImagePath = imagePath.substring(index+1);
                     newImagePath = imageLink += newImagePath;
                     Log.i("file path","is: "+ newImagePath);
@@ -127,7 +130,10 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     String post_data = URLEncoder.encode("imageFile", "UTF-8") + "=" + URLEncoder.encode(newImagePath, "UTF-8") + "&" +
                             URLEncoder.encode("videoFile", "UTF-8") + "=" + URLEncoder.encode(newVideoPath, "UTF-8") + "&" +
                             URLEncoder.encode("id", "UTF-8") + "=" + user_id + "&" +
-                            URLEncoder.encode("videoDescription", "UTF-8") + "=" + video_description;
+                            URLEncoder.encode("videoDescription", "UTF-8") + "=" + video_description + "&" +
+                            URLEncoder.encode("limitCounter", "UTF-8") + "=" + limitCounter;
+
+                    Log.i("ids","are " + user_id + " " + limitCounter);
                     writer.write(post_data);
                     writer.flush();
                     writer.close();

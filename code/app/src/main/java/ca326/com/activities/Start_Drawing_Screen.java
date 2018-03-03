@@ -123,6 +123,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private File newfile = null;
     private Random rand = new Random();
 
+    public static Integer limitCounter=0;
+
     // Other Fields
     private boolean is_menu_open = false;
     private String backgroundTitle;
@@ -145,7 +147,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public static Map<Integer, Drawable> drawables = new HashMap<>();
 
     public static Integer adapterPosition = 20;
-    public static boolean set = true;
+    public static boolean set = false;
     public static boolean set2 = true;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -628,14 +630,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         upload.execute();
     }
 
-    public void choose(View v){
-        //check if user has reached their limit of videos
-        if (limitCounter = 5){
+    public void choose(View v) {
+        /*
+        if (response == "5") {
             Toast toast = Toast.makeText(getApplicationContext(), "Reached your limit of uploaded videos!", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+            return;
+        } else {
+            limitCounter++;
+            chooseImage();
         }
+        */
+        limitCounter=5;
+        chooseImage();
 
+    }
+    public void chooseImage(){
         // the thumbnail of the video will be the frame halfway through the animation
 
         //this next line remembers the canvas that the user is on when uploading video so it doesn't get overwritten by the thumbnail
