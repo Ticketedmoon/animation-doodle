@@ -15,7 +15,7 @@
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/anim_dood_logo"
+        android:icon="@mipmap/test_logo"
         android:label="Animation Doodle"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -86,7 +86,7 @@
         <!-- Special Views -->
         <activity
             android:name=".BlocklyActivity"
-            android:theme="@style/BlocklyTheme"
+            android:theme="@style/BlocklyVerticalTheme"
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
     </application>
 

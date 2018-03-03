@@ -106,6 +106,12 @@ public class Main_Menu_Screen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToBlocklyScreen(View v) {
+        Log.i("Button BLOCKLY", "Pressed");
+        Intent intent = new Intent(Main_Menu_Screen.this, BlocklyActivity.class);
+        startActivity(intent);
+    }
+
     /* When button pressed, call this function
     public void goToSignInOrProfile(View v) {
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);

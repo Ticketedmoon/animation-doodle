@@ -57,6 +57,15 @@ public class SimpleFragment extends AbstractBlocklyFragment {
         return mCodeGeneratorCallback;
     }
 
+    // START SHANE ADDITIONS
+    @Override
+    protected void onInitBlankWorkspace() {
+        // Initialize available variable names.
+        getController().addVariable("item");
+    }
+
+    // END
+
     /**
      * Optional override of the save path, since this demo Activity has multiple Blockly
      * configurations.

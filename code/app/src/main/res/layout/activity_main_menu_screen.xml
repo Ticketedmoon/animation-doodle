@@ -57,6 +57,7 @@
             android:background="@drawable/main_menu_btn_colour"
             android:fontFamily="@font/amiko"
             android:text="Draw with Blockly"
+            android:onClick="goToBlocklyScreen"
             android:textColor="@color/colorWhite"
             android:textSize="11sp"
             android:textStyle="normal|bold" />

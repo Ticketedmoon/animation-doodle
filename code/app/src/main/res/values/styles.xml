@@ -8,9 +8,11 @@
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style
         name="BlocklyTheme"
         parent="BlocklyVerticalTheme">
+        <!--parent="BlocklyVerticalTheme" -->
     </style>
 
     <style name="AppTheme.NoActionBar">
