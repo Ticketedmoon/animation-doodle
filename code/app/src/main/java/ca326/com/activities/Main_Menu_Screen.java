@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,6 +52,18 @@ public class Main_Menu_Screen extends AppCompatActivity {
                                 selectedFragment = ItemOneFragment.newInstance();
                                 break;
                             case R.id.action_item2:
+                                mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+                                Intent intent;
+
+
+                                if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
+                                    intent = new Intent(Main_Menu_Screen.this, Profile_Screen.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    selectedFragment = ItemTwoFragment.newInstance();
+                                    break;
+                                }
                                 selectedFragment = ItemTwoFragment.newInstance();
                                 break;
                             case R.id.action_item3:
@@ -112,21 +125,8 @@ public class Main_Menu_Screen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /* When button pressed, call this function
-    public void goToSignInOrProfile(View v) {
-        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        Intent intent;
 
 
-        if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
-            intent = new Intent(Main_Menu_Screen.this, Profile_Screen.class);
-        }
-        else{
-            intent = new Intent(Main_Menu_Screen.this, Sign_In_Screen.class);
-        }
-
-        startActivity(intent);
-    } */
 
     // Disable back button on this screen
     public void onBackPressed() {

@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static ca326.com.activities.Sign_In_Screen.user_id;
+import static ca326.com.activities.ItemTwoFragment.user_id;
 
 /**
  * A login screen that offers login via email/password.

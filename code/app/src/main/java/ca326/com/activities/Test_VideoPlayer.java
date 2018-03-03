@@ -8,7 +8,7 @@ import android.widget.VideoView;
 
 import static ca326.com.activities.Profile_Screen.deciding_string;
 import static ca326.com.activities.Profile_Screen.position2;
-import static ca326.com.activities.Top_Rated_Screen.position;
+import static ca326.com.activities.ItemThreeFragment.position;
 
 public class Test_VideoPlayer extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class Test_VideoPlayer extends AppCompatActivity {
             video = Profile_Screen.listVideos.get(position2);
         }
         else{
-            video = Top_Rated_Screen.listVideos.get(position);
+            video = ItemThreeFragment.listVideos.get(position);
         }
         System.out.println("position :"+ position2 + "  " + video.getVideoUrl());
         String url = video.getVideoUrl();

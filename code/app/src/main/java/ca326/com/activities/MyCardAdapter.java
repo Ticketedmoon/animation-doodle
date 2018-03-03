@@ -1,14 +1,17 @@
 package ca326.com.activities;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -93,6 +96,18 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             }
         });
 
+        holder.rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemThreeFragment fragment = new ItemThreeFragment();
+                Toast.makeText(context, rateValue, Toast.LENGTH_SHORT).show();
+                fragment.rating();
+
+            }
+        });
+
+
+
         System.out.println(videoUri);
         holder.videoView.setVideoURI(videoUri);
         //holder.textViewName.setText(video.getName());
@@ -122,9 +137,11 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
         public TextView textViewName;
         public  RatingBar ratingBar;
         public TextView textView;
+        public ImageButton rating;
         //Initializing Views
         public ViewHolder(View itemView) {
             super(itemView);
+            rating = (ImageButton) itemView.findViewById(R.id.submit);
             image = (NetworkImageView) itemView.findViewById(R.id.imageView);
             videoView = (VideoView) itemView.findViewById(R.id.videoViews);
             //textViewName = (TextView) itemView.findViewById(R.id.textViewName);
