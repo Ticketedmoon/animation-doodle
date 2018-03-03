@@ -71,6 +71,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_rated__screen);
 
+
         //Initializing Views
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -84,6 +85,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
         //method to retrieve data from database
         getData();
+
 
         //initializing our adapter with list of videos
         adapter = new MyCardAdapter(listVideos, this);
@@ -143,6 +145,8 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
 
         //Displaying Progressbar
         progressBar.setVisibility(View.VISIBLE);
+
+
         setProgressBarIndeterminateVisibility(true);
 
         //set up jsonArrayRequest as the data retrieved using PHP script will be in a list format

@@ -33,12 +33,14 @@ import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -110,6 +112,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private ImageButton play;
     private ImageButton ham_menu;
     private ImageButton add_frame;
+    private Button background;
 
     // just used to check if its a video being uploaded for onStartActivity
     private static final int video_code = 1;
@@ -168,6 +171,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         // Image button / Button onClick Listeners (For Style effects)
         this.ham_menu = (ImageButton) findViewById(R.id.menu);
         this.ham_menu.setBackgroundColor(Color.TRANSPARENT);
+
+        //Background button
+        this.background = (Button) findViewById(R.id.set_background);
 
         // PLAY IMAGE BUTTON
         this.play = (ImageButton) findViewById(R.id.play_button);
@@ -238,6 +244,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 }
             }, 1000);
         }
+        background.setText("Set Background");
+
     }
 
     // MAINTAIN / SAVE TIMELINE AFTER LEAVING ACTIVITY
@@ -331,6 +339,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         i++;
 
         this.pos = position;
+
+        if (drawables.get(this.pos) == null) {
+            Log.i("drawables","is "+ drawables.get(this.pos));
+            background.setText("Set Background");
+        }
+        else{
+            background.setText("Remove Background");
+        }
 
     }
 
@@ -628,6 +644,16 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void choose(View v) {
+        SharedPreferences mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String check = mSharedPreferences.getString(PREF_EMAIL,null);
+        Log.i("check","is "+ check);
+        if (check == null) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Please sign in or register to upload", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP, 0, 0);
+            toast.show();
+            return;
+        }
+
         /*
         if (response == "5") {
             Toast toast = Toast.makeText(getApplicationContext(), "Reached your limit of uploaded videos!", Toast.LENGTH_SHORT);
@@ -793,13 +819,23 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void chooseImage(View v){
-        set = true;
-        Intent intent = new Intent();
-        //only search for videos on phone
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
-
+        if (background.getText().equals("Set Background")) {
+            set = true;
+            Intent intent = new Intent();
+            //only search for videos on phone
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
+        }
+        else{
+            remove_background();
+        }
+    }
+    public void remove_background(){
+        this.canvasView2.setBackground(null);
+        drawables.put(this.pos,null);
+        this.canvasView2.invalidate();
+        background.setText("Set Background");
     }
 
     public void set_background() {
@@ -808,34 +844,32 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         File file2 = new File(backgroundPath);
         BitmapFactory.Options bit = new BitmapFactory.Options();
         Log.i("bitmap","bitmap: " +bit);
-        Bitmap background = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
+        Bitmap background2 = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
 
-        newBitmap = background.copy(Bitmap.Config.ARGB_8888, true);
+        newBitmap = background2.copy(Bitmap.Config.ARGB_8888, true);
         Log.i("file2","file " + background);
 
         // used to test if loading bitmap is working.It is.
         //imageView.setImageBitmap(newBitmap);
 
         // This method isn't working. Need to figure out whats wrong. Bitmap is loading properly, just not setting on the canvas
-        Canvas canvas = new Canvas(background.copy(Bitmap.Config.ARGB_8888, true));
+        Canvas canvas = new Canvas(background2.copy(Bitmap.Config.ARGB_8888, true));
 
         newDrawable = new BitmapDrawable(getResources(), newBitmap);
         Log.i("set","set is " + set);
-        if (set2) {
+        if (drawables.get(this.pos) == null) {
             this.canvasView2.setBackground(newDrawable);
             drawables.put(this.pos,newDrawable);
             //set2=false;
         }
-        /*
         else{
             this.canvasView.newPaths = this.pathways.get(this.pos);
             this.canvasView2.setBackground(null);
-            set2=true;
+
         }
-        */
-        //canvas.drawBitmap(newBitmap,0,0,mDefaultPaint);
-        //this.canvasView.draw(canvas);
+
         this.canvasView2.invalidate();
+        background.setText("Remove Background");
         Log.i("canvas","1 is " + canvasView.newPaths.size());
         Log.i("canvas","1 is " + canvasView.newPaths.size());
     }
