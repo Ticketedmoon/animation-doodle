@@ -86,8 +86,8 @@
         <!-- Special Views -->
         <activity
             android:name=".BlocklyActivity"
-            android:theme="@style/BlocklyTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 
 </manifest>

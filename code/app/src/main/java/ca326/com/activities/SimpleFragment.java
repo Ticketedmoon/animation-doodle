@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+
 import android.support.annotation.NonNull;
 
 import com.google.blockly.android.AbstractBlocklyFragment;
@@ -24,6 +25,7 @@ public class SimpleFragment extends AbstractBlocklyFragment {
     private static final List<String> BLOCK_DEFINITIONS = DefaultBlocks.getAllBlockDefinitions();
     private static final List<String> JAVASCRIPT_GENERATORS = Arrays.asList(
             // Custom block generators go here. Default blocks are already included.
+            // TODO(#99): Include Javascript defaults when other languages are supported.
     );
 
     CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback = null;
@@ -57,15 +59,6 @@ public class SimpleFragment extends AbstractBlocklyFragment {
         return mCodeGeneratorCallback;
     }
 
-    // START SHANE ADDITIONS
-    @Override
-    public void onInitBlankWorkspace() {
-        // Initialize available variable names.
-        getController().addVariable("item");
-    }
-
-    // END
-
     /**
      * Optional override of the save path, since this demo Activity has multiple Blockly
      * configurations.
@@ -88,4 +81,3 @@ public class SimpleFragment extends AbstractBlocklyFragment {
         return AUTOSAVE_FILENAME;
     }
 }
-

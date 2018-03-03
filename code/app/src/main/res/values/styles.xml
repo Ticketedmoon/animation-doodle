@@ -9,10 +9,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style
-        name="BlocklyTheme"
-        parent="BlocklyVerticalTheme"/>
-        <!--parent="BlocklyVerticalTheme" -->
+    <style name="BlocklyTheme" parent="BlocklyVerticalTheme">
+        <item name="blockTextSize">24sp</item>
+        <item name="blockHat">false</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
