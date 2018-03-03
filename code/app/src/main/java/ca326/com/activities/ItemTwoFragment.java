@@ -43,6 +43,8 @@ public class ItemTwoFragment extends Fragment {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                Sign_In_Screen screen = new Sign_In_Screen();
+                screen.attemptLogin();
             }
         });
 

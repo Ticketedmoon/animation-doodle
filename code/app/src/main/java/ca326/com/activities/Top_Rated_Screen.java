@@ -69,7 +69,7 @@ public class Top_Rated_Screen extends AppCompatActivity implements MyCardAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_rated__screen);
+        setContentView(R.layout.fragment_layout_main);
 
 
         //Initializing Views
