@@ -1,55 +1,58 @@
 package ca326.com.activities;
-        import android.animation.Animator;
-        import android.animation.AnimatorListenerAdapter;
-        import android.annotation.TargetApi;
-        import android.app.Activity;
-        import android.app.LoaderManager.LoaderCallbacks;
-        import android.content.Context;
-        import android.content.CursorLoader;
-        import android.content.Intent;
-        import android.content.Loader;
-        import android.content.SharedPreferences;
-        import android.content.pm.PackageManager;
-        import android.database.Cursor;
-        import android.net.Uri;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.provider.ContactsContract;
-        import android.support.annotation.NonNull;
-        import android.support.design.widget.Snackbar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.text.TextUtils;
-        import android.text.method.PasswordTransformationMethod;
-        import android.util.Log;
-        import android.view.KeyEvent;
-        import android.view.View;
-        import android.view.View.OnClickListener;
-        import android.view.inputmethod.EditorInfo;
-        import android.widget.ArrayAdapter;
-        import android.widget.AutoCompleteTextView;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
-        import android.view.Gravity;
 
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import java.io.BufferedReader;
-        import java.io.InputStreamReader;
-        import java.net.HttpURLConnection;
-        import java.net.URL;
-        import java.net.URLEncoder;
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.io.OutputStream;
-        import java.io.OutputStreamWriter;
-        import java.io.BufferedWriter;
-        import java.io.InputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import static android.Manifest.permission.READ_CONTACTS;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -58,8 +61,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
     // Id to identity READ_CONTACTS permission request.
     private static final int REQUEST_READ_CONTACTS = 0;
-
-
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -79,23 +80,56 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
 
     public static SharedPreferences mSharedPreference;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_sign__in__screen);
-            //Variables
+        setContentView(R.layout.fragment_layout_main);
 
-            // Set up the login form.
-            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-            populateAutoComplete();
+        // Fragment Operations (Need this in All 3 classes)
+        // Start Fragment Operations
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
 
-            mPasswordView = (EditText) findViewById(R.id.password);
-            // convert passord to asterix
-            mPasswordView.setTransformationMethod(new changePasswordToAsterix());
-            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_item1:
+                                selectedFragment = ItemOneFragment.newInstance();
+                                break;
+                            case R.id.action_item2:
+                                selectedFragment = ItemTwoFragment.newInstance();
+                                break;
+                            case R.id.action_item3:
+                                selectedFragment = ItemThreeFragment.newInstance();
+                                break;
+                        }
+                        String tag = selectedFragment.getTag();
+                        replaceFragmentWithAnimation(selectedFragment, tag);
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
+        transaction.commit();
+        // END ---------------
+
+        //Variables
+        // Set up the login form.
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        populateAutoComplete();
+        mPasswordView = (EditText) findViewById(R.id.password);
+        // convert passord to asterix
+        mPasswordView.setTransformationMethod(new changePasswordToAsterix());
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                     if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -106,18 +140,18 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                 }
             });
 
-            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-            mEmailSignInButton.setTextColor(getApplication().getResources().getColor(R.color.colorWhite));
-            mEmailSignInButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    attemptLogin();
-                }
-            });
-
             mLoginFormView = findViewById(R.id.login_form);
             mProgressView = findViewById(R.id.login_progress);
-        }
+
+    }
+
+    public void replaceFragmentWithAnimation(android.support.v4.app.Fragment fragment, String tag){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.exit_to_right, R.anim.enter_from_left, R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(tag);
+        transaction.commit();
+    }
 
 
     private void populateAutoComplete() {
@@ -150,9 +184,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         return false;
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
+    // Callback received when a permissions request has been completed.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -163,13 +195,12 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         }
     }
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    public void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -306,9 +337,7 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {}
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
@@ -336,19 +365,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         startActivity(startMain);
     }
 
-    // Sync both activities
-    public void goToDrawingScreen(View view){
-        Intent intent = new Intent (Sign_In_Screen.this, Start_Drawing_Screen.class);
-        startActivity(intent);
-    }
-
-    public void goToRegisterScreen(View view){
-        Intent intent = new Intent (Sign_In_Screen.this, Register_Screen.class);
-        startActivity(intent);
-    }
-
-
-
     public class UserLoginTask extends AsyncTask<String, Void, String> {
 
         Activity instance;
@@ -357,8 +373,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
             this.instance = instance;
 
         }
-
-
 
         @Override
         protected String doInBackground(String... arg0) {
@@ -450,7 +464,6 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
         }
     }
 
-
     public class changePasswordToAsterix extends PasswordTransformationMethod {
         @Override
         public CharSequence getTransformation(CharSequence source, View view) {
@@ -472,10 +485,5 @@ public class Sign_In_Screen extends AppCompatActivity implements LoaderCallbacks
                 return mText.subSequence(start, end);
             }
         }
-    };
+    }
 }
-
-
-
-
-

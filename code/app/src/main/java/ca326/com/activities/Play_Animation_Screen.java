@@ -4,8 +4,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
@@ -42,7 +40,6 @@ public class Play_Animation_Screen extends AppCompatActivity {
         play_animation(cv);
     }
 
-    // THIS FUNCTION IS NOT WORKING CORRECTLY -> REMEMBER TO FIX
     public void play_animation(View v) {
         // Logcat Information
         System.out.println("Transition to Play_Animation Activity\nPlay Button Pushed / paused\nPlaying Animation");

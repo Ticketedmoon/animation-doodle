@@ -3,8 +3,8 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/play_red_bg" />
+        android:drawable="@drawable/video_play_bg" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/play" />
+        android:drawable="@drawable/video_play" />
 </selector>
