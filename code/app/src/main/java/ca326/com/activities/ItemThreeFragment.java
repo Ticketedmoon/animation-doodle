@@ -1,6 +1,7 @@
 package ca326.com.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ import static ca326.com.activities.Profile_Screen.deciding_string;
 
 
 public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemClickListener {
+
+    public Context context;
 
     //list of videos
     public static List<Video> listVideos;
@@ -88,6 +91,8 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
         //Initializing Views
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+
+        context = getActivity();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -194,7 +199,6 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
         rating_counter = video.getRatingCounter();
         number = video.getRating();
         averageRating = (number * rating_counter);
-        //Toast.makeText(getContext(), rateValue, Toast.LENGTH_SHORT).show();
         Log.i("rating value","value is " + rateValue);
         changeRating(rateValue);
 

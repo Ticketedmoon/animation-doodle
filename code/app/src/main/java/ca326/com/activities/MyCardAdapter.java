@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -99,7 +100,9 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 ItemThreeFragment fragment = new ItemThreeFragment();
+                Toast.makeText(context, rateValue, Toast.LENGTH_SHORT).show();
                 fragment.rating();
+
             }
         });
 
