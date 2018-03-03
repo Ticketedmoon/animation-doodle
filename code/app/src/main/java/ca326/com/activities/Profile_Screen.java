@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -192,10 +193,12 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
     public void logOut(View view) {
         //this.logout.setVisibility(View.VISIBLE);
+        Log.i("Logging", "Logged out user: " + user_id);
         SharedPreferences.Editor editor = getSharedPreferences("preference",getApplicationContext().MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
-        Intent intent = new Intent(Profile_Screen.this, Sign_In_Screen.class);
+        // Leave the Intent here as Main_Menu_Screen, if you make it Sign_In_Screen, causes a bug
+        Intent intent = new Intent(Profile_Screen.this, Main_Menu_Screen.class);
         startActivity(intent);
     }
 
