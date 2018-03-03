@@ -24,7 +24,12 @@
         tools:replace="android:label">
         <activity
             android:name=".Main_Menu_Screen"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Top_Rated_Screen"
             android:label=""
@@ -47,12 +52,8 @@
         <activity
             android:name=".Intro_Animation_Transition_Screen"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
         <activity
             android:name=".Register_Screen"
             android:label="@string/title_activity_register__screen"
@@ -69,9 +70,11 @@
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Play_Animation_Screen"
             android:configChanges="orientation" />
+
         <activity
             android:name=".Test_VideoPlayer"
             android:configChanges="orientation" />

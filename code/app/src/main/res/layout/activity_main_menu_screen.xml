@@ -2,18 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/activity_main"
+    android:background="@drawable/main_menu_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:adjustViewBounds="true"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/main_menu_bg"
     tools:context="ca326.com.activities.Main_Menu_Screen">
 
     <RelativeLayout
         android:id="@+id/top_nav"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="250dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="37dp">
 
@@ -36,57 +34,31 @@
 
         <Button
             android:id="@+id/drawing_menu"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/profile_menu"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/main_menu_btn_colour"
             android:onClick="goToDrawingScreen"
             android:text="Start Drawing"
             android:textColor="@color/colorWhite"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/blockly"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:layout_alignStart="@+id/drawing_menu"
-            android:onClick="goToBlocklyScreen"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="145dp"
+            android:background="@drawable/main_menu_btn_colour"
             android:text="Blockly"
             android:textColor="@color/colorWhite"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textStyle="normal|bold" />
 
-        <Button
-            android:id="@+id/profile_menu"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/drawing_menu"
-            android:layout_centerVertical="true"
-            android:onClick="goToSignInOrProfile"
-            android:text="Profile"
-            android:textColor="@android:color/white"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/popAn_menu"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/profile_menu"
-            android:layout_below="@+id/profile_menu"
-            android:layout_marginTop="43dp"
-            android:onClick="goToTopRated"
-            android:text="Popular Animations"
-            android:textColor="@android:color/white"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
     </RelativeLayout>
-
-    <!-- Testing new material Design stuff -->
 
 </RelativeLayout>

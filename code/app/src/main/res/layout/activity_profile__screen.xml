@@ -19,7 +19,6 @@
             android:elevation="4dp"
             android:paddingBottom="24dp">
 
-
             <ImageView
                 android:id="@+id/drop_down_option_menu"
                 android:layout_width="60dp"

@@ -1,13 +1,17 @@
 package ca326.com.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import java.io.File;
@@ -22,35 +26,48 @@ public class Main_Menu_Screen extends AppCompatActivity {
 
     // Initialise buttons
     private Button start_drawing;
-    private Button start_profile;
-    private Button start_popular_animations;
     private Button start_blockly;
 
     // Main Menu standard onCreate function.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_main_menu_screen);
-
-        // Assign buttons
-        start_drawing = (Button) findViewById(R.id.drawing_menu);
-        start_profile = (Button) findViewById(R.id.profile_menu);
-        start_popular_animations = (Button) findViewById(R.id.popAn_menu);
-        start_blockly = (Button) findViewById(R.id.blockly);
-
-        // Assign Background Colour
-        start_drawing.setBackgroundResource(R.drawable.main_menu_btn_colour);
-        start_profile.setBackgroundResource(R.drawable.main_menu_btn_colour);
-        start_popular_animations.setBackgroundResource(R.drawable.main_menu_btn_colour);
-        start_blockly.setBackgroundResource(R.drawable.main_menu_btn_colour);
-        // END
-
-        // Change status bar (Transparent -> looks better)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        setContentView(R.layout.fragment_layout_main);
 
         // Build necessary directories
         build_local_directories();
+
+        // Start Fragment Operations
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_item1:
+                                selectedFragment = ItemOneFragment.newInstance();
+                                break;
+                            case R.id.action_item2:
+                                selectedFragment = ItemTwoFragment.newInstance();
+                                break;
+                            case R.id.action_item3:
+                                selectedFragment = ItemThreeFragment.newInstance();
+                                break;
+                        }
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
+        transaction.commit();
     }
 
     private void build_local_directories() {
@@ -78,26 +95,17 @@ public class Main_Menu_Screen extends AppCompatActivity {
         if (!animationDirectory.exists()) {
             animationDirectory.mkdirs();
         }
+
+        Log.i("Building...", "Directories Built");
     }
 
-    public void get_animation_name(View v) {
-        // Transition to Start_Drawing
-        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
-        startActivity(drawing_screen);
-    }
-
-    // When button pressed, call this function
     public void goToDrawingScreen(View v) {
-        get_animation_name(v);
-    }
-
-    public void goToBlocklyScreen(View v){
-        Intent intent;
-        intent = new Intent(Main_Menu_Screen.this, BlocklyActivity.class);
+        Log.i("Button", "Pressed");
+        Intent intent = new Intent(Main_Menu_Screen.this, Start_Drawing_Screen.class);
         startActivity(intent);
     }
 
-    // When button pressed, call this function
+    /* When button pressed, call this function
     public void goToSignInOrProfile(View v) {
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         Intent intent;
@@ -111,13 +119,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
         }
 
         startActivity(intent);
-    }
-
-    // When button pressed, call this function
-    public void goToTopRated(View v) {
-        Intent drawing_screen = new Intent(Main_Menu_Screen.this, Top_Rated_Screen.class);
-        startActivity(drawing_screen);
-    }
+    } */
 
     // Disable back button on this screen
     public void onBackPressed() {

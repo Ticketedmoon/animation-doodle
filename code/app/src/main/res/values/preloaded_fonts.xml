@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/advent_pro_extralight</item>
+        <item>@font/amiko</item>
         <item>@font/bungee_outline</item>
         <item>@font/comfortaa</item>
         <item>@font/metamorphous</item>
