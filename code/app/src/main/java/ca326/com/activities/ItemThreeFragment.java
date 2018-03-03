@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -39,6 +41,7 @@ import java.util.List;
 import static ca326.com.activities.MyCardAdapter.rateValue;
 import static ca326.com.activities.Profile_Screen.deciding_string;
 
+
 public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemClickListener {
 
     //list of videos
@@ -53,6 +56,7 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
     //Creating Views
     private RecyclerView recyclerView;
     private MyCardAdapter adapter;
+    private ImageButton rating;
 
     //Volley Request Queue
     private RequestQueue requestQueue;
@@ -184,13 +188,13 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
         adapter.notifyDataSetChanged();
     }
 
-    public void rating(View view){
+    public void rating(){
         Video video = listVideos.get(position);
         newUrl = video.getVideoUrl();
         rating_counter = video.getRatingCounter();
         number = video.getRating();
         averageRating = (number * rating_counter);
-        Toast.makeText(getContext(), rateValue, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), rateValue, Toast.LENGTH_SHORT).show();
         Log.i("rating value","value is " + rateValue);
         changeRating(rateValue);
 
@@ -272,7 +276,7 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     String query_result = jsonObj.getString("query_result");
                     if (query_result.equals("SUCCESS")) {
-                        Toast.makeText(instance, "Video rated !", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(instance, "Video rated !", Toast.LENGTH_SHORT).show();
                     } else if (query_result.equals("FAILURE")) {
                         Toast.makeText(instance, "Couldn't set rating. Database error", Toast.LENGTH_SHORT).show();
                     } else {
