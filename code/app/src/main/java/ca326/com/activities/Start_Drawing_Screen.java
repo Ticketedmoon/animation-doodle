@@ -751,8 +751,39 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("Restart Animation", "frames: " + frames.size());
         Log.i("Restart Animation", "Pathways: " + pathways.size());
 
+        /*AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setTitle("Animation Control Manager");
+        builder1.setMessage("Do you want to delete your animation?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Accept",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        reset_timeline();
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();*/
+
+        reset_timeline();
+    }
+
+    private void reset_timeline() {
         frames.clear();
+        frameNums.clear();
         pathways.clear();
+        drawables.clear();
         frame_counter = 1; // Reset back to 1
 
         Log.i("Restart Animation", "frames: " + frames);
@@ -771,10 +802,13 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         Log.i("Restart Animation", "Made it this far");
         // Add a new frame to begin with
-        add_frame(canvasView);
+        add_frame(timeline_frames);
+        canvasView.newPaths.clear();
+        canvasView.invalidate();
+
 
         //  Prompt for new Animation Title
-        // get_animation_name();
+        get_animation_name();
 
         // DONE
     }

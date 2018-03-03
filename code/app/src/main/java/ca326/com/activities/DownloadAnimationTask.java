@@ -1,36 +1,23 @@
 package ca326.com.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
-import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.github.javiersantos.materialstyleddialogs.enums.Duration;
-import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 import java.io.File;
 
 class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
 
     private Start_Drawing_Screen instance;
-    private ProgressDialog downloading;
+    ProgressDialog progress;
     private FFmpeg ffmpeg;
     private File dir;
 
@@ -67,7 +54,9 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         // After show progress Dialog
-        downloading = ProgressDialog.show(instance, "Downloading File Locally", "Downloading...", false, false);
+
+        progress = ProgressDialog.show(this.instance, "Local File Download", "Downloading Animation...", false, false);
+
         Log.i("Download", "Starting Download...");
     }
 
@@ -120,8 +109,8 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
                 public void onFinish() {
                     Log.i("Download", "FFmpeg Execute finished");
                     Log.i("Download", "Download Complete");
-                    Toast.makeText(instance.getApplication(), "Animation successfully Downloaded (/sdcard/AnimationDoodle)", Toast.LENGTH_SHORT).show();
-                    downloading.dismiss();
+                    Toast.makeText(instance.getApplication(), "Animation successfully Downloaded (/sdcard/AnimationDoodle)", Toast.LENGTH_LONG).show();
+                    progress.dismiss();
 
                     // Delete tmp folder
                     if (dir.isDirectory())
