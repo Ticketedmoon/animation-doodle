@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static ca326.com.activities.Profile_Screen.textViewAbout;
-import static ca326.com.activities.Sign_In_Screen.user_id;
+import static ca326.com.activities.ItemTwoFragment.user_id;
 
 public class ProfileData extends AppCompatActivity {
 

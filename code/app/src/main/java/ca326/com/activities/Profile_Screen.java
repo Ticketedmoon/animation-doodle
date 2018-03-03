@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca326.com.activities.Sign_In_Screen.user_id;
+import static ca326.com.activities.ItemTwoFragment.user_id;
 
 // __Author__ = Shane Creedon (Shane.creedon3@mail.dcu.ie)
 // __Author__ = James Collins

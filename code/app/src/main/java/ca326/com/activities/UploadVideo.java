@@ -26,7 +26,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import static ca326.com.activities.Sign_In_Screen.PREF_ID;
-import static ca326.com.activities.Sign_In_Screen.user_id;
+import static ca326.com.activities.ItemTwoFragment.user_id;
 import static ca326.com.activities.Start_Drawing_Screen.imagePath;
 import static ca326.com.activities.Start_Drawing_Screen.limitCounter;
 import static ca326.com.activities.Start_Drawing_Screen.mSharedPreferences;
