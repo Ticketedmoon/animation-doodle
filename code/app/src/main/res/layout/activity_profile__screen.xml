@@ -77,10 +77,7 @@
                 android:text="@string/logout_form"
                 android:textSize="11sp" />
 
-
         </RelativeLayout>
-
-
 
         <GridLayout
             android:layout_width="fill_parent"

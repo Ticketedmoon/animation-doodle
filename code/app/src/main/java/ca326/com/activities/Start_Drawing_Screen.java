@@ -746,6 +746,39 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    public void restart_animation(View v) {
+        // Clear both pathways & frames
+        Log.i("Restart Animation", "frames: " + frames.size());
+        Log.i("Restart Animation", "Pathways: " + pathways.size());
+
+        frames.clear();
+        pathways.clear();
+        frame_counter = 1; // Reset back to 1
+
+        Log.i("Restart Animation", "frames: " + frames);
+        Log.i("Restart Animation", "Pathways: " + pathways);
+
+        Log.i("Restart Animation", "Not Frames / Pathways");
+
+        // Remove previous Animation Name
+        mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String temp = mSharedPreferences.getString("animationName",null);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+
+        //clear the shared preferences for the animation name
+        mEditor.remove("animationName");
+        mEditor.apply();
+
+        Log.i("Restart Animation", "Made it this far");
+        // Add a new frame to begin with
+        add_frame(canvasView);
+
+        //  Prompt for new Animation Title
+        // get_animation_name();
+
+        // DONE
+    }
+
     public void chooseVideo() {
         Intent intent = new Intent();
         //only search for videos on phone
@@ -796,6 +829,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void add_frame(View v) {
         // will generate a frame object and frameNo and place it in the timeline.
         // data to populate the RecyclerView with
+        Log.i("ADD Frame Button", "Pathways: " + pathways);
         Integer tmp = R.drawable.frame;
         frames.add(tmp);
         frameNums.add("Frame " + frame_counter);
