@@ -40,10 +40,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="45dp"
             android:background="@drawable/main_menu_btn_colour"
+            android:fontFamily="@font/amiko"
             android:onClick="goToDrawingScreen"
-            android:text="Start Drawing"
+            android:text="Draw On Canvas"
             android:textColor="@color/colorWhite"
-            android:textSize="13sp"
+            android:textSize="11sp"
             android:textStyle="normal|bold" />
 
         <Button
@@ -54,9 +55,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="145dp"
             android:background="@drawable/main_menu_btn_colour"
-            android:text="Blockly"
+            android:fontFamily="@font/amiko"
+            android:text="Draw with Blockly"
             android:textColor="@color/colorWhite"
-            android:textSize="13sp"
+            android:textSize="11sp"
             android:textStyle="normal|bold" />
 
     </RelativeLayout>

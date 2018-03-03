@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_form"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="66dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/title" />
@@ -114,12 +114,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/password"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/main_menu_btn_colour"
             android:elevation="0dp"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/white"
+            android:fontFamily="@font/amiko"
             android:text="Sign In "
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
         <Button

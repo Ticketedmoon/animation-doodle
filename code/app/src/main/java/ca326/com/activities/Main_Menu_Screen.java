@@ -31,6 +31,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
     // Main Menu standard onCreate function.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.fragment_layout_main);
 
         // Build necessary directories
