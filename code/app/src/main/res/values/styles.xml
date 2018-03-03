@@ -11,9 +11,8 @@
 
     <style
         name="BlocklyTheme"
-        parent="BlocklyVerticalTheme">
+        parent="BlocklyVerticalTheme"/>
         <!--parent="BlocklyVerticalTheme" -->
-    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

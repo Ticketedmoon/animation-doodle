@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
+    <include layout="@layout/simple_fragment" />
+
+    <fragment android:name="com.google.blockly.android.WorkspaceFragment"
+        android:id="@+id/blockly_workspace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/blockly_categories"
+        android:layout_toRightOf="@id/blockly_categories"/>
+
     <FrameLayout
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <include layout="@layout/simple_fragment" />
     </FrameLayout>
 
     <TextView android:id="@+id/generated_code"

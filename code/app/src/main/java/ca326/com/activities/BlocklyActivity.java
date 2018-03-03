@@ -51,7 +51,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity {
 
     @Override
     protected View onCreateContentView(int parentId) {
-        View root = getLayoutInflater().inflate(R.layout.split_content, null);
+        View root = getLayoutInflater().inflate(R.layout.simple_fragment, null);
         mGeneratedTextView = (TextView) root.findViewById(R.id.generated_code);
 
         return root;

@@ -59,7 +59,7 @@ public class SimpleFragment extends AbstractBlocklyFragment {
 
     // START SHANE ADDITIONS
     @Override
-    protected void onInitBlankWorkspace() {
+    public void onInitBlankWorkspace() {
         // Initialize available variable names.
         getController().addVariable("item");
     }
