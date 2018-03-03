@@ -780,10 +780,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void chooseVideo() {
-        Intent intent = new Intent();
-        //only search for videos on phone
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
+                + "/AnimationDoodle/Animations/");
+        intent.setDataAndType(uri, "video/*");
         startActivityForResult(Intent.createChooser(intent, "Select a video "), video_code);
 
     }
@@ -855,10 +856,14 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void chooseImage(View v){
         if (background.getText().equals("Set Background")) {
             set = true;
-            Intent intent = new Intent();
-            //only search for videos on phone
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+            Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
+                    + "/AnimationDoodle/Backgrounds/");
+            Log.i("string","is  " + uri);
+            Log.i("string","is  " + Environment.getExternalStorageDirectory());
+            intent.setDataAndType(uri, "image/*");
+            //intent.setType("image/*");
             startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
         }
         else{
