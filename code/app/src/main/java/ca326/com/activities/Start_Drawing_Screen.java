@@ -97,7 +97,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     // Input from user stored in these variables
     public static Integer frame_rate_value = 2;
-    public static String ANIMATION_TITLE = "_nameless_";
+    public static String ANIMATION_TITLE = null;
 
     // IMPORTANT
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = new HashMap<Integer, List<Pair <Path, Paint>>>();
@@ -157,7 +157,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         super.onCreate(savedInstanceState);
 
         // This function below creates the nice fade in / out transition between activities.
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(R.anim.fadein, R.anim.exit_to_left);
         setContentView(R.layout.activity_start__drawing__screen);
 
         imageView = (ImageView) findViewById(R.id.imageView);

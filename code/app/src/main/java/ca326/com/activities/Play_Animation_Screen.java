@@ -9,20 +9,26 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 
 import java.util.List;
 import java.util.Map;
 
 import static ca326.com.activities.Start_Drawing_Screen.drawables;
-import static ca326.com.activities.Start_Drawing_Screen.newDrawable;
 
 public class Play_Animation_Screen extends AppCompatActivity {
 
-    // Normal fields
+    // Private fields
     private CanvasViewNonEditable cv;
     private Integer pos;
-    public static Integer frame_rate;
+    private View myView;
+    private View myTopView;
+    private Boolean isUp;
+    private Button myButton;
 
+    // Public Static
+    public static Integer frame_rate;
     public static Map<Integer, List <Pair<Path, Paint>>> pathways = Start_Drawing_Screen.pathways;
 
     // Handlers / Timed events
@@ -32,11 +38,22 @@ public class Play_Animation_Screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.exit_to_left);
         setContentView(R.layout.activity_play__animation__screen);
 
         // Initialisation
         this.pos = 0;
         this.cv = (CanvasViewNonEditable) findViewById(R.id.canvas2);
+
+        myView = findViewById(R.id.my_view_bottom);
+        myView.setVisibility(View.VISIBLE);
+
+        myTopView = findViewById(R.id.my_view_top);
+        myTopView.setVisibility(View.VISIBLE);
+
+        myButton = findViewById(R.id.my_button);
+        isUp = true;
+
         play_animation(cv);
     }
 
@@ -85,5 +102,42 @@ public class Play_Animation_Screen extends AppCompatActivity {
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    // Animation Methods for Sliding toolbar play button menu
+    // slide the view from below itself to the current position
+    public void slideUp(View view){
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                view.getHeight(),  // fromYDelta
+                0);                // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    // slide the view from its current position to below itself
+    public void slideDown(View view){
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    public void onSlideViewButtonClick(View view) {
+        if (isUp) {
+            slideDown(myView);
+            myButton.setText("Slide up");
+        } else {
+            slideUp(myView);
+            myButton.setText("Slide down");
+        }
+        isUp = !isUp;
     }
 }

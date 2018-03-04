@@ -77,7 +77,8 @@
 
         <activity
             android:name=".Play_Animation_Screen"
-            android:configChanges="orientation" />
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Test_VideoPlayer"

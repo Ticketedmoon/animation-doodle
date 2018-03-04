@@ -12,22 +12,53 @@
         android:id="@+id/play_canvas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/paper"
         android:rotation="0">
-        <!--android:alpha="0.8" === Make this a feature, choose opacity -->
+
+        <RelativeLayout
+            android:id="@+id/my_view_top"
+            android:layout_width="match_parent"
+            android:layout_height="37.5dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:alpha="0.75"
+            android:background="@android:color/black"
+            android:backgroundTintMode="screen">
+
+        </RelativeLayout>
 
         <ca326.com.activities.CanvasViewNonEditable
             android:id="@+id/canvas2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/my_button"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/my_view_top"
             android:adjustViewBounds="true"
-            android:alpha="0.75"
             android:scaleType="fitCenter" />
+
+        <Button
+            android:id="@+id/my_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="onSlideViewButtonClick" />
+
+        <RelativeLayout
+            android:id="@+id/my_view_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/canvas2"
+            android:alpha="0.75"
+            android:background="@android:color/black"
+            android:backgroundTintMode="screen">
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
