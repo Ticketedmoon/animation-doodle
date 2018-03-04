@@ -892,10 +892,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             set = true;
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
-            Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
+            Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath()
                     + "/AnimationDoodle/Backgrounds/");
             Log.i("string","is  " + uri);
-            Log.i("string","is  " + Environment.getExternalStorageDirectory());
             intent.setDataAndType(uri, "image/*");
             //intent.setType("image/*");
             startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
