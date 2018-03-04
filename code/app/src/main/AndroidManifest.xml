@@ -69,6 +69,7 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Play_Animation_Screen"
