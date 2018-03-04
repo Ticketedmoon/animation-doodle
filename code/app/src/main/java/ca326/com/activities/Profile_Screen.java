@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -51,8 +54,14 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
     private boolean menu_button = false;
 
+    private EditText simpleEditText;
+    private EditText simpleEditText2;
+    private String editTextValue;
+
     private RequestQueue requestQueue;
     private RequestQueue requestQueue2;
+
+    private Button done;
 
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
@@ -64,6 +73,10 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         super.onCreate(savedInstanceState);
         //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_profile__screen);
+
+        done = (Button) findViewById(R.id.done);
+
+
 
         this.drop_down_option_menu = (RelativeLayout) findViewById(R.id.menu_layout);
 
@@ -181,13 +194,25 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     }
 
     public void about(View v){
-        EditText simpleEditText = (EditText) findViewById(R.id.textViewAbout);
+        simpleEditText = (EditText) findViewById(R.id.textViewAbout);
         simpleEditText.setFocusableInTouchMode(true);
-        String editTextValue = simpleEditText.getText().toString();
-
+        editTextValue = simpleEditText.getText().toString();
+        done.setVisibility(View.VISIBLE);
         //when user presses done button set this to false
         //simpleEditText.setFocusableInTouchMode(false);
     }
+
+    public void doneButton1(View v){
+        //when user presses done button set this to false
+        simpleEditText.setFocusableInTouchMode(false);
+        done.setVisibility(View.INVISIBLE);
+        ProfileUpload upload = new ProfileUpload(this);
+        Log.i("result ","text is "+editTextValue);
+        upload.execute(editTextValue);
+
+        //then submit the user data to database
+    }
+
 
     public void appIdeas(View v){
         EditText simpleEditText2 = (EditText) findViewById(R.id.textView);

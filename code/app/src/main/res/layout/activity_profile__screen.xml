@@ -11,7 +11,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:elevation="4dp"
-            android:paddingBottom="24dp"
+            android:paddingBottom="0dp"
             android:background="@drawable/top_rated">
 
             <ImageView
@@ -47,6 +47,30 @@
                 android:padding="20dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile" />
+
+            <Button
+                android:id="@+id/done"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/user_profile_photo"
+                android:layout_marginStart="24dp"
+                android:clickable="true"
+                android:onClick="doneButton1"
+                android:text="Done"
+                android:textSize="8dp"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/ideas"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignBaseline="@+id/done"
+                android:layout_alignBottom="@+id/done"
+                android:layout_alignParentEnd="true"
+                android:text="Done"
+                android:visibility="invisible" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -73,26 +97,30 @@
                 android:textSize="11sp" />
 
         </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_marginTop="270dp"
+        android:paddingTop="0dp"
         android:background="@color/shadow_color">
 
-            <EditText
+        <EditText
                 android:id="@+id/textViewAbout"
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:background="#fff"
                 android:clickable="true"
+                android:paddingRight="10dp"
                 android:onClick="about"
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:focusable="false"
+                android:imeOptions="actionDone"
                 android:backgroundTint="#69000000" />
 
-            <EditText
+        <EditText
                 android:id="@+id/textView"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
@@ -106,6 +134,15 @@
                 android:layout_toRightOf="@id/textViewAbout"
                 android:elevation="4dp"
                 android:padding="20dp" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textViewAbout"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 
@@ -118,12 +155,6 @@
         android:layout_alignParentStart="true"
         android:paddingTop="5dp"
         android:visibility="visible" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
 
 
 </RelativeLayout>
