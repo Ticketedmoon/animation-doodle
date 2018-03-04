@@ -48,6 +48,8 @@ import com.bq.markerseekbar.MarkerSeekBar;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Duration;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -458,6 +460,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvasView.shouldShowOnionSkin = true;
             outputStream.close();
 
+            Toast.makeText(this, "Background Saved!\n(/AnimationDoodle/Backgrounds", Toast.LENGTH_SHORT).show();
+
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -751,40 +755,40 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         Log.i("Restart Animation", "frames: " + frames.size());
         Log.i("Restart Animation", "Pathways: " + pathways.size());
 
-        /*AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setTitle("Animation Control Manager");
-        builder1.setMessage("Do you want to delete your animation?");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Accept",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+        new FancyGifDialog.Builder(this)
+                .setTitle("Animation Restart Manager")
+                .setMessage("Are you sure you want to restart your animation?")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Accept")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                .setGifResource(R.drawable.gif16)   //Pass your Gif here
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
                         reset_timeline();
-                        dialog.cancel();
                     }
-                });
-
-        builder1.setNegativeButton(
-                "Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
                     }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();*/
-
-        reset_timeline();
+                })
+                .build();
     }
 
     private void reset_timeline() {
+        // Clear Frames, FrameNums, Pathways & drawables
+        // Also reset frame_counter back to 1 to restart.
         frames.clear();
         frameNums.clear();
         pathways.clear();
         drawables.clear();
+        canvasView.onionPaths.clear();
+
         frame_counter = 1; // Reset back to 1
+        pos = 0;
 
         Log.i("Restart Animation", "Restarting... \nFrames reset\n" +
                 "frameNums reset\nPathways reset\ndrawables reset\nframe_counter reset to 1");
