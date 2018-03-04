@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -176,6 +177,22 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     public void get_profile_data(){
         ProfileData data = new ProfileData();
         requestQueue2.add(data.getData(user_id));
+
+    }
+
+    public void about(View v){
+        EditText simpleEditText = (EditText) findViewById(R.id.textViewAbout);
+        simpleEditText.setFocusableInTouchMode(true);
+        String editTextValue = simpleEditText.getText().toString();
+
+        //when user presses done button set this to false
+        //simpleEditText.setFocusableInTouchMode(false);
+    }
+
+    public void appIdeas(View v){
+        EditText simpleEditText2 = (EditText) findViewById(R.id.textView);
+        simpleEditText2.setFocusableInTouchMode(true);
+        String editTextValue2 = simpleEditText2.getText().toString();
 
     }
 

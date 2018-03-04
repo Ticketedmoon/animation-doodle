@@ -2,22 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/top_rated">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout">
+    android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="270dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:paddingBottom="24dp"
+            android:background="@drawable/top_rated">
 
             <ImageView
                 android:id="@+id/drop_down_option_menu"
@@ -43,10 +38,10 @@
 
             <ImageButton
                 android:id="@+id/user_profile_photo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:background="@drawable/profile"
                 android:elevation="5dp"
                 android:padding="20dp"
@@ -77,60 +72,59 @@
                 android:text="@string/logout_form"
                 android:textSize="11sp" />
 
-
         </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginTop="270dp"
+        android:background="@color/shadow_color">
 
-
-
-        <GridLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_layout"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:id="@+id/gridLayout">
-
-            <TextView
+            <EditText
                 android:id="@+id/textViewAbout"
-                android:layout_width="300dp"
-                android:layout_height="109dp"
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:background="#fff"
                 android:clickable="true"
+                android:onClick="about"
                 android:elevation="4dp"
                 android:padding="20dp"
+                android:focusable="false"
                 android:backgroundTint="#69000000" />
 
-            <TextView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/textView"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginTop="3dp"
                 android:background="#69000000"
+                android:onClick="appIdeas"
+                android:focusable="false"
                 android:clickable="true"
+                android:layout_toRightOf="@id/textViewAbout"
                 android:elevation="4dp"
-                android:padding="20dp"
-                android:text="Temp" />
-        </GridLayout>
-
+                android:padding="20dp" />
     </RelativeLayout>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:paddingTop="5dp"
-            android:visibility="visible" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="5dp"
+        android:visibility="visible" />
 
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+</RelativeLayout>
 
