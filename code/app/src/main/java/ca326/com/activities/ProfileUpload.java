@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 
 
 import static ca326.com.activities.ItemTwoFragment.user_id;
+import static ca326.com.activities.Profile_Screen.check;
 import static ca326.com.activities.Sign_In_Screen.PREF_ID;
 import static ca326.com.activities.Start_Drawing_Screen.mSharedPreferences;
 
@@ -29,6 +30,8 @@ class ProfileUpload extends AsyncTask<String, Void, String> {
 
     ProgressDialog uploading;
     Activity instance;
+    private BufferedWriter writer;
+    private String post_data;
 
 
     ProfileUpload(Activity instance) {
@@ -78,18 +81,24 @@ class ProfileUpload extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String text =params[0];
+        String link;
         try {
-            String link = "http://animationdoodle2017.com/profileUpload.php";
+            if (check) {
+                link = "http://animationdoodle2017.com/profileUpload.php";
+            }
+            else {
+                link = "http://animationdoodle2017.com/profileUpload2.php";
+            }
             URL url = new URL(link);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoInput(true);
             con.setDoOutput(true);
             OutputStream out = con.getOutputStream();
+            writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            post_data = URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8") + "&" +
+                        URLEncoder.encode("id", "UTF-8") + "=" + user_id;
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-            String post_data = URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8") + "&" +
-                    URLEncoder.encode("id", "UTF-8") + "=" + user_id;
             writer.write(post_data);
             writer.flush();
             writer.close();
@@ -110,4 +119,5 @@ class ProfileUpload extends AsyncTask<String, Void, String> {
 
 
     }
+
 }

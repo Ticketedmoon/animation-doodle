@@ -50,6 +50,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private RecyclerView recyclerView;
     private ProfileCardAdapter adapter;
     public static TextView textViewAbout;
+    public static TextView textView;
 
 
     private boolean menu_button = false;
@@ -57,11 +58,15 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private EditText simpleEditText;
     private EditText simpleEditText2;
     private String editTextValue;
+    private String editTextValue2;
+    public static boolean check;
+
 
     private RequestQueue requestQueue;
     private RequestQueue requestQueue2;
 
-    private Button done;
+    private Button aboutDoneButton;
+    private Button ideasDoneButton;
 
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
@@ -74,7 +79,9 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_profile__screen);
 
-        done = (Button) findViewById(R.id.done);
+        aboutDoneButton = (Button) findViewById(R.id.about);
+
+        ideasDoneButton = (Button) findViewById(R.id.ideas);
 
 
 
@@ -83,7 +90,11 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //Initializing Views
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+
+        //this sets up the users text data
         textViewAbout = (TextView) findViewById(R.id.textViewAbout);
+        textView = (TextView) findViewById(R.id.textView);
+
 
         //list 2 videos side by side in a grid
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
@@ -197,27 +208,47 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         simpleEditText = (EditText) findViewById(R.id.textViewAbout);
         simpleEditText.setFocusableInTouchMode(true);
         editTextValue = simpleEditText.getText().toString();
-        done.setVisibility(View.VISIBLE);
-        //when user presses done button set this to false
+        aboutDoneButton.setVisibility(View.VISIBLE);
+        //when user presses aboutDoneButton button set this to false
         //simpleEditText.setFocusableInTouchMode(false);
     }
 
     public void doneButton1(View v){
-        //when user presses done button set this to false
+        //when user presses aboutDoneButton button set this to false
         simpleEditText.setFocusableInTouchMode(false);
-        done.setVisibility(View.INVISIBLE);
+        aboutDoneButton.setVisibility(View.INVISIBLE);
+        editTextValue = simpleEditText.getText().toString();
+        //Used to differentiate between which text box has been updated
+        check = true;
+
+        //now submit the user data to database
         ProfileUpload upload = new ProfileUpload(this);
         Log.i("result ","text is "+editTextValue);
         upload.execute(editTextValue);
+    }
+
+    public void doneButton2(View v){
+        //when user presses aboutDoneButton button set this to false
+        simpleEditText2.setFocusableInTouchMode(false);
+        ideasDoneButton.setVisibility(View.INVISIBLE);
+        editTextValue2 = simpleEditText2.getText().toString();
+
+        check = false;
+        Log.i("result ","text is "+editTextValue2);
+        ProfileUpload upload = new ProfileUpload(this);
+        upload.execute(editTextValue2);
+
 
         //then submit the user data to database
     }
 
 
     public void appIdeas(View v){
-        EditText simpleEditText2 = (EditText) findViewById(R.id.textView);
+        simpleEditText2 = (EditText) findViewById(R.id.textView);
         simpleEditText2.setFocusableInTouchMode(true);
-        String editTextValue2 = simpleEditText2.getText().toString();
+        editTextValue2 = simpleEditText2.getText().toString();
+        Log.i("result ","text is "+editTextValue2);
+        ideasDoneButton.setVisibility(View.VISIBLE);
 
     }
 

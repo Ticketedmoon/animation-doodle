@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static ca326.com.activities.Profile_Screen.textView;
 import static ca326.com.activities.Profile_Screen.textViewAbout;
 import static ca326.com.activities.ItemTwoFragment.user_id;
 
@@ -49,6 +50,7 @@ public class ProfileData extends AppCompatActivity {
                 json = array.getJSONObject(i);
 
                 textViewAbout.setText(json.getString("text"));
+                textView.setText((json.getString("text2")));
                 Log.i("textviewabout","text is " + textViewAbout);
 
             } catch (JSONException e) {

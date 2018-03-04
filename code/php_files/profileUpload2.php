@@ -7,8 +7,7 @@ if ($con->connect_error)
 }
 $text = $_POST['text'];
 $id = $_POST['id'];
-$result2 = "UPDATE profile SET about = '$text' WHERE id = '$id'";
-    
+$result2 = "UPDATE profile SET temp = '$text' WHERE id = '$id'";
 $sql = mysqli_query($con,$result2);
 if($sql == true) {
        echo '{"query_result":"SUCCESS"}';
@@ -19,4 +18,3 @@ else{
    }
 mysqli_close($con);
 ?>
-

@@ -4,74 +4,77 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-        <RelativeLayout
-            android:id="@+id/profile_layout"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:elevation="4dp"
-            android:paddingBottom="0dp"
-            android:background="@drawable/top_rated">
+    <RelativeLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_rated"
+        android:elevation="4dp"
+        android:paddingBottom="0dp">
 
-            <ImageView
-                android:id="@+id/drop_down_option_menu"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:onClick="menu"
-                android:src="@drawable/menu" />
+        <ImageView
+            android:id="@+id/drop_down_option_menu"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/transparent"
+            android:onClick="menu"
+            android:src="@drawable/menu" />
 
-            <TextView
-                android:id="@+id/user_profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/drop_down_option_menu"
-                android:layout_centerHorizontal="true"
-                android:text="Profile"
-                android:textColor="#fff"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/user_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/drop_down_option_menu"
+            android:layout_centerHorizontal="true"
+            android:text="Profile"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/user_profile_photo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/profile"
-                android:elevation="5dp"
-                android:padding="20dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profile" />
+        <ImageButton
+            android:id="@+id/user_profile_photo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/profile"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile" />
 
-            <Button
-                android:id="@+id/done"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/user_profile_photo"
-                android:layout_marginStart="24dp"
-                android:clickable="true"
-                android:onClick="doneButton1"
-                android:text="Done"
-                android:textSize="8dp"
-                android:visibility="invisible" />
+        <Button
+            android:id="@+id/about"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/user_profile_photo"
+            android:layout_marginStart="24dp"
+            android:clickable="true"
+            android:onClick="doneButton1"
+            android:text="Done"
+            android:textSize="13dp"
+            android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/ideas"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_alignBaseline="@+id/done"
-                android:layout_alignBottom="@+id/done"
-                android:layout_alignParentEnd="true"
-                android:text="Done"
-                android:visibility="invisible" />
+        <Button
+            android:id="@+id/ideas"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@+id/about"
+            android:layout_alignBottom="@+id/about"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:onClick="doneButton2"
+            android:text="Done"
+            android:textSize="13dp"
+            android:visibility="invisible" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/menu_layout"
@@ -103,45 +106,62 @@
         android:layout_height="150dp"
         android:layout_marginTop="270dp"
         android:paddingTop="0dp"
-        android:background="@color/shadow_color">
+        android:background="@drawable/top_rated">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:elevation="30dp"
+            android:text="About"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
 
         <EditText
-                android:id="@+id/textViewAbout"
-                android:layout_width="190dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:paddingRight="10dp"
-                android:onClick="about"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:focusable="false"
-                android:imeOptions="actionDone"
-                android:backgroundTint="#69000000" />
+            android:id="@+id/textViewAbout"
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#BF000000"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="false"
+            android:imeOptions="actionDone"
+            android:onClick="about"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textViewAbout"
+            android:elevation="30dp"
+            android:paddingLeft="30dp"
+            android:text="Ideas"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
 
         <EditText
-                android:id="@+id/textView"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="#69000000"
-                android:onClick="appIdeas"
-                android:focusable="false"
-                android:clickable="true"
-                android:layout_toRightOf="@id/textViewAbout"
-                android:elevation="4dp"
-                android:padding="20dp" />
+            android:id="@+id/textView"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="#BF000000"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="false"
+            android:onClick="appIdeas" />
 
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textViewAbout"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
