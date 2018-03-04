@@ -786,10 +786,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         drawables.clear();
         frame_counter = 1; // Reset back to 1
 
-        Log.i("Restart Animation", "frames: " + frames);
-        Log.i("Restart Animation", "Pathways: " + pathways);
-
-        Log.i("Restart Animation", "Not Frames / Pathways");
+        Log.i("Restart Animation", "Restarting... \nFrames reset\n" +
+                "frameNums reset\nPathways reset\ndrawables reset\nframe_counter reset to 1");
 
         // Remove previous Animation Name
         mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
@@ -800,12 +798,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         mEditor.remove("animationName");
         mEditor.apply();
 
-        Log.i("Restart Animation", "Made it this far");
-        // Add a new frame to begin with
-        add_frame(timeline_frames);
         canvasView.newPaths.clear();
         canvasView.invalidate();
 
+        // Add a new frame to begin with
+        add_frame(timeline_frames);
 
         //  Prompt for new Animation Title
         get_animation_name();
@@ -864,7 +861,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     public void add_frame(View v) {
         // will generate a frame object and frameNo and place it in the timeline.
         // data to populate the RecyclerView with
-        Log.i("ADD Frame Button", "Pathways: " + pathways);
         Integer tmp = R.drawable.frame;
         frames.add(tmp);
         frameNums.add("Frame " + frame_counter);
