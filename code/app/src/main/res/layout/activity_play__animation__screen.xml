@@ -12,10 +12,10 @@
         android:id="@+id/play_canvas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/paper"
+        android:orientation="vertical"
         android:rotation="0">
 
         <RelativeLayout
@@ -24,8 +24,8 @@
             android:layout_height="37.5dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:alpha="0.75"
-            android:background="@android:color/black"
+            android:alpha="0.6"
+            android:background="@color/nice_grey"
             android:backgroundTintMode="screen">
 
         </RelativeLayout>
@@ -34,29 +34,48 @@
             android:id="@+id/canvas2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/my_button"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/my_view_top"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
 
-        <Button
-            android:id="@+id/my_button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="onSlideViewButtonClick" />
-
         <RelativeLayout
             android:id="@+id/my_view_bottom"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/canvas2"
-            android:alpha="0.75"
-            android:background="@android:color/black"
+            android:alpha="0.6"
+            android:background="@color/nice_grey"
             android:backgroundTintMode="screen">
+
+            <ImageButton
+                android:id="@+id/playPauseButton"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/exomedia_ic_pause_white" />
+
+            <SeekBar
+                android:id="@+id/playAnimationSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/playPauseButton"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:progress="1"
+                android:theme="@style/MySeekBarTheme" />
+
+            <ImageButton
+                android:id="@+id/changeBG"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/change_bg" />
 
         </RelativeLayout>
 
