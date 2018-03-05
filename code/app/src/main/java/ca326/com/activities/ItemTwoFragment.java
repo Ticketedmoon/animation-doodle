@@ -339,7 +339,7 @@ public class ItemTwoFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, "Login Details incorrect.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
