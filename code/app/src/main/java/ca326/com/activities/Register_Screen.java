@@ -62,6 +62,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     private static final int REQUEST_READ_CONTACTS = 0;
 
     private UserLoginTask mAuthTask = null;
+    private boolean set = false;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -95,19 +96,21 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                    Log.i("clicked", "is clikced 222 " + mPasswordView);
+                    set = true;
                     attemptLogin();
-                    return true;
+                    return false;
                 }
                 return false;
             }
         });
-
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_register_button);
         mEmailSignInButton.setTextColor(getApplication().getResources().getColor(R.color.colorWhite));
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("clicked", "is clikced " + mPasswordView);
                 attemptLogin();
             }
         });
