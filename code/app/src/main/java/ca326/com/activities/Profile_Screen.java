@@ -7,7 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,12 +50,23 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private RecyclerView recyclerView;
     private ProfileCardAdapter adapter;
     public static TextView textViewAbout;
+    public static TextView textView;
 
 
     private boolean menu_button = false;
 
+    private EditText simpleEditText;
+    private EditText simpleEditText2;
+    private String editTextValue;
+    private String editTextValue2;
+    public static boolean check;
+
+
     private RequestQueue requestQueue;
     private RequestQueue requestQueue2;
+
+    private Button aboutDoneButton;
+    private Button ideasDoneButton;
 
     //This will be used to get the page number, so a number
     // are loaded and then when you scroll more get loaded
@@ -64,12 +79,22 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_profile__screen);
 
+        aboutDoneButton = (Button) findViewById(R.id.about);
+
+        ideasDoneButton = (Button) findViewById(R.id.ideas);
+
+
+
         this.drop_down_option_menu = (RelativeLayout) findViewById(R.id.menu_layout);
 
         //Initializing Views
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+
+        //this sets up the users text data
         textViewAbout = (TextView) findViewById(R.id.textViewAbout);
+        textView = (TextView) findViewById(R.id.textView);
+
 
         //list 2 videos side by side in a grid
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
@@ -176,6 +201,54 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     public void get_profile_data(){
         ProfileData data = new ProfileData();
         requestQueue2.add(data.getData(user_id));
+
+    }
+
+    public void about(View v){
+        simpleEditText = (EditText) findViewById(R.id.textViewAbout);
+        simpleEditText.setFocusableInTouchMode(true);
+        editTextValue = simpleEditText.getText().toString();
+        aboutDoneButton.setVisibility(View.VISIBLE);
+        //when user presses aboutDoneButton button set this to false
+        //simpleEditText.setFocusableInTouchMode(false);
+    }
+
+    public void doneButton1(View v){
+        //when user presses aboutDoneButton button set this to false
+        simpleEditText.setFocusableInTouchMode(false);
+        aboutDoneButton.setVisibility(View.INVISIBLE);
+        editTextValue = simpleEditText.getText().toString();
+        //Used to differentiate between which text box has been updated
+        check = true;
+
+        //now submit the user data to database
+        ProfileUpload upload = new ProfileUpload(this);
+        Log.i("result ","text is "+editTextValue);
+        upload.execute(editTextValue);
+    }
+
+    public void doneButton2(View v){
+        //when user presses aboutDoneButton button set this to false
+        simpleEditText2.setFocusableInTouchMode(false);
+        ideasDoneButton.setVisibility(View.INVISIBLE);
+        editTextValue2 = simpleEditText2.getText().toString();
+
+        check = false;
+        Log.i("result ","text is "+editTextValue2);
+        ProfileUpload upload = new ProfileUpload(this);
+        upload.execute(editTextValue2);
+
+
+        //then submit the user data to database
+    }
+
+
+    public void appIdeas(View v){
+        simpleEditText2 = (EditText) findViewById(R.id.textView);
+        simpleEditText2.setFocusableInTouchMode(true);
+        editTextValue2 = simpleEditText2.getText().toString();
+        Log.i("result ","text is "+editTextValue2);
+        ideasDoneButton.setVisibility(View.VISIBLE);
 
     }
 

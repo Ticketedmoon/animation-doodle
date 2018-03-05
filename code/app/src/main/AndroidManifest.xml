@@ -25,15 +25,12 @@
 
         <activity
             android:name=".Main_Menu_Screen"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Top_Rated_Screen"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
@@ -48,16 +45,15 @@
             android:name=".Start_Drawing_Screen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Intro_Animation_Transition_Screen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Register_Screen"
             android:label="@string/title_activity_register__screen"
@@ -73,12 +69,13 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:windowSoftInputMode="adjustNothing"
+	    android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".Play_Animation_Screen"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+	    android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Test_VideoPlayer"
@@ -88,8 +85,7 @@
         <activity
             android:name=".BlocklyActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
-
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>
