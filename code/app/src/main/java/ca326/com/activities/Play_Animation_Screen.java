@@ -1,11 +1,13 @@
 package ca326.com.activities;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
@@ -47,6 +49,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
     // Handlers / Timed events
     private Handler m_handler;
     private Runnable m_handlerTask;
+    private RelativeLayout play_canvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,10 @@ public class Play_Animation_Screen extends AppCompatActivity {
         // Initialisation
         this.pos = 0;
         this.cv = (CanvasViewNonEditable) findViewById(R.id.canvas2);
+
+        // Background adjustment
+        play_canvas = (RelativeLayout) findViewById(R.id.play_canvas);
+        play_canvas.setBackground(getDrawable(R.drawable.paper));
 
         // Create important textViews
         TextView valueTV = new TextView(this);
@@ -75,14 +82,6 @@ public class Play_Animation_Screen extends AppCompatActivity {
         myTopView.setGravity(Gravity.CENTER);
         myTopView.addView(valueTV);
 
-        // Image Button modifications
-        change_canvas = (ImageButton) findViewById(R.id.changeBG);
-        change_canvas.setBackgroundColor(Color.TRANSPARENT);
-        change_canvas.setImageResource(R.drawable.change_bg_click);
-
-        // Change background button
-
-
         // Pause / Play Button (DONE)
         pause_play_btn = (ImageButton) findViewById(R.id.playPauseButton);
         pause_play_btn.setBackgroundColor(Color.TRANSPARENT);
@@ -95,6 +94,48 @@ public class Play_Animation_Screen extends AppCompatActivity {
                     pause_play_btn.setImageResource(R.drawable.exomedia_ic_pause_white);
 
                 isPlaying = !isPlaying;
+            }
+        });
+
+        // Change Canvas Button
+        change_canvas = (ImageButton) findViewById(R.id.changeBG);
+        change_canvas.setBackgroundColor(Color.TRANSPARENT);
+        change_canvas.setImageResource(R.drawable.change_bg_click);
+        change_canvas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence colors[] = new CharSequence[] {"Blank Canvas", "Crumpled Paper", "Ancient Scroll", "School Paper"};
+                isPlaying = false;
+                pause_play_btn.setImageResource(R.drawable.exomedia_ic_play_arrow_white);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(cv.getContext());
+                builder.setTitle("Pick a color");
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on colors[which]
+                        Log.i("Choice Dialog", which + "<--");
+                        switch (which) {
+                            case 1:
+                                which = 0;
+                                play_canvas.setBackgroundResource(0);
+                                break;
+                            case 2:
+                                which = 1;
+                                play_canvas.setBackground(getDrawable(R.drawable.paper));
+                                break;
+                            case 3:
+                                which = 2;
+                                play_canvas.setBackground(getDrawable(R.drawable.ancient_bg));
+                                break;
+                            case 4:
+                                which = 3;
+                                play_canvas.setBackground(getDrawable(R.drawable.school_bg));
+                                break;
+                        }
+                    }
+                });
+                builder.show();
             }
         });
 
