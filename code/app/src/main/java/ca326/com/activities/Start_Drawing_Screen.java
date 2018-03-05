@@ -803,6 +803,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         mEditor.apply();
 
         canvasView.newPaths.clear();
+        //remove the final drawable background
+        background.setText("Set Background");
+        this.canvasView2.setBackground(null);
+
         canvasView.invalidate();
 
         // Add a new frame to begin with
