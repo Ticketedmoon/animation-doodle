@@ -43,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:fontFamily="@font/amiko"
-            android:text="Public Animaitons"
+            android:text="Public Animations"
             android:textColor="@color/white"
             android:textSize="24dp"
             android:textStyle="bold" />
