@@ -337,12 +337,9 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
         startActivity(startMain);
     }
 
-    public void goToDrawingScreen(View view){
-        Intent intent = new Intent (Register_Screen.this, Start_Drawing_Screen.class);
-        startActivity(intent);
-    }
     public void goToSignInScreen(View view){
-        Intent intent = new Intent (Register_Screen.this, Sign_In_Screen.class);
+        System.out.println("Sign In text Pushed <Returning to Sign In>");
+        Intent intent = new Intent (Register_Screen.this, Main_Menu_Screen.class);
         startActivity(intent);
     }
 

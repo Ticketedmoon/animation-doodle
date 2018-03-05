@@ -1,4 +1,8 @@
 <resources>
+    <!-- Main Menu Buttons -->
+    <string name="canvas_draw">Draw On Canvas</string>
+    <string name="blockly_draw">Draw with Blockly</string>
+
     <string name="app_name">Animation Doodle</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign__in__screen">Animation Doodle</string>

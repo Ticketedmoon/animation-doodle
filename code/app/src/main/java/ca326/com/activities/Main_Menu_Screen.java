@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.io.File;
 
@@ -24,10 +23,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
     public static final String PREFERENCE= "preference";
     public static final String PREF_EMAIL = "email";
     public static final String PREF_PASSWORD = "password";
-
-    // Initialise buttons
-    private Button start_drawing;
-    private Button start_blockly;
 
     // Main Menu standard onCreate function.
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +49,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
                             case R.id.action_item2:
                                 mSharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
                                 Intent intent;
-
 
                                 if(mSharedPreferences.contains(PREF_EMAIL)&& mSharedPreferences.contains(PREF_PASSWORD)) {
                                     intent = new Intent(Main_Menu_Screen.this, Profile_Screen.class);
