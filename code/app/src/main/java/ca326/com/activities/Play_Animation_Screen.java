@@ -109,7 +109,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
                 pause_play_btn.setImageResource(R.drawable.exomedia_ic_play_arrow_white);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(cv.getContext());
-                builder.setTitle("Pick a color");
+                builder.setTitle("Choose Animation Background");
                 builder.setItems(colors, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -170,9 +170,10 @@ public class Play_Animation_Screen extends AppCompatActivity {
             }
         });
 
-
-        // Ending
         isUp = true;
+
+        // Runnable post delayed events.
+        // play animation once screen is fully loaded
         cv.postDelayed(new Runnable() {
 
             @Override
@@ -180,6 +181,15 @@ public class Play_Animation_Screen extends AppCompatActivity {
                 play_animation(cv);
             }
         }, 1000);
+
+        // Hide Both nav bars after 1.5 seconds
+        cv.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                onSlideViewClick(cv);
+            }
+        }, 2500);
     }
 
     public void play_animation(View v) {
