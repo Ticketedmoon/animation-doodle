@@ -80,8 +80,10 @@ public class Play_Animation_Screen extends AppCompatActivity {
         change_canvas.setBackgroundColor(Color.TRANSPARENT);
         change_canvas.setImageResource(R.drawable.change_bg_click);
 
-        // Image Button modifications
+        // Change background button
 
+
+        // Pause / Play Button (DONE)
         pause_play_btn = (ImageButton) findViewById(R.id.playPauseButton);
         pause_play_btn.setBackgroundColor(Color.TRANSPARENT);
         pause_play_btn.setImageResource(R.drawable.exomedia_ic_pause_white);
