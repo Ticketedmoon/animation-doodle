@@ -109,30 +109,29 @@ public class Play_Animation_Screen extends AppCompatActivity {
                 pause_play_btn.setImageResource(R.drawable.exomedia_ic_play_arrow_white);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(cv.getContext());
-                builder.setTitle("Pick a color");
+                builder.setTitle("Choose Animation Background");
                 builder.setItems(colors, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // the user clicked on colors[which]
-                        Log.i("Choice Dialog", which + "<--");
+                        Log.i("Choice Dialog", which + " <--");
                         switch (which) {
-                            case 1:
-                                which = 0;
+                            case 0:
                                 play_canvas.setBackgroundResource(0);
                                 break;
-                            case 2:
-                                which = 1;
+                            case 1:
                                 play_canvas.setBackground(getDrawable(R.drawable.paper));
                                 break;
-                            case 3:
-                                which = 2;
+                            case 2:
                                 play_canvas.setBackground(getDrawable(R.drawable.ancient_bg));
                                 break;
-                            case 4:
-                                which = 3;
+                            case 3:
                                 play_canvas.setBackground(getDrawable(R.drawable.school_bg));
                                 break;
+                            default:
+                                Log.i("Choice Dialog", "No Choice Chosen");
                         }
+
                     }
                 });
                 builder.show();
@@ -141,10 +140,8 @@ public class Play_Animation_Screen extends AppCompatActivity {
 
         // SeekBar manipulations
         seek = (SeekBar) findViewById(R.id.playAnimationSeekBar);
-
         seek.setMax(pathways.size()-1);
         seek.setProgress(0);
-
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -173,9 +170,10 @@ public class Play_Animation_Screen extends AppCompatActivity {
             }
         });
 
-
-        // Ending
         isUp = true;
+
+        // Runnable post delayed events.
+        // play animation once screen is fully loaded
         cv.postDelayed(new Runnable() {
 
             @Override
@@ -183,6 +181,15 @@ public class Play_Animation_Screen extends AppCompatActivity {
                 play_animation(cv);
             }
         }, 1000);
+
+        // Hide Both nav bars after 1.5 seconds
+        cv.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                onSlideViewClick(cv);
+            }
+        }, 2500);
     }
 
     public void play_animation(View v) {
