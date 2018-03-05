@@ -48,9 +48,20 @@ public class ProfileData extends AppCompatActivity {
             try {
                 //Getting json
                 json = array.getJSONObject(i);
-
-                textViewAbout.setText(json.getString("text"));
-                textView.setText((json.getString("text2")));
+                String text = json.getString("text");
+                if (text.equals("null")){
+                    textViewAbout.setText("");
+                }
+                else {
+                    textViewAbout.setText(json.getString("text"));
+                }
+                String ideasText = json.getString("text2");
+                if (ideasText.equals("null")){
+                    textView.setText("");
+                }
+                else {
+                    textView.setText((json.getString("text2")));
+                }
                 Log.i("textviewabout","text is " + textViewAbout);
 
             } catch (JSONException e) {

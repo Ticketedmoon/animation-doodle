@@ -22,10 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label,android:icon">
-
         <activity
             android:name=".Main_Menu_Screen"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Top_Rated_Screen"
             android:label=""

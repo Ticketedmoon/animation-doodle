@@ -220,7 +220,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
         }
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         boolean filter = true;
         String filterString = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
         String laxString = ".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
@@ -233,8 +233,8 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     // this regex will check that passwords contain at least one digit
     // a lower case letter at least once,an upper case letter, at least one special character
     // and is at least 5 characters long
-    private boolean isPasswordValid(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}";
+    public boolean isPasswordValid(String password) {
+        String pattern = "(?=.*[0-9])(?=.*[A-Z]).{5,}";
         return password.matches(pattern);
     }
 

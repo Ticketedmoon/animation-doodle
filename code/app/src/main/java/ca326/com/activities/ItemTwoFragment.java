@@ -104,7 +104,10 @@ public class ItemTwoFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    String passwordView = mPasswordView.getText().toString();
+                    String emailView = mEmailView.getText().toString();
+                    Log.i("strings","are " + emailView + " " + passwordView);
+                    attemptLogin(emailView,passwordView);
                     return true;
                 }
                 return false;
@@ -121,7 +124,10 @@ public class ItemTwoFragment extends Fragment {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                attemptLogin();
+                String passwordView = mPasswordView.getText().toString();
+                String emailView = mEmailView.getText().toString();
+                Log.i("strings","are " + emailView + " " + passwordView);
+                attemptLogin(emailView,passwordView);
             }
         });
 
@@ -135,7 +141,7 @@ public class ItemTwoFragment extends Fragment {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    public void attemptLogin(String emailView, String passwordView) {
         if (mAuthTask != null) {
             return;
         }
@@ -145,8 +151,8 @@ public class ItemTwoFragment extends Fragment {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = emailView;
+        String password = passwordView;
 
         boolean cancel = false;
         View focusView = null;
@@ -185,7 +191,7 @@ public class ItemTwoFragment extends Fragment {
         }
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         boolean filter = true;
         String filterString = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
         String laxString = ".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
@@ -198,8 +204,8 @@ public class ItemTwoFragment extends Fragment {
     // this regex will check that passwords contain at least one digit
     // a lower case letter at least once,an upper case letter, at least one special character
     // and is at least 5 characters long
-    private boolean isPasswordValid(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}";
+    public boolean isPasswordValid(String password) {
+        String pattern = "(?=.*[0-9])(?=.*[A-Z]).{5,}";
         return password.matches(pattern);
     }
 
@@ -339,7 +345,7 @@ public class ItemTwoFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(instance, "Error parsing JSON data.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, "Login Details incorrect.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(instance, "Couldn't get any JSON data.", Toast.LENGTH_SHORT).show();
