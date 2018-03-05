@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.VideoView;
 
 import static ca326.com.activities.Profile_Screen.deciding_string;
@@ -33,9 +34,12 @@ public class Test_VideoPlayer extends AppCompatActivity {
         }
         System.out.println("position :"+ position2 + "  " + video.getVideoUrl());
         String url = video.getVideoUrl();
+        Log.i("video","video url 111 is " + url);
+        url = url.replace(" ", "%20");
+        Log.i("video","video url is " + url);
         Uri videoUri = Uri.parse(url);
+        Log.i("video","video urii is " + videoUri);
         videoView.setVideoURI(videoUri);
-
         //changes the screen to white from black as video loads
         videoView.setZOrderOnTop(true);
         videoView.start();

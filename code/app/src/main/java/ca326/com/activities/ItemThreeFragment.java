@@ -179,6 +179,8 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
                 video.setRating(number);
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
+                String test = video.getVideoUrl();
+                Log.i("video","video name is " + test);
                 video.setName(json.getString("name"));
                 video.setDescription(json.getString("video description"));
                 video.setRatingCounter(rating_counter);
