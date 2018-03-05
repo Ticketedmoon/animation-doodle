@@ -42,7 +42,7 @@
             android:background="@drawable/main_menu_btn_colour"
             android:fontFamily="@font/amiko"
             android:onClick="goToDrawingScreen"
-            android:text="Draw On Canvas"
+            android:text="@string/canvas_draw"
             android:textColor="@color/colorWhite"
             android:textSize="11sp"
             android:textStyle="normal|bold" />
@@ -56,7 +56,7 @@
             android:layout_marginTop="145dp"
             android:background="@drawable/main_menu_btn_colour"
             android:fontFamily="@font/amiko"
-            android:text="Draw with Blockly"
+            android:text="@string/blockly_draw"
             android:onClick="goToBlocklyScreen"
             android:textColor="@color/colorWhite"
             android:textSize="11sp"
