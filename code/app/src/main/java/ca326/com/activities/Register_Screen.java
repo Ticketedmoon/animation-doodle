@@ -234,7 +234,7 @@ public class Register_Screen extends AppCompatActivity implements LoaderCallback
     // a lower case letter at least once,an upper case letter, at least one special character
     // and is at least 5 characters long
     private boolean isPasswordValid(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}";
+        String pattern = "(?=.*[0-9])(?=.*[A-Z]).{5,}";
         return password.matches(pattern);
     }
 

@@ -15,7 +15,7 @@
     <string name="title_input_dialog">Give your Animation a Name: </string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="invalid_password">Passwords must contain a lower,upper case,special character and be at least 5 characters long</string>
+    <string name="invalid_password">Passwords must contain at least 1 Upper Case character and number </string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
