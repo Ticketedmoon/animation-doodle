@@ -1,6 +1,5 @@
 package ca326.com.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -40,6 +39,17 @@ public class CanvasView extends View {
         super(c, attrbs);
         this.context=c;
         this.attrbs = attrbs;
+
+        // Set up Paint object
+        mPaint = new Paint();
+        setUpPaint(Color.BLACK, mPaint, 8);
+        this.colour = Color.BLACK;
+    }
+
+    // Another Constructor
+    public CanvasView(Context c) {
+        super(c);
+        this.context=c;
 
         // Set up Paint object
         mPaint = new Paint();
