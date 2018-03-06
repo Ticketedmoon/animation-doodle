@@ -1,5 +1,6 @@
 package ca326.com.activities;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -15,6 +16,7 @@ class DownloadFrameTask extends AsyncTask<Void, Void, String> {
     private ArrayList<Bitmap> frames;
     private int image_counter = 1;
     private Start_Drawing_Screen instance;
+    ProgressDialog progress;
 
     public DownloadFrameTask(ArrayList<Bitmap> frames, Start_Drawing_Screen instance) {
         this.frames = frames;
@@ -48,6 +50,8 @@ class DownloadFrameTask extends AsyncTask<Void, Void, String> {
         Log.i("Download", "JPEG Conversion: " + result);
         // ASYNC TASK(Encode Images)
         Log.i("Download", "Starting JPEG to Video (mp4) conversion");
+        progress.dismiss();
+
         DownloadAnimationTask task = new DownloadAnimationTask(instance);
         task.execute();
     }
@@ -55,6 +59,7 @@ class DownloadFrameTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        progress = ProgressDialog.show(this.instance, "Local File Download", "Downloading Animation...", false, false);
         Log.i("Download", "Starting Frame Download...");
 
     }

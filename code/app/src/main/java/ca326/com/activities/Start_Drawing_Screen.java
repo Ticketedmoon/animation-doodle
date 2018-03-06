@@ -550,8 +550,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 //add code here
                 Log.i("Frame Rate Button", "SeekBar slider moved!");
                 Log.i("Frame Rate Button", "Value: " + progress);
-                frame_rate_value = progress;
-
+                if (progress != 0)
+                    frame_rate_value = progress;
+                else
+                    frame_rate_value = 1;
             }
         });
         // Button OK

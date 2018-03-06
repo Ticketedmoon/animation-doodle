@@ -1,9 +1,5 @@
 package ca326.com.activities;
 
-import android.content.Intent;
-import android.widget.AutoCompleteTextView;
-import android.widget.ProgressBar;
-import ca326.com.activities.ItemTwoFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doCallRealMethod;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginTest {
@@ -35,7 +31,6 @@ public class LoginTest {
         boolean negativeResult = signIn.isPasswordValid("Knock");
         assertEquals(false, negativeResult);
     }
-
 
     @Mock private ItemTwoFragment mock;
 
