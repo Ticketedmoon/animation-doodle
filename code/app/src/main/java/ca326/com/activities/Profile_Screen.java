@@ -183,16 +183,23 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         Drawable newDrawable = new BitmapDrawable(getResources(), background2);
 
         profilePicture.setBackground(newDrawable);
+
+        //update database
+        ImageUpload upload = new ImageUpload(this);
+        Log.i("file","is " + imagePath);
+        upload.execute(imagePath);
+
     }
 
     public void get_image(View v){
+
+        // Get the users selected image from phone
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
-        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/AnimationDoodle/Backgrounds/");
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath());
         intent.setDataAndType(uri, "image/*");
         //intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
+        startActivityForResult(Intent.createChooser(intent, "Select an image"), video_code);
     }
 
     public void onBackPressed() {
