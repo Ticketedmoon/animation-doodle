@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static ca326.com.activities.Start_Drawing_Screen.drawables;
+import static ca326.com.activities.Start_Drawing_Screen.myDrawable;
 
 public class Play_Animation_Screen extends AppCompatActivity {
 
@@ -63,7 +64,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
 
         // Background adjustment
         play_canvas = (RelativeLayout) findViewById(R.id.play_canvas);
-        play_canvas.setBackground(getDrawable(R.drawable.paper));
+        play_canvas.setBackgroundResource(0);
 
         // Create important textViews
         TextView valueTV = new TextView(this);
@@ -208,7 +209,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
                     seek.setProgress(pos);
                     System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
                     cv.newPaths = pathways.get(pos);
-                    cv.setBackground(drawables.get(pos));
+                    cv.setBackground(myDrawable);
                     cv.invalidate();
                     pos++;
                 }
