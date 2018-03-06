@@ -53,7 +53,7 @@ public class CanvasView extends View {
 
         // Set up Paint object
         mPaint = new Paint();
-        setUpPaint(Color.BLACK, mPaint, 8);
+        // setUpPaint(Color.BLACK, mPaint, 8);
         this.colour = Color.BLACK;
     }
 
