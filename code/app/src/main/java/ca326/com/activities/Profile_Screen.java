@@ -3,7 +3,16 @@ package ca326.com.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -30,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +75,8 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private String editTextValue;
     private String editTextValue2;
     public static boolean check;
+
+    private static int video_code = 1;
 
 
     private RequestQueue requestQueue;
@@ -123,6 +135,64 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         adapter.setClickListener(this);
         //Add adapter to recyclerview
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            String imagePath = getImagePath(imageUri);
+            setImage(imagePath);
+
+        }
+
+    }
+
+    public String getImagePath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        //this is important to change depending on whether your uploading videos or images
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        System.out.println("cursor is  " + cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        System.out.println("the path is " + path);
+        cursor.close();
+        return path;
+    }
+
+    public void setImage(String imagePath){
+        File file2 = new File(imagePath);
+        BitmapFactory.Options bit = new BitmapFactory.Options();
+        Log.i("bitmap","bitmap: " +bit);
+        Bitmap background2 = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
+
+        // used to test if loading bitmap is working.It is.
+        //imageView.setImageBitmap(newBitmap);
+
+        // This method isn't working. Need to figure out whats wrong. Bitmap is loading properly, just not setting on the canvas
+        Canvas canvas = new Canvas(background2.copy(Bitmap.Config.ARGB_8888, true));
+
+        Drawable newDrawable = new BitmapDrawable(getResources(), background2);
+
+        profilePicture.setBackground(newDrawable);
+    }
+
+    public void get_image(View v){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/AnimationDoodle/Backgrounds/");
+        intent.setDataAndType(uri, "image/*");
+        //intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select an image in backgrounds "), video_code);
     }
 
     public void onBackPressed() {
