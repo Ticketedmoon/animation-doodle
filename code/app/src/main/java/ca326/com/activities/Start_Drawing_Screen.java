@@ -63,7 +63,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Start_Drawing_Screen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
 
-    private static boolean temp= false;
+    private static boolean temp = false;
 
     // Saving recycle view (Timeline) functionality
     private RecyclerView timeline_frames;
@@ -247,7 +247,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }, 1000);
         }
         background.setText("Set Background");
-
     }
 
     // MAINTAIN / SAVE TIMELINE AFTER LEAVING ACTIVITY
@@ -355,6 +354,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     // Save Animation Function, takes all frames in canvas
     // Converts them to bitmaps and encodes them to mp4.
     public void download_animation(View v) {
+        // Create Directories if they already haven't been created
+        build_local_directories();
 
         Log.i("Save Animation","Beginning Encoded / Decoding (Saving Animation /sdcard/AnimationDoodle");
 
@@ -424,6 +425,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     public void save_external(View v) {
+        build_local_directories();
         Log.i("Save", "Pushed Save Button");
 
         // Store canvas_width (Some reason gets overwritten, so store and then restore)
@@ -434,7 +436,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     private void save(String store_name) {
-        verifyStoragePermissions(this);
+        build_local_directories();
         Log.i("Download Image", "Canvas Width: " + canvasView.width + " -- " + "Canvas Height: " + canvasView.height );
 
         try {
@@ -596,7 +598,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     // Check Storage permissions (Mandatory)
-    public static void verifyStoragePermissions(Activity activity) {
+    public void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -753,8 +755,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     private void build_local_directories() {
-        verifyStoragePermissions(this);
-
         // BASE DIRECTORY
         File baseDirectory = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
         if(!baseDirectory.exists()){
@@ -763,7 +763,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // IMPORTABLE BACKGROUNDS DIRECTORY
         File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
-        if(!file.exists()){
+        if(!file.exists()) {
             file.mkdirs();
         }
 
@@ -1037,6 +1037,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    private void callStoragePermissions() {
+        verifyStoragePermissions(this);
+    }
+
     public String getImagePath(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -1095,9 +1099,8 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // Build necessary directories
-                        build_local_directories();
 
+                        // Build necessary directories
                         Log.d("MaterialStyledDialogs", "Accept Button Pushed!");
                         ANIMATION_TITLE = customText.getText().toString();
 
@@ -1105,9 +1108,10 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
                         mEditor.putString(PREF_ANIMATION_NAME,ANIMATION_TITLE);
                         mEditor.commit();
-                        Log.i("shared pref","pref name is " + mSharedPreferences.getAll());
 
+                        callStoragePermissions();
                         // Logging
+                        Log.i("shared pref","pref name is " + mSharedPreferences.getAll());
                         Log.d("MaterialStyledDialogs", "Animation Name: " + ANIMATION_TITLE);
                     }
                 })

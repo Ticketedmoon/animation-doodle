@@ -70,7 +70,9 @@ public class Main_Menu_Screen extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
         transaction.commit();
+
     }
+
 
     public void goToDrawingScreen(View v) {
         Log.i("Button", "Pressed");
@@ -83,9 +85,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
         Intent intent = new Intent(Main_Menu_Screen.this, BlocklyActivity.class);
         startActivity(intent);
     }
-
-
-
 
     // Disable back button on this screen
     public void onBackPressed() {
