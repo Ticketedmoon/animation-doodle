@@ -46,6 +46,7 @@
             android:background="@drawable/profile"
             android:elevation="5dp"
             android:padding="20dp"
+            android:clickable="true"
             android:scaleType="centerCrop"
             android:src="@drawable/profile" />
 

@@ -107,7 +107,6 @@ public class Play_Animation_Screen extends AppCompatActivity {
                 CharSequence colors[] = new CharSequence[] {"Blank Canvas", "Crumpled Paper", "Ancient Scroll", "School Paper"};
                 isPlaying = false;
                 pause_play_btn.setImageResource(R.drawable.exomedia_ic_play_arrow_white);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(cv.getContext());
                 builder.setTitle("Choose Animation Background");
                 builder.setItems(colors, new DialogInterface.OnClickListener() {

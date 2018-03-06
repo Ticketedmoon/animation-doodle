@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
@@ -109,7 +110,9 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
                 public void onFinish() {
                     Log.i("Download", "FFmpeg Execute finished");
                     Log.i("Download", "Download Complete");
-                    Toast.makeText(instance.getApplication(), "Animation successfully Downloaded (/sdcard/AnimationDoodle)", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(instance.getApplication(), "Animation successfully Downloaded !", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     progress.dismiss();
 
                     // Delete tmp folder

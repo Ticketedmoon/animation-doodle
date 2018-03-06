@@ -462,7 +462,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvasView.shouldShowOnionSkin = true;
             outputStream.close();
 
-            Toast.makeText(this, "Background Saved!\n(/AnimationDoodle/Backgrounds", Toast.LENGTH_SHORT).show();
+           Toast toast = Toast.makeText(this, "Background Saved!", Toast.LENGTH_SHORT);
+           toast.setGravity(Gravity.CENTER, 0, 0);
+           toast.show();
 
         } catch(Exception e){
             e.printStackTrace();
