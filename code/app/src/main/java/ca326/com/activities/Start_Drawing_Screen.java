@@ -738,7 +738,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 Uri imageUri = data.getData();
                 backgroundPath = getImagePath(imageUri);
                 set=false;
-                set_background();
+                set_background(backgroundPath);
                 return;
             }
             else if (!set & requestCode == video_code) {
@@ -946,10 +946,11 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         background.setText("Set Background");
     }
 
-    public void set_background() {
+    public void set_background(String backpath) {
 
         Log.i("file2","file " + backgroundPath);
-        File file2 = new File(backgroundPath);
+        String newBackground = backpath;
+        File file2 = new File(newBackground);
         BitmapFactory.Options bit = new BitmapFactory.Options();
         Log.i("bitmap","bitmap: " +bit);
         Bitmap background2 = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
