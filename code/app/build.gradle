@@ -42,6 +42,7 @@ dependencies {
     compile 'com.devbrackets.android:exomedia:4.1.0'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
+    compile 'de.hdodenhof:circleimageview:1.2.1'
 
 
 

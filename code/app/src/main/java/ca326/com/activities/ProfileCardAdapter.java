@@ -21,6 +21,7 @@ public class ProfileCardAdapter extends RecyclerView.Adapter<ProfileCardAdapter.
 
     private Context context;
 
+    //used for our volley request
     private ImageLoader loadImage;
 
     private ItemClickListener mClickListener;

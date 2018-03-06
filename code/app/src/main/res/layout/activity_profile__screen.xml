@@ -50,6 +50,15 @@
             android:onClick="get_image"
             android:scaleType="centerCrop" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/profile"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/circleView"
+            />
+
         <Button
             android:id="@+id/about"
             android:layout_width="60dp"

@@ -2,32 +2,31 @@ package ca326.com.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,7 +39,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,12 +137,13 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         requestQueue = Volley.newRequestQueue(this);
         requestQueue2 = Volley.newRequestQueue(this);
 
-        //method to retrieve data from database
-        getData();
-
+        //method to retrieve profile picture from database
         fetchImage();
 
+        //method to retrieve profile data from database
         get_profile_data();
+        getData();
+
 
         //initializing our adapter with list of videos
         adapter = new ProfileCardAdapter(listVideos, this);
@@ -154,6 +153,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         recyclerView.setAdapter(adapter);
     }
 
+    // method for user to upload image from phone
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -459,7 +459,28 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
                 connection.connect();
                 InputStream input = connection.getInputStream();
                 bitmap = BitmapFactory.decodeStream(input);
-                return bitmap;
+
+                Bitmap roundedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(roundedBitmap);
+
+                final int color = 0xff424242;
+                final Paint paint = new Paint();
+                final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                final RectF rectF = new RectF(rect);
+                final float roundPx = 100;
+
+                paint.setAntiAlias(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(color);
+                canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(bitmap, rect, rect, paint);
+
+
+
+
+                return roundedBitmap;
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -471,7 +492,6 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
             try {
                 Drawable drawable = new BitmapDrawable(getResources(), bitmap);
                 profilePicture.setBackground(drawable);
-                Log.i("drawable","bbdddddddddddb is "+ bitmap);
 
             } catch (Exception e) {
                 e.printStackTrace();
