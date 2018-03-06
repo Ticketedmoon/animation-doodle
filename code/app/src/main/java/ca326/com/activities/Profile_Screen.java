@@ -1,5 +1,7 @@
 package ca326.com.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,8 +12,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,14 +36,21 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +63,7 @@ import static ca326.com.activities.ItemTwoFragment.user_id;
 public class Profile_Screen extends AppCompatActivity implements  ProfileCardAdapter.ItemClickListener {
 
     public static String deciding_string;
+    private Bitmap bitmap;
 
     private RelativeLayout drop_down_option_menu;
 
@@ -65,7 +77,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     public static TextView textViewAbout;
     public static TextView textView;
 
-    private ImageButton profilePicture;
+    private NetworkImageView profilePicture;
 
 
     private boolean menu_button = false;
@@ -90,6 +102,9 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private int pageCount = 1;
     public static int i = 0;
 
+    private Context context;
+    private ImageLoader loadImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +123,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        profilePicture = (ImageButton) findViewById(R.id.user_profile_photo);
+        profilePicture = (NetworkImageView) findViewById(R.id.user_profile_photo);
 
         //this sets up the users text data
         textViewAbout = (TextView) findViewById(R.id.textViewAbout);
@@ -126,6 +141,8 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
         //method to retrieve data from database
         getData();
+
+        fetchImage();
 
         get_profile_data();
 
@@ -174,14 +191,9 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         Log.i("bitmap","bitmap: " +bit);
         Bitmap background2 = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
 
-        // used to test if loading bitmap is working.It is.
-        //imageView.setImageBitmap(newBitmap);
-
-        // This method isn't working. Need to figure out whats wrong. Bitmap is loading properly, just not setting on the canvas
         Canvas canvas = new Canvas(background2.copy(Bitmap.Config.ARGB_8888, true));
 
         Drawable newDrawable = new BitmapDrawable(getResources(), background2);
-
         profilePicture.setBackground(newDrawable);
 
         //update database
@@ -264,8 +276,6 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
                 //Adding data to the video object
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
-                video.setName(json.getString("name"));
-                video.setDescription(json.getString("video description"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -365,6 +375,108 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         Intent intent = new Intent (Profile_Screen.this, Test_VideoPlayer.class);
         startActivity(intent);
 
+    }
+
+
+    private void fetchImage() {
+        //Adding the method to the queue by calling the method getVideoFromDB
+        pageCount=1;
+        requestQueue.add(getImageFromDB(pageCount));
+        //Incrementing the page count
+        pageCount++;
+    }
+
+    private JsonArrayRequest getImageFromDB(int pageCount) {
+        //Initializing ProgressBar
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        //Displaying Progressbar
+        progressBar.setVisibility(View.VISIBLE);
+        setProgressBarIndeterminateVisibility(true);
+        System.out.println("user_id is " + user_id);
+        // System.out.println("shared  " + mSharedPreference.getAll());
+
+
+        //set up jsonArrayRequest as the data retrieved using PHP script will be in a list format
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://animationdoodle2017.com/fetchImage.php?id=" + String.valueOf(user_id),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        parseImageData(response);
+                        progressBar.setVisibility(View.GONE);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
+                        //If an error occurs means no more videos on db to load
+                        Toast.makeText(Profile_Screen.this, "No More Items Available", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        //Returning the request
+        return jsonArrayRequest;
+    }
+
+
+
+    //used to parse the json data returned by the php script
+    private void parseImageData(JSONArray array) {
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject json = null;
+            Log.i("drawable","is "+ json);
+            try {
+                //Getting json
+                json = array.getJSONObject(i);
+
+                //Adding data to the video object
+                String image = (json.getString("image"));
+                Log.i("drawable","bbb is "+ image);
+                new imageLoad(this).execute(image);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public class imageLoad extends AsyncTask<String, Void, Bitmap> {
+
+        Activity instance;
+        public imageLoad(Activity instance) {
+            this.instance = instance;
+        }
+        @Override
+        protected Bitmap doInBackground(String... src) {
+            Bitmap bitmap = null;
+            try {
+                URL url = new URL(src[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                bitmap = BitmapFactory.decodeStream(input);
+                return bitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            try {
+                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                profilePicture.setBackground(drawable);
+                Log.i("drawable","bbdddddddddddb is "+ bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

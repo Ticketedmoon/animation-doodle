@@ -41,6 +41,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.devbrackets.android:exomedia:4.1.0'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
+
+
 
     // GitHub Libraries we are using (compile):
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
