@@ -750,6 +750,36 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    private void build_local_directories() {
+        verifyStoragePermissions(this);
+
+        // BASE DIRECTORY
+        File baseDirectory = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
+        if(!baseDirectory.exists()){
+            baseDirectory.mkdirs();
+        }
+
+        // IMPORTABLE BACKGROUNDS DIRECTORY
+        File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        // TEMP IMAGE HOLDERS (USED TO ENCODE VIDEO) DIRECTORY
+        File tempDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Temp");
+        if (!tempDirectory.exists()) {
+            tempDirectory.mkdirs();
+        }
+
+        // ANIMATIONS DIRECTORY
+        File animationDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Animations");
+        if (!animationDirectory.exists()) {
+            animationDirectory.mkdirs();
+        }
+
+        Log.i("Building...", "Directories Built");
+    }
+
     public void restart_animation(View v) {
         // Clear both pathways & frames
         Log.i("Restart Animation", "frames: " + frames.size());
@@ -1063,6 +1093,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        // Build necessary directories
+                        build_local_directories();
+
                         Log.d("MaterialStyledDialogs", "Accept Button Pushed!");
                         ANIMATION_TITLE = customText.getText().toString();
 

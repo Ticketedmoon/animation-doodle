@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
-import java.io.File;
 
 public class Main_Menu_Screen extends AppCompatActivity {
 
@@ -29,9 +26,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.fragment_layout_main);
-
-        // Build necessary directories
-        build_local_directories();
 
         // Start Fragment Operations
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
@@ -76,35 +70,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
         transaction.commit();
-    }
-
-    private void build_local_directories() {
-
-        // BASE DIRECTORY
-        File baseDirectory = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle");
-        if(!baseDirectory.exists()){
-            baseDirectory.mkdirs();
-        }
-
-        // IMPORTABLE BACKGROUNDS DIRECTORY
-        File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
-        if(!file.exists()){
-            file.mkdirs();
-        }
-
-        // TEMP IMAGE HOLDERS (USED TO ENCODE VIDEO) DIRECTORY
-        File tempDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Temp");
-        if (!tempDirectory.exists()) {
-            tempDirectory.mkdirs();
-        }
-
-        // ANIMATIONS DIRECTORY
-        File animationDirectory = new File(Environment.getExternalStorageDirectory(), "AnimationDoodle/Animations");
-        if (!animationDirectory.exists()) {
-            animationDirectory.mkdirs();
-        }
-
-        Log.i("Building...", "Directories Built");
     }
 
     public void goToDrawingScreen(View v) {
