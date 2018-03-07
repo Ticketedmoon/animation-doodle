@@ -25,6 +25,8 @@ public class CanvasView extends View {
     private Canvas mCanvas;
 
     public Path mPath;
+    public static boolean settings_onion_skin = true;
+
     Context context;
     AttributeSet attrbs;
 
@@ -62,7 +64,7 @@ public class CanvasView extends View {
         for(int i = 0; i < newPaths.size(); i++) {
             canvas.drawPath(newPaths.get(i).first, newPaths.get(i).second);
         }
-        if (shouldShowOnionSkin)
+        if (shouldShowOnionSkin && settings_onion_skin)
             for(int i = 0; i < onionPaths.size(); i++) {
                 canvas.drawPath(onionPaths.get(i).first, onionPaths.get(i).second);
             }

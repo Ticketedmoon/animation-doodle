@@ -247,6 +247,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             }, 1000);
         }
         background.setText("Set Background");
+
+        // Log settings tab by user for modifications
+        Log.i("Settings: ", "Onion Skin Visibility? -- " + canvasView.settings_onion_skin);
     }
 
     // MAINTAIN / SAVE TIMELINE AFTER LEAVING ACTIVITY

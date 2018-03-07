@@ -1,7 +1,7 @@
 <resources>
     <!-- Main Menu Buttons -->
     <string name="canvas_draw">Draw On Canvas</string>
-    <string name="blockly_draw">Draw with Blockly</string>
+    <string name="about_draw">About</string>
 
     <string name="app_name">Animation Doodle</string>
     <string name="action_settings">Settings</string>
