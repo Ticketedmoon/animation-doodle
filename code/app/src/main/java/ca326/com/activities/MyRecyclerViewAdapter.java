@@ -52,6 +52,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         if (position != adapterPosition) {
             holder.myView.setBackgroundResource(res);
         }
+        else if(adapterPosition == 100){
+            holder.myView.setBackgroundResource(res);
+        }
         else{
             holder.myView.setBackground(myDrawable);
         }

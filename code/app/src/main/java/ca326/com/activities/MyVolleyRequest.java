@@ -20,6 +20,8 @@ public class MyVolleyRequest {
     private RequestQueue queueRequest;
     private ImageLoader loadImage;
 
+
+    // This will retrieve each image in the database and get the url
     private MyVolleyRequest(Context context) {
         this.context = context;
         this.queueRequest = getRequestQueue();

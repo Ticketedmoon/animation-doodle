@@ -149,7 +149,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     public static Map<Integer, Drawable> drawables = new HashMap<>();
 
-    public static Integer adapterPosition = 20;
+    public static Integer adapterPosition = 200;
     public static boolean set = false;
     public static boolean set2 = true;
 
@@ -311,9 +311,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     private void change_current_frame(int position, int correct_onion_frame) {
         // Destroy previous onion cache
         this.canvasView.onionPaths.clear();
-
-        newDrawable = drawables.get(position);
-        this.canvasView2.setBackground(newDrawable);
+        if (background.getText().equals("Remove Background")) {
+            this.canvasView2.setBackground(newDrawable);
+        }
+        else{
+            this.canvasView2.setBackground(null);
+        }
 
         // Add Onion Layering Functionality (Transparent previous frame, don't include in actual drawing)
         this.pathways.put(this.pos, this.canvasView.newPaths);
@@ -331,23 +334,24 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Hide Onion layer in bitmap frames
         canvasView.shouldShowOnionSkin = false;
-
-        this.canvasView.setDrawingCacheEnabled(true);
-        bitmap = this.canvasView.getDrawingCache();
-        adapterPosition = position;
-        myDrawable = new BitmapDrawable(getResources(), bitmap);
-        adjust_timeline();
+        if (!temp) {
+            this.canvasView.setDrawingCacheEnabled(true);
+            bitmap = this.canvasView.getDrawingCache();
+            adapterPosition = position;
+            myDrawable = new BitmapDrawable(getResources(), bitmap);
+            adjust_timeline();
+        }
+        else{
+            adapterPosition = 100;
+            adapterPosition = position;
+            myDrawable = new BitmapDrawable(getResources(), bitmap);
+            adjust_timeline();
+            adapterPosition = 99;
+        }
         i++;
 
         this.pos = position;
 
-        if (drawables.get(this.pos) == null) {
-            Log.i("drawables","is "+ drawables.get(this.pos));
-            background.setText("Set Background");
-        }
-        else{
-            background.setText("Remove Background");
-        }
 
     }
 
@@ -462,7 +466,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             canvasView.shouldShowOnionSkin = true;
             outputStream.close();
 
-            Toast.makeText(this, "Background Saved!\n(/AnimationDoodle/Backgrounds", Toast.LENGTH_SHORT).show();
+           Toast toast = Toast.makeText(this, "Background Saved!", Toast.LENGTH_SHORT);
+           toast.setGravity(Gravity.CENTER, 0, 0);
+           toast.show();
 
         } catch(Exception e){
             e.printStackTrace();
@@ -923,6 +929,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
     }
 
+    //method called when background is to be set
+
+
     public void chooseImage(View v){
         if (background.getText().equals("Set Background")) {
             set = true;
@@ -939,14 +948,17 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             remove_background();
         }
     }
+
     public void remove_background(){
-        this.canvasView2.setBackground(null);
-        drawables.put(this.pos,null);
+        this.canvasView2.setBackgroundColor(Color.WHITE);
+        drawables.put(0,null);
         this.canvasView2.invalidate();
         background.setText("Set Background");
+        temp=true;
     }
 
     public void set_background(String backpath) {
+        temp = false;
 
         Log.i("file2","file " + backgroundPath);
         String newBackground = backpath;
@@ -966,21 +978,12 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         newDrawable = new BitmapDrawable(getResources(), newBitmap);
         Log.i("set","set is " + set);
-        if (drawables.get(this.pos) == null) {
-            this.canvasView2.setBackground(newDrawable);
-            drawables.put(this.pos,newDrawable);
-            //set2=false;
-        }
-        else{
-            this.canvasView.newPaths = this.pathways.get(this.pos);
-            this.canvasView2.setBackground(null);
+        this.canvasView2.setBackground(newDrawable);
+        drawables.put(0,newDrawable);
 
-        }
 
         this.canvasView2.invalidate();
         background.setText("Remove Background");
-        Log.i("canvas","1 is " + canvasView.newPaths.size());
-        Log.i("canvas","1 is " + canvasView.newPaths.size());
     }
 
     public  List<Pair<Path, Paint>> get_onion_skin(int correct_onion_frame) {
