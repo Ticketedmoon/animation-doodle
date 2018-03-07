@@ -42,11 +42,10 @@ dependencies {
     compile 'com.devbrackets.android:exomedia:4.1.0'
     compile 'com.android.support:animated-vector-drawable:26.2.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
-    compile 'de.hdodenhof:circleimageview:1.2.1'
-
-
 
     // GitHub Libraries we are using (compile):
+    compile 'de.hdodenhof:circleimageview:1.2.1'
+
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile 'com.github.bq:markerseekbar:v0.9'
     compile 'com.writingminds:FFmpegAndroid:0.3.2'
@@ -63,11 +62,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:support-v4:26.1.0'
 
-    // BLOCKLY
-    compile 'com.android.support:appcompat-v7:26.0.1'
-    compile 'com.android.support:recyclerview-v7:26.0.1'
-    compile 'com.android.support:support-v4:26.0.1'
-    compile 'com.google.blockly.android:blocklylib-vertical:0.9-beta.20171003'
+    // Settings Tab
 
 }
 

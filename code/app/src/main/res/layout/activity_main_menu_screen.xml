@@ -48,16 +48,16 @@
             android:textStyle="normal|bold" />
 
         <Button
-            android:id="@+id/blockly"
+            android:id="@+id/settings"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="145dp"
+            android:layout_alignStart="@+id/drawing_menu"
+            android:layout_below="@+id/drawing_menu"
+            android:layout_marginTop="52dp"
             android:background="@drawable/main_menu_btn_colour"
             android:fontFamily="monospace"
-            android:onClick="goToBlocklyScreen"
-            android:text="@string/blockly_draw"
+            android:onClick="goToSettingsScreen"
+            android:text="@string/app_settings"
             android:textColor="@color/colorWhite"
             android:textSize="11dp"
             android:textStyle="normal|bold" />

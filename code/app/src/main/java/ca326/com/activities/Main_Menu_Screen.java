@@ -27,6 +27,10 @@ public class Main_Menu_Screen extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.fragment_layout_main);
 
+        // Change status bar (Transparent -> looks better)
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        //        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         // Start Fragment Operations
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -80,9 +84,9 @@ public class Main_Menu_Screen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToBlocklyScreen(View v) {
-        Log.i("Button BLOCKLY", "Pressed");
-        Intent intent = new Intent(Main_Menu_Screen.this, BlocklyActivity.class);
+    public void goToSettingsScreen(View v) {
+        Log.i("Button Settings", "Pressed");
+        Intent intent = new Intent(Main_Menu_Screen.this, Settings_Screen.class);
         startActivity(intent);
     }
 

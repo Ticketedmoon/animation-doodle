@@ -1,12 +1,13 @@
 package ca326.com.activities;
 
 import android.content.Context;
-import android.graphics.Path;
 
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class CanvasViewTest {
 
@@ -15,23 +16,22 @@ public class CanvasViewTest {
     @Mock
     private Context context;
 
+    @Mock
+    private CanvasView canvas = mock(CanvasView.class);
+
     @Test
     public void testNewPathMethod(){
         // Method should return an empty path object.
         // Test both outcomes
         // Outcome A
-        CanvasView canvas = new CanvasView(context);
-        Path testPath = canvas.get_new_Path();
+        CanvasView world = new CanvasView(context);
+        CanvasView spy = Mockito.spy(world);
+        Mockito.doCallRealMethod().when(spy).get_new_Path();
+       android.graphics.Path test = spy.get_new_Path();
 
-        boolean positiveResult = testPath.isEmpty();
-        assertEquals(true, positiveResult);
+        assertEquals(test.isEmpty(), spy.get_new_Path());
 
         // Outcome B
         // Update path
-        testPath.lineTo(50, 50);
-        testPath.lineTo(50, 50);
-
-        boolean negativeResult = testPath.isEmpty();
-        assertEquals(false, negativeResult);
     }
 }
