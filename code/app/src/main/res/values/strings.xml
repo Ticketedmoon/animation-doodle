@@ -1,6 +1,6 @@
 <resources>
     <!-- Main Menu Buttons -->
-    <string name="canvas_draw">Draw On Canvas</string>
+    <string name="canvas_draw">Start Drawing</string>
 
     <string name="app_name">Animation Doodle</string>
     <string name="app_settings">Settings</string>

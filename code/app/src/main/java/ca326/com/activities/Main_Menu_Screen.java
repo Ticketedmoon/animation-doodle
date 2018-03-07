@@ -27,10 +27,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.fragment_layout_main);
 
-        // Change status bar (Transparent -> looks better)
-        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-        //        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
         // Start Fragment Operations
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -76,7 +72,6 @@ public class Main_Menu_Screen extends AppCompatActivity {
         transaction.commit();
 
     }
-
 
     public void goToDrawingScreen(View v) {
         Log.i("Button", "Pressed");
