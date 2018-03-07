@@ -57,7 +57,7 @@
             android:background="@drawable/main_menu_btn_colour"
             android:fontFamily="monospace"
             android:onClick="goToSettingsScreen"
-            android:text="@string/about_draw"
+            android:text="@string/app_settings"
             android:textColor="@color/colorWhite"
             android:textSize="11dp"
             android:textStyle="normal|bold" />
