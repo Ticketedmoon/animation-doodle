@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
 public class Main_Menu_Screen extends AppCompatActivity {
 
@@ -29,8 +28,8 @@ public class Main_Menu_Screen extends AppCompatActivity {
         setContentView(R.layout.fragment_layout_main);
 
         // Change status bar (Transparent -> looks better)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        //        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Start Fragment Operations
         BottomNavigationView bottomNavigationView = (BottomNavigationView)

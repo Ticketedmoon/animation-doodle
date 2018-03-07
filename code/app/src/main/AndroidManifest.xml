@@ -31,7 +31,7 @@
             android:name=".Top_Rated_Screen"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/topRated"/>
 
         <activity
             android:name=".Sign_In_Screen"
@@ -46,7 +46,7 @@
         <activity
             android:name=".Start_Drawing_Screen"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Intro_Animation_Transition_Screen"

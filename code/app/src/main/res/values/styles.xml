@@ -16,6 +16,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="topRated" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/nice_grey</item>
+        <item name="android:statusBarColor">@color/nice_grey</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
