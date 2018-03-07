@@ -74,6 +74,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     private ProfileCardAdapter adapter;
     public static TextView textViewAbout;
     public static TextView textView;
+    public static TextView picture;
 
     private NetworkImageView profilePicture;
 
@@ -122,6 +123,8 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         recyclerView.setHasFixedSize(true);
 
         profilePicture = (NetworkImageView) findViewById(R.id.user_profile_photo);
+        picture = (TextView) findViewById(R.id.changePicture);
+        picture.setVisibility(View.VISIBLE);
 
         //this sets up the users text data
         textViewAbout = (TextView) findViewById(R.id.textViewAbout);
@@ -200,6 +203,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         ImageUpload upload = new ImageUpload(this);
         Log.i("file","is " + imagePath);
         upload.execute(imagePath);
+        picture.setVisibility(View.INVISIBLE);
 
     }
 
@@ -387,12 +391,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
     }
 
     private JsonArrayRequest getImageFromDB(int pageCount) {
-        //Initializing ProgressBar
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        //Displaying Progressbar
-        progressBar.setVisibility(View.VISIBLE);
-        setProgressBarIndeterminateVisibility(true);
         System.out.println("user_id is " + user_id);
         // System.out.println("shared  " + mSharedPreference.getAll());
 
@@ -404,13 +403,13 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
                     public void onResponse(JSONArray response) {
 
                         parseImageData(response);
-                        progressBar.setVisibility(View.GONE);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressBar.setVisibility(View.GONE);
+
                         //If an error occurs means no more videos on db to load
                         Toast.makeText(Profile_Screen.this, "No More Items Available", Toast.LENGTH_SHORT).show();
                     }
@@ -433,6 +432,9 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
                 //Adding data to the video object
                 String image = (json.getString("image"));
+                if (image.equals("null")){
+                    return;
+                }
                 Log.i("drawable","bbb is "+ image);
                 new imageLoad(this).execute(image);
 
@@ -461,6 +463,7 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
                 bitmap = BitmapFactory.decodeStream(input);
 
                 Bitmap roundedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
                 Canvas canvas = new Canvas(roundedBitmap);
 
                 final int color = 0xff424242;
@@ -491,8 +494,9 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         protected void onPostExecute(Bitmap bitmap) {
             try {
                 Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                profilePicture.setBackground(drawable);
-
+                Log.i("draw","is " + drawable);
+                    profilePicture.setBackground(drawable);
+                    picture.setVisibility(View.INVISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
