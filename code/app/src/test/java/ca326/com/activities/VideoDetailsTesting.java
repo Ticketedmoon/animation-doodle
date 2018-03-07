@@ -29,5 +29,8 @@ public class VideoDetailsTesting {
         assertEquals(1.0f,rating,0.0002);
 
         assertNotNull(video.getVideoUrl());
+
+        video.setVideoUrl(null);
+        assertNull(video.getVideoUrl());
     }
 }
