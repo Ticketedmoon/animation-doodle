@@ -33,7 +33,10 @@
    -  View Animations
    -  Rate Animations
 
-**6. Logout**
+**6. Settings**
+   - Change Settings
+
+**7. Logout**
   - Logout
 
 **1. About Animation Doodle**
@@ -248,7 +251,14 @@ their ratings
  - To give an animation a rating, use the rating bar at the bottom of each video and
 press the Star icon to submit your rating of that animation.
 
-**6. Logout**
+**6. Settings**
+
+*Change onion skinning on/off*
+
+ - While on the home screen, a user can choose to turn off the onion skinning feature. By default, this feature is turned on.
+
+
+**7. Logout**
 
 *Logout*
 

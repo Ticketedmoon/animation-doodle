@@ -17,7 +17,7 @@
 
 
 
-## 1. Use Case Testing**
+## 1. Use Case Testing
 
 
 ![](media/use_case.png)
@@ -130,7 +130,7 @@
 
 
 
-*How did this animation app compare to any other similar apps you may have used ?**
+**How did this animation app compare to any other similar apps you may have used ?**
 
 
  - Better laid out than other drawing apps i’ve used.
