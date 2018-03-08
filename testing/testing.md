@@ -178,6 +178,11 @@
 
 ## 3. Unit Testing
 
+*Uri bug*
+
+During our unit testing we found an important bug related when our video url links were being stored in the database. Certain videos weren't playing properly due to Uri parsing issues.
+
+![](media/unitTest.png)
 
 ## 5. Heuristic Testing
 

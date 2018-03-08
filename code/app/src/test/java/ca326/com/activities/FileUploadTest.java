@@ -18,18 +18,20 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 @RunWith(PowerMockRunner.class)
 public class FileUploadTest {
-
-
-
-    @PrepareForTest({Uri.class})
+    @PrepareForTest({Canvas.class})
     @Test
     public void uploadFileTest() {
-        FileUpload file = new FileUpload();
+        PowerMockito.mockStatic(Canvas.class);
         Profile_Screen screen = new Profile_Screen();
         String image = "/storage/emulated/0/DCIM/Camera/IMG_20180307_153933.jpg";
-        //canvas = screen.setImage(image);
-       // assertEquals(null,canvas);
+        Canvas canvas = mock(Canvas.class);
+        canvas = screen.setImage(image);
+        assertEquals(null, canvas);
+    }
 
+        @PrepareForTest({Uri.class})
+        @Test
+        public void uriTest() {
         PowerMockito.mockStatic(Uri.class);
         Uri uri = mock(Uri.class);
         try {
@@ -41,6 +43,8 @@ public class FileUploadTest {
         String video_url = "http://animationdoodle2017.com/videos/uploads/NewAnimation.mp4";
         uri = testing.check_video_url(video_url);
         assertNotEquals(null,uri);
+
+
 
     }
 }
