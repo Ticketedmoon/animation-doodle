@@ -201,26 +201,26 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
         rating_counter = video.getRatingCounter();
         number = video.getRating();
         averageRating = (number * rating_counter);
-        Log.i("rating value","value is " + rateValue);
-        changeRating(rateValue);
+        Float ratingInt = null;
+        changeRating(rateValue,ratingInt,averageRating,rating_counter);
 
     }
 
-    public void changeRating(String rateValue){
-        Float ratingInt;
+    public Float changeRating(String rateValue,Float ratingInt, Float averageRating,Integer rating_counter){
         rating_counter ++;
-        Log.i("rating value","average2 is " + averageRating);
         if (!rateValue.equals("0.0")){
             ratingInt = (averageRating + Float.parseFloat(rateValue)) / rating_counter;
-            Log.i("rating value","new rating is " + ratingInt);
         }
         else {
             ratingInt = averageRating / rating_counter;
-            Log.i("rating value","new rating 2 is " + ratingInt);
         }
+
+
         //insert ratingInt into the rating column in database
 
         new ItemThreeFragment.updateRatingValue(getActivity()).execute(ratingInt);
+
+        return ratingInt;
 
     }
 
