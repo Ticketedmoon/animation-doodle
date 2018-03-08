@@ -1,13 +1,14 @@
 package ca326.com.activities;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.util.Pair;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
 
 public class CanvasViewTest {
 
@@ -16,22 +17,25 @@ public class CanvasViewTest {
     @Mock
     private Context context;
 
-    @Mock
-    private CanvasView canvas = mock(CanvasView.class);
-
     @Test
-    public void testNewPathMethod(){
-        // Method should return an empty path object.
-        // Test both outcomes
-        // Outcome A
-        CanvasView world = new CanvasView(context);
-        CanvasView spy = Mockito.spy(world);
-        Mockito.doCallRealMethod().when(spy).get_new_Path();
-       android.graphics.Path test = spy.get_new_Path();
+    public void testClearCanvas() throws Exception {
 
-        assertEquals(test.isEmpty(), spy.get_new_Path());
+        // This test method will check the clear button's functionality.
+        // We will carry out two tests
+        // The first being that the canvas correctly has items in it.
 
-        // Outcome B
-        // Update path
+        CanvasView canvas = new CanvasView(context);
+        canvas.newPaths.add(new Pair<Path, Paint>(new Path(), new Paint()));
+        canvas.newPaths.add(new Pair<Path, Paint>(new Path(), new Paint()));
+        boolean checkBefore = canvas.newPaths.size() > 0;
+        assertEquals(true, checkBefore);
+
+        // The second test being that once we call the clear method, all items will be removed
+        // Thus the size() should be == 1 since we add a pathway in after clearing.
+        // test call clear
+        canvas.clearCanvas();
+        boolean isEmpty = canvas.newPaths.size() == 1;
+        assertEquals(true, isEmpty);
+
     }
 }
