@@ -188,10 +188,10 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
         return path;
     }
 
-    public void setImage(String imagePath){
+    public Canvas setImage(String imagePath){
         File file2 = new File(imagePath);
         BitmapFactory.Options bit = new BitmapFactory.Options();
-        Log.i("bitmap","bitmap: " +bit);
+        //Log.i("bitmap","bitmap: " +bit);
         Bitmap background2 = BitmapFactory.decodeFile(file2.getAbsolutePath(),bit);
 
         Canvas canvas = new Canvas(background2.copy(Bitmap.Config.ARGB_8888, true));
@@ -201,9 +201,10 @@ public class Profile_Screen extends AppCompatActivity implements  ProfileCardAda
 
         //update database
         ImageUpload upload = new ImageUpload(this);
-        Log.i("file","is " + imagePath);
+        //Log.i("file","is " + imagePath);
         upload.execute(imagePath);
         picture.setVisibility(View.INVISIBLE);
+        return canvas;
 
     }
 

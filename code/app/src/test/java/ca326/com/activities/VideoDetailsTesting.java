@@ -1,5 +1,7 @@
 package ca326.com.activities;
 
+import android.net.Uri;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -29,5 +31,9 @@ public class VideoDetailsTesting {
         assertEquals(1.0f,rating,0.0002);
 
         assertNotNull(video.getVideoUrl());
+
+        video.setVideoUrl(null);
+        assertNull(video.getVideoUrl());
+
     }
 }

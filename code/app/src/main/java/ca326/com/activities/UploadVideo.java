@@ -97,8 +97,6 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     System.out.println("file is " + imagePath);
                     String msg = upload.uploadFile(imagePath);
                     String msg2 = upload.uploadFile(videoPath);
-                    //delete file from phone as its now on the server
-                    //not sure if this is working or not, need to check later
 
                     //you need to strip imagePath and videoPath to only their name + file extension
                     /// http://animationdoodle2017.com/videos/uploads/testing.mp4

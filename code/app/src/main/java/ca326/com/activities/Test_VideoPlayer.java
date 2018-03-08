@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.VideoView;
 
+import java.net.URL;
+
 import static ca326.com.activities.Profile_Screen.deciding_string;
 import static ca326.com.activities.Profile_Screen.position2;
 import static ca326.com.activities.ItemThreeFragment.position;
@@ -34,6 +36,7 @@ public class Test_VideoPlayer extends AppCompatActivity {
         }
         System.out.println("position :"+ position2 + "  " + video.getVideoUrl());
         String url = video.getVideoUrl();
+        check_video_url(url);
         Log.i("video","video url 111 is " + url);
         url = url.replace(" ", "%20");
         Log.i("video","video url is " + url);
@@ -52,6 +55,11 @@ public class Test_VideoPlayer extends AppCompatActivity {
                 mp.setLooping(true);
             }
         });
+    }
+
+    public Uri check_video_url(String url){
+        Uri result = Uri.parse(url);
+        return result;
     }
 
 }
