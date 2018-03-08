@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>20</y>
+      <w>140</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=green
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>20</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Channels
+bg=blue
+layer=3
+valign=center
+fontsize=14
+fg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>210</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>User
+fg=white
+bg=blue
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>20</y>
+      <w>140</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=green
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>20</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Services
+bg=blue
+layer=3
+valign=center
+fontsize=14
+fg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>130</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Android 
+Mobile Device
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>280</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Android 
+Tablet Device
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>20</y>
+      <w>140</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=green
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>20</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Resources
+bg=blue
+layer=3
+valign=center
+fontsize=14
+fg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>20</y>
+      <w>140</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=green
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>20</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Services
+bg=blue
+layer=3
+valign=center
+fontsize=14
+fg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>80</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Create + Design
+Animations
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>140</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Create Painted
+Backgrounds
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>200</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Upload Animation
+to public DB
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>260</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Upload Animation
+to profile
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>320</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Download
+Animation Locally
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>380</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>View other users
+public animations
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>360</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Android SDK
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>80</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FFmpeg
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>220</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>AwesomeSplash
+Library
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>150</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Ambilwarna -
+Colour Picker
+Library
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>290</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>nikoyuwono - 
+toolbar-panel
+fg=white
+bg=blue
+valign=center
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>180</x>
+      <y>230</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+fg=blue</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>230</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+fg=blue</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>230</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+fg=blue</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
