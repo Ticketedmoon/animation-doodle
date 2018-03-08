@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         applicationId "ca326.com.activities"
-        minSdkVersion 23
-        targetSdkVersion 26
+        minSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
 
