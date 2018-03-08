@@ -15,20 +15,30 @@
 
 
 
+
+
 **1. Use Case Testing**
 
+
 ![](media/use_case.png)
+
+
 
 
 **2. Usability Testing**
 
 
+
 *Questionnaire*
+
+
 
 ![](media/questionnaire.png)
 
 
 *Questionnaire follow up questions*
+
+
 
 ![](media/questionnaire2.png)
 
@@ -38,21 +48,28 @@
 
 *Question 1*
 
+
 ![](media/bar_chart1.png)
+
 
  - The majority of users found the app easy to use and were able to intuitively use the features and buttons.
 
 
 *Question 2*
 
+
 ![](media/bar_chart2.png)
 
+
  - As you can see the majority of users were able to intuitively work out what each feature did. One user though struggled to find where the play button was located. We have subsequently moved it to a more prominent position on the screen.
+
 
 *Question 3*
 
 
+
 ![](media/bar_chart3.png)
+
 
  - All users were happy with the automatic nature of the onion skinning process.
 
@@ -61,14 +78,18 @@
 
 *Question 4*
 
+
 ![](media/bar_chart4.png)
+
 
  - Most users found it comfortable with the design of the app and  where able to move fluidly between screens
 
 
 *Question 5*
 
+
 ![](media/bar_chart5.png)
+
 
  - Almost all users would use the app again.
 
@@ -76,7 +97,9 @@
 
 *Question 6*
 
+
 ![](media/bar_chart6.png)
+
 
  - Almost all users would recommend this app to a friend.
 
@@ -84,7 +107,9 @@
 *Questionnaire follow up responses*
 
 
+
 *Would you prefer an eraser feature to remove errors or did you like the undo button we had ?*
+
 
  - No, I thought the undo button worked well
 
@@ -107,6 +132,7 @@
 
 *How did this animation app compare to any other similar apps you may have used ?*
 
+
  - Better laid out than other drawing apps i’ve used.
 
  - Less clunky than others. Onion skinning feature was very nice and helpful.
@@ -122,6 +148,7 @@
 
 *Which features were you impressed with the most ?*
 
+
  - Onion Skinning
 
  - Public Animations page.
@@ -134,7 +161,9 @@
 
  - Onion Skinning
 
+
 *Are there any features you would have liked to have been included ?*
+
 
  - Drag and drop objects in the drawing
 
@@ -149,19 +178,26 @@
 
 **3. Unit Testing**
 
+
 **4. Instrumented Testing**
+
+
 
 **5. Heuristic Testing**
 
+
 We are using Schneiderman's 8 golden rules to help guide us through the design of our application.
 
+
 *Strive for consistency*
+
 
 We have ensured that the design and layout of our app remains consistent throughout. We have used consistent colouring throughout all screens in the app.
 
 
 
 *Offer informative feedback*
+
 
 We offer informative feedback to users when they input incorrect data in the login fields.  As you can see in the pictures below, when a user inputs an incorrect email or password input. This helps the user to see where they are going wrong and to correct it. 
 
@@ -172,7 +208,9 @@ We offer informative feedback to users when they input incorrect data in the log
 
 *Design dialogs to yield closure* 
 
+
 When a user completes a task the app relays the result of the command to the user. This enables the user with the confidence and knowledge that their task was completed. They are no longer wondering if their actions were received or not. An example of this can be seen when a user logs in , uploads an animation.
+
 
 ![](media/closure.png)
 
