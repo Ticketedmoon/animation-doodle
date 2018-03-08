@@ -14,11 +14,10 @@
 **5. Heuristic Testing**
 
 
-![](media/use_case.png)
 
 **1. Use Case Testing**
 
-
+![](media/use_case.png)
 
 
 **2. Usability Testing**
@@ -28,9 +27,13 @@
 
 ![](media/questionnaire.png)
 
+
+*Questionnaire follow up questions*
+
 ![](media/questionnaire2.png)
 
-Questionnaire Responses
+
+*Questionnaire Responses*
 
 
 *Question 1*
@@ -78,7 +81,8 @@ Questionnaire Responses
  - Almost all users would recommend this app to a friend.
 
 
-*User Response Questions*
+*Questionnaire follow up responses*
+
 
 *Would you prefer an eraser feature to remove errors or did you like the undo button we had ?*
 
