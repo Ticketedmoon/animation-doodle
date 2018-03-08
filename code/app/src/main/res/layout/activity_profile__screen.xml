@@ -144,13 +144,13 @@
             android:layout_alignParentTop="true"
             android:background="@color/colorWhite"
             android:clickable="true"
-            android:elevation="4dp"
+            android:elevation="40dp"
             android:paddingLeft="4dp"
             android:focusable="false"
             android:imeOptions="actionDone"
-            android:inputType="textNoSuggestions|textMultiLine"
+            android:inputType="textNoSuggestions|textMultiLine|textFilter"
             android:onClick="about"
-            android:paddingBottom="100dp"
+            android:paddingBottom="115dp"
             android:textColor="@color/colorBlack" />
 
         <EditText
@@ -161,11 +161,11 @@
             android:layout_alignParentTop="true"
             android:background="@color/colorWhite"
             android:clickable="true"
-            android:elevation="4dp"
+            android:elevation="40dp"
             android:focusable="false"
-            android:inputType="textNoSuggestions|textMultiLine"
+            android:inputType="textNoSuggestions|textMultiLine|textFilter"
             android:onClick="appIdeas"
-            android:paddingBottom="90dp"
+            android:paddingBottom="12dp"
             android:paddingLeft="20dp"
             android:textColor="@color/colorBlack" />
 

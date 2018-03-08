@@ -37,7 +37,7 @@
             android:name=".Sign_In_Screen"
             android:label="@string/title_activity_sign__in__screen"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="stateVisible|adjustPan|adjustNothing" />
 
         <meta-data
             android:name="preloaded_fonts"
