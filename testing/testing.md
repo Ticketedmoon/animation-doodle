@@ -17,7 +17,7 @@
 
 
 
-**1. Use Case Testing**
+## 1. Use Case Testing**
 
 
 ![](media/use_case.png)
@@ -25,7 +25,7 @@
 
 
 
-**2. Usability Testing**
+## 2. Usability Testing
 
 
 
@@ -176,14 +176,10 @@
  - A feature that makes the paint brush turn charcoal
 
 
-**3. Unit Testing**
+## 3. Unit Testing
 
 
-**4. Instrumented Testing**
-
-
-
-**5. Heuristic Testing**
+## 5. Heuristic Testing
 
 
 We are using Schneiderman's 8 golden rules to help guide us through the design of our application.
