@@ -66,6 +66,13 @@ public class VideoDetailsTesting {
         ratingValue = screen.changeRating(newRating,ratingInt,averageRating,rating_counter);
         assertEquals(3.0,ratingValue,0.00000);
 
+        newVideo.setRating(5.0f);
+        averageRating = newVideo.getRating();
+        rating_counter = 1;
+        newRating = "0.0";
+        ratingValue = screen.changeRating(newRating,ratingInt,averageRating,rating_counter);
+        assertEquals(5.0,ratingValue,0.00000);
+
         videos = new ArrayList<>();
         videos.add(newVideo);
 

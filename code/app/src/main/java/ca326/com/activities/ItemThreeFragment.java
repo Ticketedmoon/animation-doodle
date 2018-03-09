@@ -136,7 +136,6 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
                         parseData(response);
                         progressBar.setVisibility(View.GONE);
                     }
@@ -165,6 +164,8 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
 
     //used to parse the json data returned by the php script
     private void parseData(JSONArray array) {
+        Log.i("json response","response is " + array);
+        //get each video from json list
         for (int i = 0; i < array.length(); i++) {
             //Creating the video object
             Video video = new Video();
@@ -216,8 +217,8 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
     }
 
     public Float changeRating(String rateValue,Float ratingInt, Float averageRating,Integer rating_counter){
-        rating_counter ++;
         if (!rateValue.equals("0.0")){
+            rating_counter ++;
             ratingInt = (averageRating + Float.parseFloat(rateValue)) / rating_counter;
         }
         else {

@@ -28,6 +28,16 @@
 ## 2. Usability Testing
 
 
+**1st Phase of user testing**
+
+During our first phase of user testing we found out a number of key issues which our users felt needed changing.
+
+One of them was how our "Set Background" was implemented. This feature initially just set the background of the frame the user was on when they selected this button. From our users responses we found that they felt that the background should be set for the entire animation, rathar than the user having to set the background for each frame automatically. This showed us how important user testing was going to be for our app, as we were still thinking of using features as software engineers rathar than how the user would interpret things.
+
+Another important point we learned from this phase of testing was where to position the play button. We initially had it hidden inside our menu bar on the top of the screen. We thought that this was a good idea as it freed up space on the page, but users found it a bit difficult to find the button. We have since moved the play button so it's visible on the screen.
+
+
+**Final Phase of user testing**
 
 **Questionnaire**
 
@@ -183,6 +193,15 @@
 During our unit testing we found an important bug related when our video url links were being stored in the database. Certain videos weren't playing properly due to Uri parsing issues.
 
 ![](media/unitTest.png)
+
+
+*Video rating bug*
+
+We also found a bug related to how the videos ratings were changing. When no rating took place our rating counter was stil being incremented. This was reducing the average of the video even though no rating had been given. This was dramatically reducing the rating of the video, and we couldnt understand why unti we had implemente the unit test for this feature. We then found and fixed the problem easily
+
+ 
+![](media/unitTest2.png)
+ 
 
 ## 5. Heuristic Testing
 
