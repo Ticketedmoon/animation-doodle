@@ -1,5 +1,8 @@
 ## Technical Specification
 
+
+![](media/title.png)
+
 ## Animation Doodle
 
 **By: Shane Creedon & James Collins**
@@ -122,7 +125,8 @@ move the preventative barrier to the core content of the application, that barri
 
 ### 2.1 - System Architecture
 
-image
+
+![](media/system.png)
 
 
 This is our original system architecture model. It shows the flow of information among the various properties of our system. Our android app interacts with our MYSQL database through PHP. This is an essential property to our system given we must store both user
@@ -150,6 +154,8 @@ them before uploading them to the database while maintaining a decent frame qual
 
 ### 2.2 - Architectural Overview Diagram
 
+![](media/architecture.png)
+
 The Architectural Overview diagram is an important diagram to show the key architectural
 model of a system. The above diagram is the architectural overview diagram of Animation
 Doodle and how exactly each of the columns interact with one another. We have a user who
@@ -164,6 +170,10 @@ array of bitmap images the user has drawn and converts them to a MP4 video file.
 
 ### 2.3 - System Components
 
+
+![](media/components.png)
+
+
 The above diagram is our old conceptual model. Our current model takes a similar approach
 but does not take advantage of the PHP Rest API. We simply query the database through using PHP and receive and parse the JSON response accordingly.
 
@@ -173,11 +183,17 @@ but does not take advantage of the PHP Rest API. We simply query the database th
 ### 3.1 - Original High Level Design Diagram
 
 
+![](media/highLevel.png)
+
+
 The design flow of this diagram is very simple to follow. The dotted arrows indicate a choice among entities and no absolute deterministic outcome. The original high level model was quickly revamped early into development when our project coordinator suggested we do not force the user to log in to utilise the apps main features.
 
 Instead, we let the user access the core functionality of the application but restrict some features involving database interaction to non-logged in users. This is exposed to a greater extent in the component model further down.
 
 ### 3.2 - Current High Level Design Diagram
+
+
+![](media/currentHighLevel.png)
 
 This is our current High Level Design Diagram. As you can see, a user does not need to log in to access the core functionality. Users upon simply launching the app can draw / animate, register / sign-in or even view public animations. They can Download their own animations locally but some features cannot be accessed as expressed above such as:
 
@@ -225,6 +241,9 @@ between profile and user.
 
 
 ### 3.4 - Component Model
+
+
+![](media/model.png)
 
 
 ‘Animation Doodle’s component model is showcased above. It shows the key
@@ -366,11 +385,11 @@ speed using a different library yet much more complex called FFmpeg.
 ```
  - Install Android Studio if not already.
  - Open Android Studio accordingly.
- -Create & Start your emulator. This can be done by:
-   -   ○ > Open Tools
+ - Create & Start your emulator. This can be done by:
+   - ○ > Open Tools
    - ○ > Android
- - ○ > AVD Manager
- - ○ > Create Virtual Device
+   - ○ > AVD Manager
+   - ○ > Create Virtual Device
  - Alternatively, you can connect your phone through a USB connection rather than
 open an emulator and continue on.
  -  Download the APK file linked to here on GitLab:
@@ -394,35 +413,26 @@ notification tray at the top of your devices screen.
 
 ## 6 - Resources / Libraries
 
-```
  -  Awesome Splash Animation Introduction
-(​https://github.com/ViksaaSkool/AwesomeSplash​)
-```
-```
+​https://github.com/ViksaaSkool/AwesomeSplash
+
  -  Marker SeekerBar
 (​https://github.com/bq/MarkerSeekBar​)
-```
-```
+
  - Writing Minds FFmpeg Library
 ​ ( ​ https://ffmpeg.org/ffmpeg.html)
-```
-```
+
  - Bottom Dialog Material Design Navigation Bar
 ​ ( ​ https://github.com/javiersantos/BottomDialogs)
-```
-```
+
  -  Nice Dialog Box Library
 (​https://github.com/javiersantos/MaterialStyledDialogs​)
-```
-```
+
  -  Fancy Gif Dialog Box Library
 (​https://github.com/Shashank02051997/FancyGifDialog-Android​)
-```
-```
+
  - Library to allow choice of paint colour
 (​https://github.com/yukuku/ambilwarna​)
-```
-```
+
  - Library to allow circular profile pictures
 (​https://github.com/hdodenhof/CircleImageView​)
-```
