@@ -105,10 +105,15 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                     //insert the location of the files into the database
                     String imageLink = "http://animationdoodle2017.com/videos/uploads/";
                     String videoLink = "http://animationdoodle2017.com/videos/uploads/";
+
+                    // strips the video name and image name from file paths
                     int index = imagePath.lastIndexOf("/");
                     int index2 = videoPath.lastIndexOf("/");
                     Log.i("file path","is: "+ index);
+
+                    //gets the user id to insert video correctly into database with their id
                     user_id = mSharedPreferences.getInt(PREF_ID,0);
+
                     String newImagePath = imagePath.substring(index+1);
                     newImagePath = imageLink += newImagePath;
                     Log.i("file path","is: "+ newImagePath);
