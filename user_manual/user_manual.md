@@ -1,5 +1,10 @@
 ## USER MANUAL
 ---
+
+![](media/title.png)
+
+---
+
 **Table of Contents**
 
 **1. About Animation Doodle**

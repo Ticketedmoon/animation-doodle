@@ -414,7 +414,7 @@ notification tray at the top of your devices screen.
 ## 6 - Resources / Libraries
 
  -  Awesome Splash Animation Introduction
-​https://github.com/ViksaaSkool/AwesomeSplash
+(​https://github.com/ViksaaSkool/AwesomeSplash)
 
  -  Marker SeekerBar
 (​https://github.com/bq/MarkerSeekBar​)
