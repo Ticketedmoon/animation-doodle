@@ -56,4 +56,5 @@ public class CanvasViewTest {
         canvas.undoAction();
         assertEquals(false, canvas.newPaths.isEmpty());
     }
+
 }

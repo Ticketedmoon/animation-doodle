@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,6 +90,7 @@ public class CanvasView extends View {
 
     public Path get_new_Path() {
         this.mPath = new Path();
+        Log.i("TEST LENGTH: ", mPath + "");
         return mPath;
     }
 
