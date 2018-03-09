@@ -38,4 +38,23 @@ public class CanvasViewTest {
         assertEquals(true, isEmpty);
 
     }
+
+    @Test
+    public void testUndoAction() throws Exception {
+        // Create your newPaths array of pathways
+        CanvasView canvas = new CanvasView(context);
+        canvas.newPaths.add(new Pair<Path, Paint>(new Path(), new Paint()));
+        canvas.newPaths.add(new Pair<Path, Paint>(new Path(), new Paint()));
+
+        // Test for a positive result
+        int pathways_size = canvas.newPaths.size();
+        canvas.undoAction();
+        assertEquals(pathways_size-1, canvas.newPaths.size());
+        // NewPaths size should be equal to one less
+
+        // Give a False case
+        canvas.undoAction();
+        assertEquals(false, canvas.newPaths.isEmpty());
+    }
+
 }

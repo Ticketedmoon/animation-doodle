@@ -427,6 +427,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         recyclerView.setAdapter(adapter);
     }
 
+    // Testing function
     public static CanvasView getCView() {
         return canvasView;
     }
@@ -819,7 +820,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
                 .build();
     }
 
-    private void reset_timeline() {
+    public void reset_timeline() {
         // Clear Frames, FrameNums, Pathways & drawables
         // Also reset frame_counter back to 1 to restart.
         frames.clear();
@@ -844,6 +845,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         mEditor.apply();
 
         canvasView.newPaths.clear();
+
         //remove the final drawable background
         background.setText("Set Background");
         this.canvasView2.setBackground(null);
@@ -933,8 +935,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
     }
 
     //method called when background is to be set
-
-
     public void chooseImage(View v){
         if (background.getText().equals("Set Background")) {
             set = true;
