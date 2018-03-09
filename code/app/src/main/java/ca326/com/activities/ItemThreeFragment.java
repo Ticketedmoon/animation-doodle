@@ -118,6 +118,9 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
     }
 
 
+    // pulls the json array response from the server and then
+    // sends it to be parsed to get the attributes of each video
+
     private JsonArrayRequest getVideoFromDB(int pageCount) {
         //Initializing ProgressBar
         final ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
@@ -152,8 +155,9 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
 
     private void getData() {
         //Adding the method to the queue by calling the method getVideoFromDB
+        // volley will make the processing and caching of the images and videos faster
         requestQueue.add(getVideoFromDB(pageCount));
-        //Incrementing the page count
+        // page count not used anymore, might re-implement it later
         pageCount++;
     }
 
@@ -176,6 +180,10 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
                 String rating =(json.getString("rating"));
                 number = Float.parseFloat(rating);
                 Log.i("rating value","average is " + averageRating);
+
+                //set attributes of video from database
+                // to a video object
+
                 video.setRating(number);
                 video.setImageUrl(json.getString("image"));
                 video.setVideoUrl(json.getString("video"));
@@ -184,6 +192,7 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
                 video.setName(json.getString("name"));
                 video.setDescription(json.getString("video description"));
                 video.setRatingCounter(rating_counter);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -191,7 +200,7 @@ public class ItemThreeFragment extends Fragment implements MyCardAdapter.ItemCli
             listVideos.add(video);
         }
 
-        //add to adapter
+        //add to adapter and notify cardview to change
         adapter.notifyDataSetChanged();
     }
 

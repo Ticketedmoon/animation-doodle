@@ -15,8 +15,10 @@ import java.net.URL;
 
 public class FileUpload {
 
+    //our php script link
     public static final String URL= "http://animationdoodle2017.com/videos/videoUpload.php";
-
+    //used to know whether data has been uploaded or not
+    // 200 = success
     private int responseFromServer;
 
     public String uploadFile(String file) {
@@ -33,8 +35,7 @@ public class FileUpload {
         int maxBufferSize = 1 * 1024 * 1024;
         File selectedFile = new File(file);
         if (!selectedFile.isFile()) {
-            System.out.println("file does not exist");
-
+            // don't upload anything
             return null;
         }
 
@@ -75,8 +76,7 @@ public class FileUpload {
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
             responseFromServer = conn.getResponseCode();
-            Log.i("file","check 15 is " + responseFromServer);
-            Log.i("responseeeeeeeeeee ","response " + responseFromServer);
+            Log.i("response ","response " + responseFromServer);
 
             fileInputStream.close();
             dos.flush();
@@ -101,7 +101,7 @@ public class FileUpload {
             }
             return sb.toString();
         }else {
-            return "Upload unsuccessfull";
+            return "Upload unsuccessful";
         }
     }
 }
