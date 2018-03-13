@@ -25,6 +25,8 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Map;
 
+import static ca326.com.activities.Start_Drawing_Screen.drawables;
+
 public class Play_Animation_Screen extends AppCompatActivity {
 
     // Private fields
@@ -206,7 +208,7 @@ public class Play_Animation_Screen extends AppCompatActivity {
                     seek.setProgress(pos);
                     System.out.println(pos.toString() + "----" + Integer.toString(pathways.size()));
                     cv.newPaths = pathways.get(pos);
-                    cv.setBackground(Start_Drawing_Screen.newDrawable);
+                    cv.setBackground(drawables.get(0));
                     cv.invalidate();
                     pos++;
                 }
