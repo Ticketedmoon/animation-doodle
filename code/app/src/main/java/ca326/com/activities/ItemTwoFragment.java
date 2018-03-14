@@ -77,6 +77,7 @@ public class ItemTwoFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
     }
 
     @Override
