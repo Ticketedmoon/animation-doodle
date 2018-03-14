@@ -967,7 +967,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         drawables.put(0,null);
         this.canvasView2.invalidate();
         background.setText("Set Background");
-        temp=true;
     }
 
     public void set_background(String backpath) {
