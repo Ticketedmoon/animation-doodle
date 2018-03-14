@@ -41,7 +41,7 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
         Log.i("TEST", src.toString());
         loadFFmpeg();
 
-        String[] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=N/(" + instance.frame_rate_value.toString() + "*TB)", "-pix_fmt", "yuv420p", "-crf", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/Animations/" + instance.ANIMATION_TITLE  + ".mp4"};
+        String[] complexCommand = new String[]{"-i", src + "", "-c:v", "libx264", "-c:a", "aac", "-vf", "setpts=N/(" + instance.frame_rate_value.toString() + "*TB)", "-pix_fmt", "yuv420p", "-q:v", "10", "-r", instance.frame_rate_value.toString(), "-shortest", "-y", "/storage/emulated/0/" + "AnimationDoodle/Animations/" + instance.ANIMATION_TITLE  + ".mp4"};
         executeFFmpeg(complexCommand);
 
         return "Complete";
@@ -115,7 +115,7 @@ class DownloadAnimationTask extends AsyncTask<Void, Void, String> {
                     toast.show();
                     progress.dismiss();
 
-                    // Delete tmp folder
+                    // Delete tmp folder contents
                     if (dir.isDirectory())
                     {
                         String[] children = dir.list();
