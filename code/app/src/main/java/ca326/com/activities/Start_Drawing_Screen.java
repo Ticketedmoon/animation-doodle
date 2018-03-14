@@ -725,7 +725,7 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
 
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Backgrounds");
+                File file = new File(Environment.getExternalStorageDirectory(),"AnimationDoodle/Temp");
 
                 //// make the file name the same as the video file name + .jpg to differentiate
                 //// will change this later when save feature is done

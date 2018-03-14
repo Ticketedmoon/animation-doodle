@@ -3,6 +3,7 @@ package ca326.com.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -37,6 +39,7 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
 
             ProgressDialog uploading;
             Activity instance;
+            private File dir;
 
 
             UploadVideo(Activity instance) {
@@ -80,6 +83,18 @@ class UploadVideo extends AsyncTask<Void, Void, String> {
                 }
 
                 uploading.dismiss();
+
+                dir = new File(Environment.getExternalStorageDirectory() + "/AnimationDoodle/Temp");
+                // Delete tmp folder
+                if (dir.isDirectory())
+                {
+                    String[] children = dir.list();
+                    for (int i = 0; i < children.length; i++)
+                    {
+                        new File(dir, children[i]).delete();
+                    }
+                }
+
                 Toast toast = Toast.makeText(instance, "File uploaded!", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
