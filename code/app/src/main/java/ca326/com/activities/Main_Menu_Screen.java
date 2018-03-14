@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 public class Main_Menu_Screen extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class Main_Menu_Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.fragment_layout_main);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Start Fragment Operations
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
