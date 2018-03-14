@@ -309,6 +309,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             // Reshow Bitmap after bitmap saved
             canvasView.shouldShowOnionSkin = true;
         }
+        else {
+            assignTimelineIcon(position);
+        }
     }
 
     private void change_current_frame(int position, int correct_onion_frame) {
@@ -337,6 +340,15 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
 
         // Hide Onion layer in bitmap frames
         canvasView.shouldShowOnionSkin = false;
+        assignTimelineIcon(position);
+        i++;
+
+        this.pos = position;
+
+
+    }
+
+    private void assignTimelineIcon(int position) {
         if (!temp) {
             this.canvasView.setDrawingCacheEnabled(true);
             bitmap = this.canvasView.getDrawingCache();
@@ -351,11 +363,6 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
             adjust_timeline();
             adapterPosition = 99;
         }
-        i++;
-
-        this.pos = position;
-
-
     }
 
     // Save Animation Function, takes all frames in canvas
@@ -828,6 +835,9 @@ public class Start_Drawing_Screen extends AppCompatActivity implements MyRecycle
         pathways.clear();
         drawables.clear();
         canvasView.onionPaths.clear();
+
+        adapter.notifyDataSetChanged();
+        timeline_frames.invalidate();
 
         frame_counter = 1; // Reset back to 1
         pos = 0;
