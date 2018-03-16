@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main Menu Buttons -->
-    <string name="action_settings">Action Settings</string>
     <string name="action_search">Search</string>
-    <string name="canvas_draw">Start Drawing</string>
+    <string name="action_settings">Settings</string>
 
+    <string name="canvas_draw">Start Drawing</string>
     <string name="app_name">Animation Doodle</string>
     <string name="app_settings">Settings</string>
+
+    <!-- Bottom Navigation bar Text -->
+    <string name="bar_home">Home</string>
+    <string name="bar_profile">Profile</string>
+    <string name="bar_public">Public Animations</string>
 
     <string name="title_activity_sign__in__screen">Animation Doodle</string>
     <string name="title_activity_register__screen">Animation Doodle</string>
@@ -24,9 +29,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="invalid_password">Passwords must contain at least 1 Upper Case character and number </string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
     <!-- Strings related to logout -->
     <string name="logout_form">Log out</string>
