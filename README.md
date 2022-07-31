@@ -4,7 +4,7 @@
 ![](/user_manual/media/title_small.png)
 
 ##### What is Animation Doodle?
-Animation Doodle is a project being developed by James Collins & Shane Creedon in an effort  
+Animation Doodle is a project developed by James Collins & Shane Creedon in an effort  
 to unite both drawing and artistic design with animation inside a mobile application.  
 
 ---
